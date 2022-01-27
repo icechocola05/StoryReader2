@@ -5,16 +5,20 @@ html,body {
    font-family: Noto Sans KR;
 }
 
+.header {
+	background-color: #927D71;
+}
+
 .contents {
    margin-top: 10%;
-   margin-left: 7%;
+   margin-left: 5%;
    width: 50%;
    float: left;
 }
 
 .img {
    margin-top: 8%;
-    margin-left: 3%;
+   margin-left: 7%;
    float: left;
 }
 
