@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+button {
+   width: auto;
+   padding: 2% 20% 2% 20%;
+   background-color: #927D71;
+   border: none;
+   
+   font-family: Noto Sans;
+   font-style: normal;
+   font-weight: 600;
+   font-size: 60px;
+   line-height: 68px;
+   letter-spacing: -0.05em;
+   
+   color: #FFFFFF;
+}
+
+button:hover {
+	background: #4f443e;
+}
