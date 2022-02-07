@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Enumeration;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -16,6 +18,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.vision.v1.AnnotateImageRequest;
+import com.google.cloud.vision.v1.AnnotateImageResponse;
+import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
+import com.google.cloud.vision.v1.Feature;
+import com.google.cloud.vision.v1.Image;
+import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import com.google.cloud.vision.v1.Feature.Type;
+import com.google.protobuf.ByteString;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
@@ -37,6 +48,8 @@ public class DoUploadImage extends HttpServlet {
     	String fileName = ""; // 업로드 파일 이름
     	String originalFileName =""; // 실제 원본 이름
     	String uploadFilePath = ""; // 업로드 파일 경로
+    	String pageImage = ""; // 이미지
+    	String pageText = ""; //추출된 텍스트
 	    
 		String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());  //현재시간
 		
@@ -59,8 +72,8 @@ public class DoUploadImage extends HttpServlet {
 	        		String ext = originFileName.substring(originFileName.lastIndexOf("."));
 	        		String fileTempName = now + "_" + originalFileName + ext;
 	        		File tempFile = new File(uploadPath + "/" + fileTempName); //변경한 파일명
-	        		uploadFilePath = "http://localhost:8080/UploadImg/" + fileTempName;
-	        		
+	        		uploadFilePath = "./UploadImg/" + fileTempName;
+	        		pageImage = uploadPath + "\\" + fileTempName;
 	        		if(!originFile.renameTo(tempFile))
 	        			System.out.print("파일명 변경 실패");
 	        	}
@@ -71,8 +84,38 @@ public class DoUploadImage extends HttpServlet {
 	    }
 	    
 	    //이미지에서 텍스트 추출
-	    
-	    request.setAttribute("uploadFilePath", uploadFilePath); //업로드 파일 경로
+		System.out.println(pageImage);
+		
+		try {
+	         GoogleCredentials credentials = GoogleCredentials.getApplicationDefault(); // fromStream(new FileInputStream(googleCredentialsConfiguration.getLocation()));
+         
+	         List<AnnotateImageRequest> requests = new ArrayList<>();
+	         ByteString imgBytes = ByteString.readFrom(new FileInputStream(pageImage));
+	         Image img = Image.newBuilder().setContent(imgBytes).build();
+	         Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
+	         AnnotateImageRequest req = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+	         requests.add(req);
+	         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+	            BatchAnnotateImagesResponse resp = client.batchAnnotateImages(requests);
+	            List<AnnotateImageResponse> resps = resp.getResponsesList();
+	            for (AnnotateImageResponse res : resps) {
+	               if (res.hasError()) {
+	                  System.out.printf("Error: %s\n", res.getError().getMessage());
+	                  return;
+	               }
+	               pageText = res.getTextAnnotationsList().get(0).getDescription();
+	               System.out.println("Text : ");
+	               System.out.println(pageText);
+	         
+	            }
+	         }
+	      }
+	      catch(Exception e) {
+	         e.printStackTrace();
+	      }
+		request.setAttribute("uploadFilePath", uploadFilePath);
+		request.setAttribute("pageImage", pageImage);//업로드 파일 경로 + 이름
+	    request.setAttribute("pageText",pageText); //추출 텍스트
 		
     	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
         rd.forward(request, response);
