@@ -113,10 +113,11 @@ public class DoUploadImage extends HttpServlet {
 	      catch(Exception e) {
 	         e.printStackTrace();
 	      }
+		
 		request.setAttribute("uploadFilePath", uploadFilePath);
 		request.setAttribute("pageImage", pageImage);//업로드 파일 경로 + 이름
 	    request.setAttribute("pageText",pageText); //추출 텍스트
-		
+		//request.setAttribute("pageText","DEFAULT TEXT (IN TEST)");
     	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
         rd.forward(request, response);
 	}

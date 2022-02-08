@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+button {
+	display: block;
+	width: 60vw;
+	height: 10vh;
+	background-color: #927D71;
+	border: none;
+	text-align:center;
+	font-family: Noto Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 60px;
+	line-height: 68px;
+	letter-spacing: -0.05em;
+	
+	color: #FFFFFF;
+}
+
+button:hover {
+	background: #4f443e;
+}
+
