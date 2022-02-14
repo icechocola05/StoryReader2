@@ -92,6 +92,7 @@ public class DoUploadImage extends HttpServlet {
 	    //이미지에서 텍스트 추출
 		System.out.println(pageImage);
 		
+
 		try {
 	         GoogleCredentials credentials = GoogleCredentials.getApplicationDefault(); // fromStream(new FileInputStream(googleCredentialsConfiguration.getLocation()));
          
@@ -151,8 +152,8 @@ public class DoUploadImage extends HttpServlet {
 	      }
 		request.setAttribute("uploadFilePath", uploadFilePath);
 		request.setAttribute("pageImage", pageImage);//업로드 파일 경로 + 이름
-	    request.setAttribute("pageText",pageText); //추출 텍스트
-		
+	    //request.setAttribute("pageText",pageText); //추출 텍스트
+		request.setAttribute("pageText","DEFAULT TEXT (IN TEST)");
     	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
         rd.forward(request, response);
 	}

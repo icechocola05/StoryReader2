@@ -1,29 +1,39 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>ÀÌ¹ÌÁö µî·Ï</title>
+<title>í˜ì´ì§€ ë“±ë¡</title>
+<link rel="stylesheet" href="CSS/selection.css" type='text/css' >
 </head>
+<%@ include file="headerIn.jsp" %>
 <body>
-	<div>ÀÌ¹ÌÁö µî·Ï ¹æ½ÄÀ» Á¤ÇØÁÖ¼¼¿ä</div>
-		<button onclick="location='fileInput.jsp'">»çÁø ÃÔ¿µÇÏ±â</button> <br>
-	<form action="doUploadImage" id="uploadForm" method="post" enctype="multipart/form-data">
-		<label className="input-file-button" for="input-file">ÀúÀåµÈ ÀÌ¹ÌÁö »ç¿ëÇÏ±â</label>
-		 <!-- ¹öÆ° Å¬¸¯ ½Ã ÆÄÀÏ Ã£±â·Î ¸µÅ© -->
-		<input type="file" name="input-file" id="input-file" onchange="checkImgUploaded()" style="display: none;"/> <!-- È­¸é¿¡¼­ ÆÄÀÏ Ã£´Â ¹öÆ° º¸ÀÌÁö ¾Êµµ·Ï -->
-		<button type="submit" id="submit_btn" style="display: none;"></button>
-	</form>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#btn-upload').click(function(e){
+			e.preventDefault();
+			$('#input-file').click();
+		});
+	});
 	
-	<script>
-		function checkImgUploaded() {
-			var fileCheck = document.getElementById("input-file").value;
-			if(fileCheck){
-				alert("ÀÌ¹ÌÁö ¾÷·Îµå ¼º°ø!");
-				document.getElementById('submit_btn').click();
-			}
+	function checkImgUploaded(){
+		var fileCheck = document.getElementById("input-file").value;
+		if(fileCheck){
+			alert("ì´ë¯¸ì§€ ì—…ë¡œë“œ ì„±ê³µ!");
+			document.getElementById('submit_btn').click();
 		}
-		
-	</script>
+	}
+</script>
+	
+	<div id = "msg-container">ì´ë¯¸ì§€ ë“±ë¡ ë°©ì‹ì„ ì •í•´ì£¼ì„¸ìš”</div>
+	<div id = "btn-container">
+		<button onclick="location='fileInput.jsp'" >ì‚¬ì§„ ì´¬ì˜í•˜ê¸°</button> <br><br>
+		<form action="doUploadImage" id="uploadForm" method="post" enctype="multipart/form-data">
+			<input type="file" id="input-file" name="input-file" onchange="checkImgUploaded()" style="display: none;"/>
+			<button type="submit" id="submit_btn" style="display: none;"></button>
+		</form>
+		<button type="button" id="btn-upload" >ì €ì¥ëœ ì´ë¯¸ì§€ ì‚¬ìš©í•˜ê¸°</button>
+	</div>
 </body>
 </html>
