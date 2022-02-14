@@ -22,9 +22,15 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.vision.v1.AnnotateImageRequest;
 import com.google.cloud.vision.v1.AnnotateImageResponse;
 import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
+import com.google.cloud.vision.v1.Block;
 import com.google.cloud.vision.v1.Feature;
 import com.google.cloud.vision.v1.Image;
 import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import com.google.cloud.vision.v1.Page;
+import com.google.cloud.vision.v1.Paragraph;
+import com.google.cloud.vision.v1.Symbol;
+import com.google.cloud.vision.v1.TextAnnotation;
+import com.google.cloud.vision.v1.Word;
 import com.google.cloud.vision.v1.Feature.Type;
 import com.google.protobuf.ByteString;
 import com.oreilly.servlet.MultipartRequest;
@@ -86,34 +92,64 @@ public class DoUploadImage extends HttpServlet {
 	    //이미지에서 텍스트 추출
 		System.out.println(pageImage);
 		
-//		try {
-//	         GoogleCredentials credentials = GoogleCredentials.getApplicationDefault(); // fromStream(new FileInputStream(googleCredentialsConfiguration.getLocation()));
-//         
-//	         List<AnnotateImageRequest> requests = new ArrayList<>();
-//	         ByteString imgBytes = ByteString.readFrom(new FileInputStream(pageImage));
-//	         Image img = Image.newBuilder().setContent(imgBytes).build();
-//	         Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
-//	         AnnotateImageRequest req = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-//	         requests.add(req);
-//	         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
-//	            BatchAnnotateImagesResponse resp = client.batchAnnotateImages(requests);
-//	            List<AnnotateImageResponse> resps = resp.getResponsesList();
-//	            for (AnnotateImageResponse res : resps) {
-//	               if (res.hasError()) {
-//	                  System.out.printf("Error: %s\n", res.getError().getMessage());
-//	                  return;
-//	               }
-//	               pageText = res.getTextAnnotationsList().get(0).getDescription();
-//	               System.out.println("Text : ");
-//	               System.out.println(pageText);
-//	         
-//	            }
-//	         }
-//	      }
-//	      catch(Exception e) {
-//	         e.printStackTrace();
-//	      }
-		
+
+		try {
+	         GoogleCredentials credentials = GoogleCredentials.getApplicationDefault(); // fromStream(new FileInputStream(googleCredentialsConfiguration.getLocation()));
+         
+	         List<AnnotateImageRequest> requests = new ArrayList<>();
+	         ByteString imgBytes = ByteString.readFrom(new FileInputStream(pageImage));
+	         Image img = Image.newBuilder().setContent(imgBytes).build();
+	         Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
+	         AnnotateImageRequest req = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+	         requests.add(req);
+	         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+	            BatchAnnotateImagesResponse resp = client.batchAnnotateImages(requests);
+	            List<AnnotateImageResponse> resps = resp.getResponsesList();
+	            for (AnnotateImageResponse res : resps) {
+	               if (res.hasError()) {
+	                  System.out.printf("Error: %s\n", res.getError().getMessage());
+	                  return;
+	               }
+	               
+	             // For full list of available annotations, see http://g.co/cloud/vision/docs
+	             TextAnnotation annotation = res.getFullTextAnnotation();
+		             for (Page page: annotation.getPagesList()) {
+		             String pageText1 = "";
+		             for (Block block : page.getBlocksList()) {
+		             String blockText = "";
+		             for (Paragraph para : block.getParagraphsList()) {
+			             String paraText = "";
+			             for (Word word: para.getWordsList()) {
+				             String wordText = "";
+				             for (Symbol symbol: word.getSymbolsList()) {
+					             wordText = wordText + symbol.getText();
+					             System.out.format("Symbol text: %s (confidence: %f)\n", symbol.getText(),
+					             symbol.getConfidence());
+				             }
+				             System.out.format("Word text: %s (confidence: %f)\n\n", wordText, word.getConfidence());
+				             paraText = String.format("%s %s", paraText, wordText);
+			             }
+			             // Output Example using Paragraph:
+			             System.out.println("\nParagraph: \n" + paraText);
+			             System.out.format("Paragraph Confidence: %f\n", para.getConfidence());
+			             blockText = blockText + paraText;
+			          }
+			             pageText = pageText + blockText;
+		             }
+	             }
+	             System.out.println("\nComplete annotation:");
+	             System.out.println(annotation.getText());
+	             
+	               pageText = res.getTextAnnotationsList().get(0).getDescription();
+	               System.out.println("Text : ");
+	               System.out.println(pageText);
+	         
+	            }
+	         }
+	      }
+	      catch(Exception e) {
+	         e.printStackTrace();
+	      }
 		request.setAttribute("uploadFilePath", uploadFilePath);
 		request.setAttribute("pageImage", pageImage);//업로드 파일 경로 + 이름
 	    //request.setAttribute("pageText",pageText); //추출 텍스트
