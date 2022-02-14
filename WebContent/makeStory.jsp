@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>µ¿È­ ¸¸µé±â</title>
+<title>ë™í™” ë§Œë“¤ê¸°</title>
 </head>
 <body>
 	<button onclick="location='uploadImage.jsp'"> + </button>
