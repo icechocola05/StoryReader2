@@ -1,20 +1,50 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>¾÷·Îµå ÀÌ¹ÌÁö È®ÀÎ</title>
+<title>ì—…ë¡œë“œ ì´ë¯¸ì§€ í™•ì¸</title>
+<style>
+#img-content{
+	margin-top : 10%;
+	margin-left : 10%;
+	margin-right: 10%;
+	margin-bottom:5%;
+	display:inline-block;
+	width:80%;
+	height:80%;
+}
+img {
+	display:inline-block;
+	width: 38vw;
+	height: 40vh;
+	object-fit: contain;
+	background-color:#C4C4C4;
+	
+  
+}
+textarea{
+	width: 40vw;
+  	height: 40vh;
+  	margin-top : 10%;
+	margin-right : 10%;
+}
+</style>
 </head>
+<%@ include file="headerIn.jsp" %>
 <body>
 	<%
-		//ÀÌ¹ÌÁö °æ·Î ¹Ş±â
+		//ì´ë¯¸ì§€ ê²½ë¡œ ë°›ê¸°
 		String uploadFilePath = "";
 		if(request.getAttribute("uploadFilePath") != null) uploadFilePath = (String) request.getAttribute("uploadFilePath");
 	 %>
+	 <div id = "img-content">
 	  <img src="<%=uploadFilePath %>">
-	  <div>
-	  <%=(String)request.getAttribute("pageText") %>
+	  <textarea>
+	  		<%=(String)request.getAttribute("pageText") %>
+	  </textarea>
 	  </div>
-	  <button onclick="location='uploadImage.jsp'"> ´ÙÀ½ </button>
+	  <br><br>
+	  <button onclick="location='uploadImage.jsp'"> ë‹¤ìŒ </button>
 </body>
 </html>

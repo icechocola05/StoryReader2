@@ -86,38 +86,38 @@ public class DoUploadImage extends HttpServlet {
 	    //이미지에서 텍스트 추출
 		System.out.println(pageImage);
 		
-		try {
-	         GoogleCredentials credentials = GoogleCredentials.getApplicationDefault(); // fromStream(new FileInputStream(googleCredentialsConfiguration.getLocation()));
-         
-	         List<AnnotateImageRequest> requests = new ArrayList<>();
-	         ByteString imgBytes = ByteString.readFrom(new FileInputStream(pageImage));
-	         Image img = Image.newBuilder().setContent(imgBytes).build();
-	         Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
-	         AnnotateImageRequest req = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-	         requests.add(req);
-	         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
-	            BatchAnnotateImagesResponse resp = client.batchAnnotateImages(requests);
-	            List<AnnotateImageResponse> resps = resp.getResponsesList();
-	            for (AnnotateImageResponse res : resps) {
-	               if (res.hasError()) {
-	                  System.out.printf("Error: %s\n", res.getError().getMessage());
-	                  return;
-	               }
-	               pageText = res.getTextAnnotationsList().get(0).getDescription();
-	               System.out.println("Text : ");
-	               System.out.println(pageText);
-	         
-	            }
-	         }
-	      }
-	      catch(Exception e) {
-	         e.printStackTrace();
-	      }
+//		try {
+//	         GoogleCredentials credentials = GoogleCredentials.getApplicationDefault(); // fromStream(new FileInputStream(googleCredentialsConfiguration.getLocation()));
+//         
+//	         List<AnnotateImageRequest> requests = new ArrayList<>();
+//	         ByteString imgBytes = ByteString.readFrom(new FileInputStream(pageImage));
+//	         Image img = Image.newBuilder().setContent(imgBytes).build();
+//	         Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
+//	         AnnotateImageRequest req = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+//	         requests.add(req);
+//	         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+//	            BatchAnnotateImagesResponse resp = client.batchAnnotateImages(requests);
+//	            List<AnnotateImageResponse> resps = resp.getResponsesList();
+//	            for (AnnotateImageResponse res : resps) {
+//	               if (res.hasError()) {
+//	                  System.out.printf("Error: %s\n", res.getError().getMessage());
+//	                  return;
+//	               }
+//	               pageText = res.getTextAnnotationsList().get(0).getDescription();
+//	               System.out.println("Text : ");
+//	               System.out.println(pageText);
+//	         
+//	            }
+//	         }
+//	      }
+//	      catch(Exception e) {
+//	         e.printStackTrace();
+//	      }
 		
 		request.setAttribute("uploadFilePath", uploadFilePath);
 		request.setAttribute("pageImage", pageImage);//업로드 파일 경로 + 이름
-	    request.setAttribute("pageText",pageText); //추출 텍스트
-		//request.setAttribute("pageText","DEFAULT TEXT (IN TEST)");
+	    //request.setAttribute("pageText",pageText); //추출 텍스트
+		request.setAttribute("pageText","DEFAULT TEXT (IN TEST)");
     	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
         rd.forward(request, response);
 	}

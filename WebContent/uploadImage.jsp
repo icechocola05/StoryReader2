@@ -25,10 +25,10 @@
 		}
 	}
 </script>
-	<div id = "cont-container">
-	<div>이미지 등록 방식을 정해주세요</div>
 	
-		<button onclick="location='fileInput.jsp'" >사진 촬영하기</button> <br>
+	<div id = "msg-container">이미지 등록 방식을 정해주세요</div>
+	<div id = "btn-container">
+		<button onclick="location='fileInput.jsp'" >사진 촬영하기</button> <br><br>
 		<form action="doUploadImage" id="uploadForm" method="post" enctype="multipart/form-data">
 			<input type="file" id="input-file" name="input-file" onchange="checkImgUploaded()" style="display: none;"/>
 			<button type="submit" id="submit_btn" style="display: none;"></button>

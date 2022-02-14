@@ -1,8 +1,25 @@
 @charset "UTF-8";
 
-button {
+#msg-container{
 	display: block;
-	width: 60vw;
+	width: 100%;
+	height: auto;
+	margin-top:5%;
+	margin-bottom:5%;
+	text-align:center;
+}
+#btn-container{
+	display: block;
+	width: 70%;
+	height: 100%;
+	margin-left:15%;
+	margin-right:15%;
+	margin-top:5%;
+	text-align:center;
+}
+button {
+	display: inline-block;
+	width: 50vw;
 	height: 10vh;
 	background-color: #927D71;
 	border: none;
