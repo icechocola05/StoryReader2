@@ -6,7 +6,7 @@
 <title>페이지 등록</title>
 <link rel="stylesheet" href="CSS/selection.css" type='text/css' >
 </head>
-<%@ include file="headerIn.jsp" %>
+<%@ include file="header.jsp" %>
 <body>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script type="text/javascript">

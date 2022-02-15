@@ -7,6 +7,14 @@
 	margin-top:5%;
 	margin-bottom:5%;
 	text-align:center;
+	
+	font-family: Noto Sans KR;
+   font-style: normal;
+   font-weight: bold;
+   font-size: 30px;
+   line-height: 43px;
+   letter-spacing: -0.02em;
+   
 }
 #btn-container{
 	display: block;
@@ -24,12 +32,12 @@ button {
 	background-color: #927D71;
 	border: none;
 	text-align:center;
-	font-family: Noto Sans;
-	font-style: normal;
-	font-weight: 600;
-	font-size: 60px;
-	line-height: 68px;
-	letter-spacing: -0.05em;
+	font-family: Noto Sans KR;
+   font-style: normal;
+   font-weight: bold;
+   font-size: 30px;
+   line-height: 43px;
+   letter-spacing: -0.02em;
 	
 	color: #FFFFFF;
 }
