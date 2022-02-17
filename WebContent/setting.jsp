@@ -237,29 +237,31 @@
 
       
       function getPreListen(val){
-         const xhttp = new XMLHttpRequest();
-         var sentence = document.getElementById('sentence'+val).value;
-         var voice_name = document.getElementById('voiceVal'+val).value;
-         var emotion_name = document.getElementById('emotionVal'+val).value;
-         var emotion_intensity = document.getElementById('intensityVal'+val).value;
-         console.log(val);
-         
-         console.log(document.getElementById('voiceVal'+val).value);
-         console.log(document.getElementById('emotionVal'+val).value);
-         console.log(document.getElementById('intensityVal'+val).value);
-         
-         console.log("sentence="+sentence+"&voice_name="+voice_name+"&emotion_name="+emotion_name+"&intensity="+emotion_intensity.toString());
-           xhttp.onreadystatechange = function () {
-             if (xhttp.readyState == 4 && xhttp.status == 200) {
-               console.log(xhttp.responseText);
-                  document.getElementById("pre-listen-audio").src = "output/"+xhttp.responseText;
-               document.getElementById('player').load();
-             }
-         };
-         xhttp.open("POST", "./getPreListen", true);
-         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; UTF-8");
-         xhttp.send("sentence="+sentence+"&voice_name="+voice_name+"&emotion_name="+emotion_name+"&intensity="+emotion_intensity.toString());
-      }
+          const xhttp = new XMLHttpRequest();
+          var sentence = document.getElementById('sentence'+val).value;
+          var voice_name = document.getElementById('voiceVal'+val).value;
+          var emotion_name = document.getElementById('emotionVal'+val).value;
+          var emotion_intensity = document.getElementById('intensityVal'+val).value;
+          var json_req_obj = {sentence : sentence, voice_name : voice_name, emotion_name : emotion_name, intensity : emotion_intensity.toString()};
+          alert(JSON.stringify(json_req_obj));
+          console.log(val);
+          
+          console.log(document.getElementById('voiceVal'+val).value);
+          console.log(document.getElementById('emotionVal'+val).value);
+          console.log(document.getElementById('intensityVal'+val).value);
+          
+          console.log("sentence="+sentence+"&voice_name="+voice_name+"&emotion_name="+emotion_name+"&intensity="+emotion_intensity.toString());
+            xhttp.onreadystatechange = function () {
+              if (xhttp.readyState == 4 && xhttp.status == 200) {
+                console.log(xhttp.responseText);
+                   document.getElementById("pre-listen-audio").src = "pre/"+xhttp.responseText;
+                document.getElementById('player').load();
+              }
+          };
+          xhttp.open("POST", "./GetPreListen", true);
+          xhttp.setRequestHeader("Content-type", "application/json");
+          xhttp.send(JSON.stringify(json_req_obj));
+       }
    </script>
 
 </body>

@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import model.dto.Emotion;
+import model.dto.Page;
 import model.dto.Story;
 import model.dto.User;
+import model.dto.Voice;
 
 /*
  * 문장 설정 정보 가져오기
@@ -31,8 +34,7 @@ public class SetVoiceEmotion extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		 // for DB connection
 	      ServletContext sc = getServletContext();
-	      Connection con = (Connection)sc.getAttribute("DBconnection");
-	      
+	      Connection con = (Connection)sc.getAttribute("DBconnection"); 
 
 	      response.setContentType("text/html; charset=UTF-8");
 	      request.setCharacterEncoding("UTF-8");
