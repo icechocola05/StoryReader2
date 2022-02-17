@@ -20,7 +20,7 @@ import model.dto.User;
 import model.dto.Voice;
 
 /*
- * 문장 설정 정보 가져오기
+ * 문장 설정 정보 가져오기 -> DB 저장
  * 설정 정보 : 문장, 화자, 음색, 감정, 감정세기
  */
 @WebServlet("/SetVoiceEmotion")
