@@ -29,11 +29,11 @@ import model.dto.User;
 /**
  * Servlet implementation class GetPreListen
  */
-@WebServlet("/GetPreListen")
-public class GetPreListen extends HttpServlet {
+@WebServlet("/doGetPreListen")
+public class DoGetPreListen extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public GetPreListen() {
+    public DoGetPreListen() {
         super();
     }
 
