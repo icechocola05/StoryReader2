@@ -33,7 +33,8 @@ import model.dto.User;
  * 
  * */
 
-@WebServlet("/GetPreListen")
+
+@WebServlet("/doGetPreListen")
 public class DoGetPreListen extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

@@ -23,14 +23,9 @@
       ArrayList<String> speaker_list = (ArrayList<String>) session.getAttribute("speaker_list");
       ArrayList<String> sentence_list = (ArrayList<String>) session.getAttribute("sentence_list");
       
-      for(int i=0; i<speaker_list.size(); i++) {
-    	  System.out.println(speaker_list.get(i));
-      }
-      
       //DB의 Emotion, Voice 가져오기 + session에 저장 -> index.jsp에서 처리 -> 가져옴
       List<Voice> voiceSet = (List<Voice>)session.getAttribute("voiceSet");
       List<Emotion> emotionSet = (List<Emotion>)session.getAttribute("emotionSet");
-      System.out.println(emotionSet.get(0).getEmotionNameKr());
       
       //voice color 배열 만들기
       String voiceColorSet[] = new String[10];
@@ -73,7 +68,8 @@
          <div class="w3-row w3-center">
             <div class="w3-col w3-xlarge" style="color: #3A91DA; font-weight: bold; margin: 5% 0 0 2%; width: 15%;">
                <!-- speaker 붙이기-->
-               <input type="text" name='speaker<%=i%>' id='speaker<%=i%>' value="<%= speaker_list.get(i) %>" placeholder="화자" style="color: #3A91DA; font-weight: bold; text-align: center; width: 90%;"> <br>
+
+               <input type="text" id='speaker<%=i%>' name='speaker<%=i%>' value="<%= speaker_list.get(i) %>" placeholder="화자" style="color: #3A91DA; font-weight: bold; text-align: center; width: 90%;"> <br>
                
                <!-- voice option 붙이기-->
                <select class='w3-select w3-large w3-margin-bottom' id='voice<%=i%>' name='voice<%=i%>' onchange="changeVoice(this.value, <%=i%>);" style="font-weight: bold; text-align: center; width: 90%;">
@@ -111,7 +107,7 @@
             
             <!-- sentence 붙이기-->
             <div class="w3-col" style="margin: 5% 0% 0% 0%; width: 40%">
-               <textarea id="sentence<%=i%>" class="w3-col s12 w3-large" name="sentence<%=i%>"><%= sentence_list.get(i) %></textarea>
+               <textarea id="sentence<%=i%>" name="sentence<%=i%>" class="w3-col s12 w3-large"><%= sentence_list.get(i) %></textarea>
             </div>
             
             <!-- 미리듣기 버튼 붙이기 -->
@@ -260,7 +256,7 @@
                 document.getElementById('player').load();
               }
           };
-          xhttp.open("POST", "./GetPreListen", true);
+          xhttp.open("POST", "./doGetPreListen", true);
           xhttp.setRequestHeader("Content-type", "application/json");
           xhttp.send(JSON.stringify(json_req_obj));
        }

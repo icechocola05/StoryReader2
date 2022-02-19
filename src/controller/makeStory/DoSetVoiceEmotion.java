@@ -23,7 +23,7 @@ import model.dto.User;
 import model.dto.Voice;
 
 /*
- * 문장 설정 정보 가져오기 
+ * 문장 설정 정보 가져오기
  * 설정 정보 : 문장, 화자, 음색, 감정, 감정세기
  */
 @WebServlet("/DoSetVoiceEmotion")
@@ -35,40 +35,29 @@ public class DoSetVoiceEmotion extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	      response.setContentType("text/html; charset=UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
 	      request.setCharacterEncoding("UTF-8");
 	      HttpSession session = request.getSession(true);
 	      
-	      //현재 user, story, page 
 	      User currUser = (User) session.getAttribute("currUser");
 	      Story currStory = (Story) session.getAttribute("currStory");
-	      
-	      //ArrayList<String> speaker = (ArrayList<String>) session.getAttribute("speaker_list");
 	      ArrayList<String> sentence_list = (ArrayList<String>) session.getAttribute("sentence_list");
 	      List<Voice> voiceSet = (List<Voice>) session.getAttribute("voiceSet");
 	      List<Emotion> emotionSet = (List<Emotion>) session.getAttribute("emotionSet");
-	      
-	     // ArrayList<String> sentence = new ArrayList<String>();
-	     // ArrayList<String> speaker = new ArrayList<String>();
-	      List<Sentence> sentenceSet = new ArrayList<Sentence>();
-	     // String temp;
-	      
+	      ArrayList<Sentence> sentenceSet = new ArrayList<Sentence>();
 	      
 	      int sentenceSize = sentence_list.size();
-	      System.out.println("DoSetVoiceEmotion : 문장 개수 : "+sentenceSize);
+	      
 	      String sentenceInput, speakerInput, voiceVal, emotionVal;
 	      float intensity;
 	      String n;
-	      
-	         
-	      //문장 별로 설정 값을 List에 저장한다.
+	      //문장 별로 설정 값을 sentenceSet(session)에 저장한다.
 	      for (int i = 0; i < sentenceSize; i++) {
 	        n = Integer.toString(i);
 	        
 	        //문장 별 설정 값들을 가져온다.
 	        sentenceInput = request.getParameter("sentence"+n);
 	        speakerInput = request.getParameter("speaker"+n);
-	        System.out.println("DoSetVoiceEmotion : 화자"+i+" : "+speakerInput);
 	        voiceVal = request.getParameter("voiceVal" + n);
 	        System.out.println(voiceVal);
 	        emotionVal = request.getParameter("emotionVal" + n);
@@ -91,16 +80,14 @@ public class DoSetVoiceEmotion extends HttpServlet {
 	           }
 	        }
 	        
-	        int story_id = currStory.getStoryId();
-	        
-	        //List 형태로 Sentence 저장(문장, 화자, 음색, 감정, 감정세기 정보 저장)
+	        //List 형태로 Sentence 저장
 	        Sentence invidSent = new Sentence();
 	        invidSent.setSentence(sentenceInput);
 	        invidSent.setSpeaker(speakerInput);
 	        invidSent.setEmotionId(emotionId);
 	        invidSent.setVoiceId(voiceId);
 	        invidSent.setIntensity(intensity);
-	        
+
 	        sentenceSet.add(invidSent);
 	        
 	     }
