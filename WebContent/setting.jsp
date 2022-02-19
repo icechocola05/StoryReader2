@@ -20,8 +20,8 @@
    
    <% 
       //저장한 이야기, 문장, 화자 정보 받아오기
-      ArrayList<String> speaker_list = (ArrayList<String>) request.getAttribute("speaker_list");
-      ArrayList<String> sentence_list = (ArrayList<String>) request.getAttribute("sentence_list");
+      ArrayList<String> speaker_list = (ArrayList<String>) session.getAttribute("speaker_list");
+      ArrayList<String> sentence_list = (ArrayList<String>) session.getAttribute("sentence_list");
       
       for(int i=0; i<speaker_list.size(); i++) {
     	  System.out.println(speaker_list.get(i));
@@ -59,7 +59,7 @@
       voiceBuff.deleteCharAt(voiceBuff.lastIndexOf(","));
    %>
 
-   <form method="Post" action="setVoiceEmotion">
+   <form method="Post" action="DoSetVoiceEmotion">
    <!-- sentence setting -->
    <div class="settings" style="margin: 3% 0 0 0;">
       <br>
@@ -73,7 +73,7 @@
          <div class="w3-row w3-center">
             <div class="w3-col w3-xlarge" style="color: #3A91DA; font-weight: bold; margin: 5% 0 0 2%; width: 15%;">
                <!-- speaker 붙이기-->
-               <input type="text" id='speaker<%=i%>' value="<%= speaker_list.get(i) %>" placeholder="화자" style="color: #3A91DA; font-weight: bold; text-align: center; width: 90%;"> <br>
+               <input type="text" name='speaker<%=i%>' id='speaker<%=i%>' value="<%= speaker_list.get(i) %>" placeholder="화자" style="color: #3A91DA; font-weight: bold; text-align: center; width: 90%;"> <br>
                
                <!-- voice option 붙이기-->
                <select class='w3-select w3-large w3-margin-bottom' id='voice<%=i%>' name='voice<%=i%>' onchange="changeVoice(this.value, <%=i%>);" style="font-weight: bold; text-align: center; width: 90%;">
@@ -141,6 +141,8 @@
    
    <script>
       function changeVoice(val, tar) {
+    	  console.log("val : "+val);
+    	  console.log("tar : "+tar);
          //tar = speaker 인덱스
          var valNum = parseInt(val.charAt(val.length - 1)); // 몇번째 화자인지
          var colorStr = "<%=colorBuff.toString()%>";
@@ -154,14 +156,14 @@
          //색 바꾸기
          element.style.borderColor='#' + colors[valNum];
          element.style.backgroundColor='#' + colors[valNum];
-         var target = document.getElementsByName('voiceVal' + now);
+		//값 바꾸기
+         target.value = val.slice(0, -1);
       }
       
       function changeEmotion(val) {
          var valNum = 0; // option 인덱스 - parseInt(val.charAt(val.length - 1));
          var valTimes = 1; // 자리수 산정하는 변수 : 1->10->100
          var sliceVal = 0; //slice 하려는 대상
-
          while(true){
         	 
         	 console.log(val.slice(-1));
@@ -179,9 +181,10 @@
          var element = document.getElementById("emotionFace" + valNum);
          var target = document.getElementById("emotionVal" + valNum);
          
-         var deleteElement = document.getElementById('emotionFaceSpan' + valNum);
-         deleteElement.parentNode.removeChild(deleteElement);
-            
+         if(document.getElementById('emotionFaceSpan' + valNum)){
+         	var deleteElement = document.getElementById('emotionFaceSpan' + valNum);
+         	deleteElement.parentNode.removeChild(deleteElement);
+         }
          if(val == "neutral") {
          	var added = document.createElement('span');
             added.setAttribute('id', 'emotionFaceSpan' + valNum);
@@ -234,7 +237,6 @@
          }
          target.value = val.toString();
       }
-
       
       function getPreListen(val){
           const xhttp = new XMLHttpRequest();

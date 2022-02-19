@@ -10,7 +10,7 @@ public class Sentence {
 	private float intensity;
 	private String sentence_wav_url;
 
-	public Sentence() {this.sentence_id=-1;}
+	public Sentence() {this.sentence_id=-1;this.page_id=-1;}
 	
 	public Sentence(String sent_txt, String sent_speaker, int story_id, int voice_id, int emotion_id, 
 			float sent_intensity) {

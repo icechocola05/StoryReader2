@@ -26,14 +26,18 @@ import org.json.simple.parser.ParseException;
 import model.dto.User;
 
 
-/**
- * Servlet implementation class GetPreListen
- */
+/*
+ * TTS Server request(JSON) 파일 생성
+ * TTS Server 통신
+ * response(wav) 미리듣기 음성파일 저장 및 이름 전달
+ * 
+ * */
+
 @WebServlet("/GetPreListen")
-public class GetPreListen extends HttpServlet {
+public class DoGetPreListen extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public GetPreListen() {
+    public DoGetPreListen() {
         super();
     }
 
