@@ -20,6 +20,7 @@
 		ArrayList<String> opacityList = (ArrayList<String>)request.getAttribute("opacityList");
 		String pageImgUrl = (String)session.getAttribute("currPageImg");
 		int size = sentenceSet.size()-1;
+		System.out.println(sentenceSet.get(0).getSentenceWavUrl());
 	 %>
 	<div class="main">
 	
