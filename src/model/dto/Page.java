@@ -4,7 +4,7 @@ public class Page {
 	private int page_id;
 	private int page_num;
 	private String page_img_url;
-	private String story_id;
+	private int story_id;
 	
 	public Page() {}
 	
@@ -20,7 +20,7 @@ public class Page {
 		this.page_img_url = page_img_url;
 	}
 	
-	public void setStoryId(String story_id) {
+	public void setStoryId(int story_id) {
 		this.story_id = story_id;
 	}
 	
@@ -36,7 +36,7 @@ public class Page {
 		return this.page_img_url;
 	}
 	
-	public String getStoryId() {
+	public int getStoryId() {
 		return this.story_id;
 	}
 }

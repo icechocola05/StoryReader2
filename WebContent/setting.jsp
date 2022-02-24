@@ -20,17 +20,12 @@
    
    <% 
       //저장한 이야기, 문장, 화자 정보 받아오기
-      ArrayList<String> speaker_list = (ArrayList<String>) request.getAttribute("speaker_list");
-      ArrayList<String> sentence_list = (ArrayList<String>) request.getAttribute("sentence_list");
-      
-      for(int i=0; i<speaker_list.size(); i++) {
-    	  System.out.println(speaker_list.get(i));
-      }
+      ArrayList<String> speaker_list = (ArrayList<String>) session.getAttribute("speaker_list");
+      ArrayList<String> sentence_list = (ArrayList<String>) session.getAttribute("sentence_list");
       
       //DB의 Emotion, Voice 가져오기 + session에 저장 -> index.jsp에서 처리 -> 가져옴
       List<Voice> voiceSet = (List<Voice>)session.getAttribute("voiceSet");
       List<Emotion> emotionSet = (List<Emotion>)session.getAttribute("emotionSet");
-      System.out.println(emotionSet.get(0).getEmotionNameKr());
       
       //voice color 배열 만들기
       String voiceColorSet[] = new String[10];
@@ -59,7 +54,7 @@
       voiceBuff.deleteCharAt(voiceBuff.lastIndexOf(","));
    %>
 
-   <form method="Post" action="setVoiceEmotion">
+   <form method="Post" action="DoSetVoiceEmotion">
    <!-- sentence setting -->
    <div class="settings" style="margin: 3% 0 0 0;">
       <br>
@@ -73,7 +68,8 @@
          <div class="w3-row w3-center">
             <div class="w3-col w3-xlarge" style="color: #3A91DA; font-weight: bold; margin: 5% 0 0 2%; width: 15%;">
                <!-- speaker 붙이기-->
-               <input type="text" id='speaker<%=i%>' value="<%= speaker_list.get(i) %>" placeholder="화자" style="color: #3A91DA; font-weight: bold; text-align: center; width: 90%;"> <br>
+
+               <input type="text" id='speaker<%=i%>' name='speaker<%=i%>' value="<%= speaker_list.get(i) %>" placeholder="화자" style="color: #3A91DA; font-weight: bold; text-align: center; width: 90%;"> <br>
                
                <!-- voice option 붙이기-->
                <select class='w3-select w3-large w3-margin-bottom' id='voice<%=i%>' name='voice<%=i%>' onchange="changeVoice(this.value, <%=i%>);" style="font-weight: bold; text-align: center; width: 90%;">
@@ -111,7 +107,7 @@
             
             <!-- sentence 붙이기-->
             <div class="w3-col" style="margin: 5% 0% 0% 0%; width: 40%">
-               <textarea id="sentence<%=i%>" class="w3-col s12 w3-large" name="sentence<%=i%>"><%= sentence_list.get(i) %></textarea>
+               <textarea id="sentence<%=i%>" name="sentence<%=i%>" class="w3-col s12 w3-large"><%= sentence_list.get(i) %></textarea>
             </div>
             
             <!-- 미리듣기 버튼 붙이기 -->
@@ -141,6 +137,8 @@
    
    <script>
       function changeVoice(val, tar) {
+    	  console.log("val : "+val);
+    	  console.log("tar : "+tar);
          //tar = speaker 인덱스
          var valNum = parseInt(val.charAt(val.length - 1)); // 몇번째 화자인지
          var colorStr = "<%=colorBuff.toString()%>";
@@ -154,14 +152,14 @@
          //색 바꾸기
          element.style.borderColor='#' + colors[valNum];
          element.style.backgroundColor='#' + colors[valNum];
-         var target = document.getElementsByName('voiceVal' + now);
+		//값 바꾸기
+         target.value = val.slice(0, -1);
       }
       
       function changeEmotion(val) {
          var valNum = 0; // option 인덱스 - parseInt(val.charAt(val.length - 1));
          var valTimes = 1; // 자리수 산정하는 변수 : 1->10->100
          var sliceVal = 0; //slice 하려는 대상
-
          while(true){
         	 
         	 console.log(val.slice(-1));
@@ -179,9 +177,10 @@
          var element = document.getElementById("emotionFace" + valNum);
          var target = document.getElementById("emotionVal" + valNum);
          
-         var deleteElement = document.getElementById('emotionFaceSpan' + valNum);
-         deleteElement.parentNode.removeChild(deleteElement);
-            
+         if(document.getElementById('emotionFaceSpan' + valNum)){
+         	var deleteElement = document.getElementById('emotionFaceSpan' + valNum);
+         	deleteElement.parentNode.removeChild(deleteElement);
+         }
          if(val == "neutral") {
          	var added = document.createElement('span');
             added.setAttribute('id', 'emotionFaceSpan' + valNum);
@@ -234,32 +233,33 @@
          }
          target.value = val.toString();
       }
-
       
       function getPreListen(val){
-         const xhttp = new XMLHttpRequest();
-         var sentence = document.getElementById('sentence'+val).value;
-         var voice_name = document.getElementById('voiceVal'+val).value;
-         var emotion_name = document.getElementById('emotionVal'+val).value;
-         var emotion_intensity = document.getElementById('intensityVal'+val).value;
-         console.log(val);
-         
-         console.log(document.getElementById('voiceVal'+val).value);
-         console.log(document.getElementById('emotionVal'+val).value);
-         console.log(document.getElementById('intensityVal'+val).value);
-         
-         console.log("sentence="+sentence+"&voice_name="+voice_name+"&emotion_name="+emotion_name+"&intensity="+emotion_intensity.toString());
-           xhttp.onreadystatechange = function () {
-             if (xhttp.readyState == 4 && xhttp.status == 200) {
-               console.log(xhttp.responseText);
-                  document.getElementById("pre-listen-audio").src = "output/"+xhttp.responseText;
-               document.getElementById('player').load();
-             }
-         };
-         xhttp.open("POST", "./getPreListen", true);
-         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded; UTF-8");
-         xhttp.send("sentence="+sentence+"&voice_name="+voice_name+"&emotion_name="+emotion_name+"&intensity="+emotion_intensity.toString());
-      }
+          const xhttp = new XMLHttpRequest();
+          var sentence = document.getElementById('sentence'+val).value;
+          var voice_name = document.getElementById('voiceVal'+val).value;
+          var emotion_name = document.getElementById('emotionVal'+val).value;
+          var emotion_intensity = document.getElementById('intensityVal'+val).value;
+          var json_req_obj = {sentence : sentence, voice_name : voice_name, emotion_name : emotion_name, intensity : emotion_intensity.toString()};
+          alert(JSON.stringify(json_req_obj));
+          console.log(val);
+          
+          console.log(document.getElementById('voiceVal'+val).value);
+          console.log(document.getElementById('emotionVal'+val).value);
+          console.log(document.getElementById('intensityVal'+val).value);
+          
+          console.log("sentence="+sentence+"&voice_name="+voice_name+"&emotion_name="+emotion_name+"&intensity="+emotion_intensity.toString());
+            xhttp.onreadystatechange = function () {
+              if (xhttp.readyState == 4 && xhttp.status == 200) {
+                console.log(xhttp.responseText);
+                   document.getElementById("pre-listen-audio").src = "pre/"+xhttp.responseText;
+                document.getElementById('player').load();
+              }
+          };
+          xhttp.open("POST", "./doGetPreListen", true);
+          xhttp.setRequestHeader("Content-type", "application/json");
+          xhttp.send(JSON.stringify(json_req_obj));
+       }
    </script>
 
 </body>

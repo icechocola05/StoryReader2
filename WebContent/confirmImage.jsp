@@ -39,6 +39,7 @@ img {
 
 	 <form action="doPrepareSetting" method="POST">
 		 <img name="input-img" src="<%=uploadFilePath %>">
+		 <input type="hidden" name="pageImgUrl" value="<%=uploadFilePath %>" >
 		 <div name="input-text">
 		 <textarea id="pageText" name="pageText" cols="50" rows="10"><%=pageText%></textarea>
 		 </div>

@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import model.dao.SettingDAO;
 import model.dto.Emotion;
+import model.dto.Story;
 import model.dto.Voice;
 
 @WebServlet("/doPrepareSetting")
@@ -45,7 +46,7 @@ public class DoPrepareSetting extends HttpServlet {
 	    
 		//문장 분리
 		String rawTxt = request.getParameter("pageText");
-		System.out.print("문장 그대로: " + rawTxt);   
+		System.out.println("문장 그대로: " + rawTxt);   
 	    String[] tempTxt = rawTxt.split("\n"); //가공1_문장 단위로 나누기
 	    System.out.println("가공 전 문장: " + Arrays.toString(tempTxt));
 	    
@@ -63,7 +64,9 @@ public class DoPrepareSetting extends HttpServlet {
 	    	}
 	    }
 		
-		
+		// 페이지 이미지 경로 session 저장
+	    String page_img_url = request.getParameter("pageImgUrl");
+	    session.setAttribute("currPageImg", page_img_url);
 //		rawTxt = rawTxt.replaceAll(System.getProperty("line.separator"), "");
 //	    String[] tempTxt = rawTxt.split("\\.|\\!|\\?"); //가공 1_문장 단위로 나누기 (기준은 . , !, ?)
 //	    System.out.println("가공 전 문장: " + Arrays.toString(tempTxt));
@@ -125,9 +128,11 @@ public class DoPrepareSetting extends HttpServlet {
 	    	System.out.println("문장: " + sentence_list.get(i));
 	    	i++;
 	    }
-	    
-	    request.setAttribute("sentence_list", sentence_list); //모든 문장 -> setting에서 수정함
-	    request.setAttribute("speaker_list", speaker_list); //모든 화자 -> setting에서 수정함
+	    //DummyData
+	    Story currStory = new Story();
+	    session.setAttribute("currStory", currStory);
+	    session.setAttribute("sentence_list", sentence_list); //모든 문장 -> setting에서 수정함
+	    session.setAttribute("speaker_list", speaker_list); //모든 화자 -> setting에서 수정함
 	      
 	    RequestDispatcher rd = request.getRequestDispatcher("/setting.jsp");
 	    rd.forward(request, response);
