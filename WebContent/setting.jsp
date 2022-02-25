@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>설정</title>
+<title>동화 만들기 : 설정</title>
 <link rel="stylesheet" href="CSS/setting.css" type='text/css' >
 </head>
 <%@ include file="header.jsp" %>
