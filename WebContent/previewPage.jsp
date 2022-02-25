@@ -22,7 +22,7 @@
 		int size = sentenceSet.size()-1;
 	 %>
 	<div class = "story-title">
-			<%=currStory.getStoryName()%>
+			<%=currStory.getStoryTitle()%>
 	</div>
 	<div class="main">
 		<div class="preview-page w3-row-padding">
@@ -47,10 +47,10 @@
 			</div> 
 		</div>
 		<div class="audio">
-			<button type="submit" id="pre_btn" onclick ="javascript:pre_clicked();">
+			<button type="submit" id="pre_btn">
 				<img src="./Img/previous_w.png" alt="image">
 			</button>
-            <audio id='player' autoplay controls onended="javascript:next();">
+            <audio id='player' autoplay controls>
                	<source id = "play-source">
                	<%for (int i = 0 ; i < sentenceSet.size(); i++ ){ %>
                	<source src="/output/<%=sentenceSet.get(i).getSentenceWavUrl()%>" type="audio/wav">
@@ -66,7 +66,7 @@
 	</form>
 	<script src="//code.jquery.com/jquery.min.js"></script>
 	<script>
-		var index = 1;
+		var index = 2;
 		
 		//이전 버튼을 눌렀을 때(onclick)
 		$('#pre_btn').click(function() {
