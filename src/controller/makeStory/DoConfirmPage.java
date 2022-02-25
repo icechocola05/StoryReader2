@@ -53,8 +53,28 @@ public class DoConfirmPage extends HttpServlet {
 	    int pageId = -1;
 	    Sentence tempSent=new Sentence();
 	    
+	    //page에 미리보기 sentence 추가
+	    String fullSentence = "";
+	    String pageSentence = "";
+	    for(int i=0; i<sentenceSet.size(); i++) {
+	    	String sent = sentenceSet.get(i).getSentence();
+	    	fullSentence = fullSentence + " " + sent;
+	    }
+	    System.out.println("모든 문장:" + fullSentence);
+	    
+	    //100글자만 추리기
+	    if(fullSentence.length() > 300)
+	    	pageSentence = fullSentence.substring(0, 300) + "...";
+	    else
+	    	pageSentence = fullSentence + "...";
+	    System.out.println("db 문장:" + pageSentence);
 	    try {
-			Page currPage = PageDAO.insertPage(con, 1, pageImgUrl, 1);
+	    	// 현재 페이지의 page_num 구하기 (제일 마지막에 추가된 페이지: 동일 story_id 중에서 가장 큰 page_num + 1 한 값임.)
+		    int page_num = 0;
+		    int story_id = currStory.getStoryId();
+	    	page_num = PageDAO.getPageNum(con, story_id) + 1;
+	    	
+			Page currPage = PageDAO.insertPage(con, page_num, pageImgUrl, pageSentence, story_id);
 			pageId = currPage.getPageId();
 			
 			for (int i=0;i<sentenceSet.size();i++) {
@@ -62,9 +82,11 @@ public class DoConfirmPage extends HttpServlet {
 				SentenceDAO.insertSent(con, tempSent.getSentence(), tempSent.getSpeaker(), tempSent.getEmotionId(), tempSent.getVoiceId(), tempSent.getIntensity(), tempSent.getSentenceWavUrl(), pageId);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	    
+	    RequestDispatcher rd = request.getRequestDispatcher("/doGetPageList");
+		rd.forward(request, response);
 		
 	}
 

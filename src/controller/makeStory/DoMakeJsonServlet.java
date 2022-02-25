@@ -34,9 +34,6 @@ public class DoMakeJsonServlet extends HttpServlet {
 		JSONArray jsonArray=new JSONArray();
 		
 		HttpSession session = request.getSession(true);
-		Story currStory = (Story) session.getAttribute("currStory");
-		
-		int story_id = currStory.getStoryId();
 		
 		List<Sentence> sentenceSet = (List<Sentence>) session.getAttribute("sentenceSet");
 		List<Voice> voiceSet = (List<Voice>) session.getAttribute("voiceSet");

@@ -22,7 +22,7 @@
 		int size = sentenceSet.size()-1;
 	 %>
 	<div class = "story-title">
-			<%=currStory.getStoryName()%>
+			<%=currStory.getStoryTitle()%>
 	</div>
 	<div class="main">
 		<div class="preview-page w3-row-padding">

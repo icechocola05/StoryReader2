@@ -43,9 +43,7 @@ public class DoTTSConnection extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(true);
 		
-		Story currStory = (Story) session.getAttribute("currStory");
 		ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
-		int story_id = currStory.getStoryId();
 		
 		//json 형식의 text table data(session의 attribute) 가져오기
 		JSONArray resultJson = new JSONArray();
@@ -57,7 +55,6 @@ public class DoTTSConnection extends HttpServlet {
 		request.setAttribute("isBegan", 1);
 		
 		if (index== resultJson.size()) {
-			session.setAttribute("selectedStory", currStory);
 			RequestDispatcher rd = request.getRequestDispatcher("/DoPreviewPage");// 원래 경로 : /readScript
 			rd.forward(request, response);
 			return;

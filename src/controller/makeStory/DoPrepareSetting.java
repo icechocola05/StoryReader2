@@ -129,8 +129,6 @@ public class DoPrepareSetting extends HttpServlet {
 	    	i++;
 	    }
 	    //DummyData
-	    Story currStory = new Story();
-	    session.setAttribute("currStory", currStory);
 	    session.setAttribute("sentence_list", sentence_list); //모든 문장 -> setting에서 수정함
 	    session.setAttribute("speaker_list", speaker_list); //모든 화자 -> setting에서 수정함
 	      

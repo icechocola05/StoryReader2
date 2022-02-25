@@ -33,8 +33,6 @@ public class DoPreviewPage extends HttpServlet {
 		
         HttpSession session = request.getSession(true);
 		
-        Story selectedStory = (Story)session.getAttribute("selectedStory");
-        System.out.println(selectedStory.getStoryId());
 		ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
 		
 		ArrayList<Voice> voiceSet = (ArrayList<Voice>)session.getAttribute("voiceSet");
