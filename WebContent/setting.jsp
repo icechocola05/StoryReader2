@@ -19,6 +19,7 @@
 <body>
    
    <% 
+ //▶<-미리듣기 버튼 수정하기
       //저장한 이야기, 문장, 화자 정보 받아오기
       ArrayList<String> speaker_list = (ArrayList<String>) session.getAttribute("speaker_list");
       ArrayList<String> sentence_list = (ArrayList<String>) session.getAttribute("sentence_list");
