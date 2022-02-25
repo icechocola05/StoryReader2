@@ -2,7 +2,7 @@ package model.dto;
 
 public class Story {
 	private int story_id;
-	private String story_name;
+	private String story_title;
 	private int user_id;
 	
 	public Story() {}
@@ -11,8 +11,8 @@ public class Story {
 		this.story_id = story_id;
 	}
 	
-	public void setStoryName(String story_name) {
-		this.story_name = story_name;
+	public void setStoryTitle(String story_title) {
+		this.story_title = story_title;
 	}
 	
 	public void setStoryUser(int user_id) {
@@ -23,8 +23,8 @@ public class Story {
 		return this.story_id;
 	}
 	
-	public String getStoryName() {
-		return this.story_name;
+	public String getStoryTitle() {
+		return this.story_title;
 	}
 	
 	public int getStoryUser() {
