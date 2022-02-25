@@ -24,14 +24,14 @@
 	<div class = "story-title">
 			<%=currStory.getStoryTitle()%>
 	</div>
-	<div class="main">
+	<div class="main w3-row-padding w3-margin">
 		<div class="preview-page w3-row-padding">
-			<div class = "page-image w3-half w3-container" style="width:50%">
-				<img name="page-img" src="<%= pageImgUrl%>" style="width:80%">
+			<div class = "page-image w3-container w3-half" style="text-align:center;">
+				<img name="page-img" src="<%= pageImgUrl%>" style="width:80%;height:50vh;">
 			</div>
-			<div class = "page-script w3-half w3-container w3-border w3-round-large" style="width:50%">
+			<div class = "page-script w3-container w3-half w3-center w3-padding-large w3-border w3-round-large" style="text-align:center;">
 				<%for(int i=0 ; i<sentenceSet.size() ; i++){ %>
-				<div id = 'sentenceset<%=i%>' class = "sentenceset w3-panel w3-border-bottom"> 
+				<div id = 'sentenceset<%=i%>' class = "sentenceset w3-container w3-border-bottom w3-center" style="width:80%;"> 
 					<div class="speaker" id='speaker<%=i%>'><%= sentenceSet.get(i).getSpeaker()%></div>
 					<!--voice 붙이기 -->
 	                <div class="voice  w3-container w3-border w3-round-xlarge" id="voiceVal<%=i%>" style="background-color:<%=voiceColorList.get(i)%>; width:2%;">
@@ -46,28 +46,31 @@
 				<%}%>
 			</div> 
 		</div>
-		<div class="audio">
-			<button type="submit" id="pre_btn">
-				<img src="./Img/previous_w.png" alt="image">
-			</button>
-            <audio id='player' autoplay controls>
-               	<source id = "play-source">
-               	<%for (int i = 0 ; i < sentenceSet.size(); i++ ){ %>
-               	<source src="/output/<%=sentenceSet.get(i).getSentenceWavUrl()%>" type="audio/wav">
-               	<%} %>
-            </audio>
-            <button type="submit" id="next_btn">
-				<img src="./Img/next_w.png" alt="image">
-			</button>`
+		<div class="audio w3-row w3-container w3-margin-top w3-margin-bottom" >
+			<div class="w3-col w3-container w3-center" style="width:25%">
+				<img class="w3-button w3-hover-white" id="pre_btn" src="./IMG/previous_w.png">
+			</div>
+			<div class="w3-col w3-container" style="width:50%">
+	            <audio id='player' style="width:100%" autoplay controls>
+	               	<source id = "play-source">
+	               	<%for (int i = 0 ; i < sentenceSet.size(); i++ ){ %>
+	               	<source src="/output/<%=sentenceSet.get(i).getSentenceWavUrl()%>" type="audio/wav">
+	               	<%} %>
+	            </audio>
+            </div>
+            <div class="w3-col w3-container w3-center" style="width:25%">
+            	<img class="w3-button w3-hover-white" id="next_btn"  src="./IMG/next_w.png" >
+            </div>
          </div>
 	</div>
 	<form method="post" action="DoConfirmPage">
-	<button>저장</button>
+	<div class="w3-center">
+		 <button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 저장 </button>
+	</div>
 	</form>
 	<script src="//code.jquery.com/jquery.min.js"></script>
 	<script>
 		var index = 2;
-		
 		//이전 버튼을 눌렀을 때(onclick)
 		$('#pre_btn').click(function() {
 			index--;

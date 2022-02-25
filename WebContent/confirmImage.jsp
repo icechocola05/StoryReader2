@@ -4,26 +4,6 @@
 <html>
 <head>
 <title>업로드 이미지 확인</title>
-<style>
-img {
-	display:inline-block;
-	width: 38vw;
-	height: 40vh;
-	object-fit: contain;
-	background-color:#C4C4C4;  
-}
-#input-text{
-	display:inline-block;
-  	vertical-align:middle;
-}
-#pageText{
-	vertical-align:middle;
-	display:inline-block;
-	width: 40vw;
-  	height: 40vh;
-
-}
-</style>
 
 </head>
 <%@ include file="header.jsp" %>
@@ -38,12 +18,18 @@ img {
 	 %>
 
 	 <form action="doPrepareSetting" method="POST">
-		 <img name="input-img" src="<%=uploadFilePath %>">
-		 <input type="hidden" name="pageImgUrl" value="<%=uploadFilePath %>" >
-		 <div name="input-text">
-		 <textarea id="pageText" name="pageText" cols="50" rows="10"><%=pageText%></textarea>
+	 	<div class="w3-row-padding w3-margin-top">
+	 		<div class="w3-container w3-half w3-padding-large" style="text-align:center;">
+		 		<img name="input-img" style="width:90%;" src="<%=uploadFilePath %>">
+		 		<input type="hidden" name="pageImgUrl" value="<%=uploadFilePath %>" >
+		 	</div>
+			 <div name="input-text" class="w3-container w3-half w3-padding-large" style="text-align:center;">
+			 	<textarea id="pageText" class = "w3-round-large w3-padding" name="pageText" cols="50" rows="10" style="width:90%;"><%=pageText%></textarea>
+			 </div>
 		 </div>
-		 <button type="submit"> 다음 </button>
+		 <div class="w3-center">
+		 <button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 다음 </button>
+		 </div>
 	 </form>
 </body>
 </html>
