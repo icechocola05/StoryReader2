@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.btn {
+   width: 100%;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.submit-btn {
+   margin-top: 2%;
+   width: 100%;
+   padding: 2% 20% 2% 20%;
+   background-color: #927D71;
+   border: none;
+   
+   font-family: Noto Sans;
+   font-style: normal;
+   font-weight: 600;
+   font-size: 33px;
+   line-height: 48px;
+   /* identical to box height */
+   
+   text-align: center;
+   
+   color: #FFFFFF;
+}
