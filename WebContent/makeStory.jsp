@@ -12,6 +12,7 @@
 <html>
 <head>
 <title>동화 만들기 : 페이지 추가</title>
+<link rel="stylesheet" href="CSS/makeStory.css" type='text/css' >
 </head>
 <%@ include file="header.jsp" %>
 <body>
@@ -23,11 +24,13 @@
 		ArrayList<Page> pageList = (ArrayList<Page>)session.getAttribute("pageList");
 		
 	%>
+	<div class="settings" style="margin: 3% 1% 2% 1%;">
 	<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
-	<form method="post" action="doChangeStoryTitle" target="iframe1">
-		<input type="text" class=" w3-input w3-xlarge w3-margin-top" name="storyTitle" value="<%=storyTitle%>" placeholder="동화 제목을 입력해주세요"><br>
-	<button type="submit">수정</button>
-	</form>
+	<div class="w3-display-container w3-margin-top w3-row w3-center" style="width: 60%;">
+		<form method="post" class="w3-display-container w3-margin-top w3-row w3-center"  action="doChangeStoryTitle" target="iframe1">
+			<input type="text" class="w3-input w3-xlarge w3-margin-top" name="storyTitle" value="<%=storyTitle%>" placeholder="동화 제목을 입력해주세요"> <button type="submit">수정</button>
+		</form>
+	</div>
 	<% 
 		if(pageList != null) {
 			int pageSize = pageList.size();
@@ -35,16 +38,31 @@
 				String pageImgUrl = pageList.get(i).getPageImgUrl();
 				String pageSentence = pageList.get(i).getPageSentence();
 	%>
-		<div>
-			<img name="page-img" src="<%=pageImgUrl%>" style="width:80%">
-			<%=pageSentence%>
+	
+		<div class="w3-container" style="border:2px solid #C4C4C4; border-radius:20px; margin:0 3% 2% 3%; ">
+			<div class="w3-row w3-center">
+				<div class="w3-col w3-cell-middle" style="margin: 1% 3% 1% 3%; width: 10%;">
+					<img name="page-img" src="<%=pageImgUrl%>" style="width:50%; height: 20%; object-fit:cover">
+				</div>
+				<div class="w3-col w3-cell-middle w3-xlarge" style="margin: 2% 1% 1% 10%; width: 60%;">
+					<%=pageSentence%>
+				</div>
+			</div>
 		</div>
 	<%		}
 		}
 	%>
 	<br>
-	<button onclick="location='uploadImage.jsp'"> + </button>
+	<div class="w3-container" style="border:2px solid #C4C4C4; border-radius:20px; margin:0 3% 0% 3%; padding:1% 3% 1% 42%; ">
+		<a onclick="location='uploadImage.jsp'">
+			<img class="w3-button w3-hover-white" id="plus_page" style="width:10%;" src="./IMG/plus.png" >
+		</a>
+	</div>
 	
+	<div class="btn">
+       <button type="SUBMIT" class="submit-btn"> 동화 완성  </button>
+    </div>
+    </div>
 	
 </body>
 </html>
