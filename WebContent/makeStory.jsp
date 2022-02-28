@@ -23,6 +23,10 @@
 		
 		ArrayList<Page> pageList = (ArrayList<Page>)session.getAttribute("pageList");
 		
+		//doMakeFullStory 에서 사용할 index
+		int pageIndex = 1;
+		session.setAttribute("pageIndex", pageIndex);
+		
 	%>
 	<div class="settings" style="margin: 3% 1% 2% 1%;">
 	<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
@@ -31,6 +35,7 @@
 			<input type="text" class="w3-input w3-xlarge w3-margin-top" name="storyTitle" value="<%=storyTitle%>" placeholder="동화 제목을 입력해주세요"> <button type="submit">수정</button>
 		</form>
 	</div>
+	<form method="post" class="w3-display-container w3-margin-top w3-row w3-center"  action="doMakeFullStory">
 	<% 
 		if(pageList != null) {
 			int pageSize = pageList.size();
@@ -53,7 +58,7 @@
 		}
 	%>
 	<br>
-	<div class="w3-container" style="border:2px solid #C4C4C4; border-radius:20px; margin:0 3% 0% 3%; padding:1% 3% 1% 42%; ">
+	<div class="w3-container" style="border:2px solid #C4C4C4; border-radius:20px; margin:0 3% 0% 3%; padding:1% 3% 1% 1%; ">
 		<a onclick="location='uploadImage.jsp'">
 			<img class="w3-button w3-hover-white" id="plus_page" style="width:10%;" src="./IMG/plus.png" >
 		</a>
@@ -62,6 +67,7 @@
 	<div class="btn">
        <button type="SUBMIT" class="submit-btn"> 동화 완성  </button>
     </div>
+    </form>
     </div>
 	
 </body>
