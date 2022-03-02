@@ -60,14 +60,13 @@ public class DoConfirmPage extends HttpServlet {
 	    	String sent = sentenceSet.get(i).getSentence();
 	    	fullSentence = fullSentence + " " + sent;
 	    }
-	    System.out.println("모든 문장:" + fullSentence);
 	    
 	    //100글자만 추리기
 	    if(fullSentence.length() > 200)
 	    	pageSentence = fullSentence.substring(0, 200) + "...";
 	    else
 	    	pageSentence = fullSentence;
-	    System.out.println("db 문장:" + pageSentence);
+	    
 	    try {
 	    	// 현재 페이지의 page_num 구하기 (제일 마지막에 추가된 페이지: 동일 story_id 중에서 가장 큰 page_num + 1 한 값임.)
 		    int page_num = 0;

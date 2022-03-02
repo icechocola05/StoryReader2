@@ -76,7 +76,7 @@ public class DoMakeJsonServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		request.setAttribute("resultJson", jsonArray);
-		request.setAttribute("i", 0);//0으로 초기화?
+		request.setAttribute("i", 0);//0으로 초기화
 		RequestDispatcher rd = request.getRequestDispatcher("/DoTTSConnection");
         rd.forward(request, response);
 	}

@@ -16,6 +16,15 @@
 </head>
 <%@ include file="header.jsp" %>
 <body>
+<script type="text/javascript">
+
+	$(function() {
+	    $("#sortable").sortable({
+	    	items:$('.sort')
+	    });
+	});
+	
+</script>
 	<%
 		//session에 저장해 둔 currStory, pageList 가져오기
 		Story currStory = (Story)session.getAttribute("currStory");
@@ -36,6 +45,7 @@
 		</form>
 	</div>
 	<form method="post" class="w3-display-container w3-margin-top w3-row w3-center"  action="doMakeFullStory">
+	<ul id="sortable">
 	<% 
 		if(pageList != null) {
 			int pageSize = pageList.size();
@@ -43,8 +53,7 @@
 				String pageImgUrl = pageList.get(i).getPageImgUrl();
 				String pageSentence = pageList.get(i).getPageSentence();
 	%>
-	
-		<div class="w3-container" style="border:2px solid #C4C4C4; border-radius:20px; margin:0 3% 2% 3%; ">
+		<div class="w3-container sort" style="border:2px solid #C4C4C4; border-radius:20px; margin:0 3% 2% 3%; ">
 			<div class="w3-row w3-center">
 				<div class="w3-col w3-cell-middle" style="margin: 1% 3% 1% 3%; width: 10%;">
 					<img name="page-img" src="<%=pageImgUrl%>" style="width:50%; height: 20%; object-fit:cover">
@@ -54,9 +63,11 @@
 				</div>
 			</div>
 		</div>
+		</li>
 	<%		}
 		}
 	%>
+	</ul>
 	<br>
 	<div class="w3-container" style="border:2px solid #C4C4C4; border-radius:20px; margin:0 3% 0% 3%; padding:1% 3% 1% 1%; ">
 		<a onclick="location='uploadImage.jsp'">

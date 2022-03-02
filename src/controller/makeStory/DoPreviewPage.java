@@ -34,7 +34,6 @@ public class DoPreviewPage extends HttpServlet {
         HttpSession session = request.getSession(true);
 		
 		ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
-		
 		ArrayList<Voice> voiceSet = (ArrayList<Voice>)session.getAttribute("voiceSet");
 		ArrayList<Emotion> emotionSet = (ArrayList<Emotion>)session.getAttribute("emotionSet");
 		
@@ -83,7 +82,7 @@ public class DoPreviewPage extends HttpServlet {
 			 opacityList.add(opacity);
 		}
 		
-		request.setAttribute("sentenceSet", sentenceSet);
+		//request.setAttribute("sentenceSet", sentenceSet);
 		request.setAttribute("voiceColorList", voiceColorList);
 		request.setAttribute("emoticonNameList", emoticonNameList);
 		request.setAttribute("opacityList", opacityList);

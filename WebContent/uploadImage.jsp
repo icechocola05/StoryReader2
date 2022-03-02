@@ -19,7 +19,6 @@
 	function checkImgUploaded(){
 		var fileCheck = document.getElementById("input-file").value;
 		if(fileCheck){
-			alert("이미지 업로드 성공!");
 			document.getElementById('submit_btn').click();
 		}
 	}
