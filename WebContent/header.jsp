@@ -19,7 +19,7 @@
 				</c:when>
 	  			<c:otherwise>
 	  				<a class="w3-bar-item w3-button w3-hover-none w3-text-black w3-hover-text-white w3-padding-24 w3-margin-left" href="enterStoryTitle.jsp">동화 만들기</a>
-					<a class="w3-bar-item w3-button w3-hover-none w3-text-black w3-hover-text-white w3-padding-24" href="mypage.jsp">만든 동화 보기</a>
+					<a class="w3-bar-item w3-button w3-hover-none w3-text-black w3-hover-text-white w3-padding-24" href="DoGetMyStoryList">만든 동화 보기</a>
 	  			</c:otherwise>
 	  		</c:choose>
 
