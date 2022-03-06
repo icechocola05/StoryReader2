@@ -38,15 +38,18 @@
 		    	ui.item.children(".sort").css('background-color', 'rgba(255, 255, 255, 0)');
 		    	$(".sortable li").each(function(index, element) {
 		    		pageIndex[index] = element.value;
+		    		console.log($(element).children('input:eq(1)').val());
+		    		$(element).children('input:eq(1)').val(index+1);
 		    		console.log(pageIndex);
 		    	});
+		    	//순서 변경 DB 적용
+		    	$(".storyPageSubmit-btn").click();
 		    }
 		});
 		
 		$(".sortable").disableSelection();
 		
 	});
-	
 	
 </script>
 	<%
@@ -65,13 +68,14 @@
 	
 	<div class="settings" style="margin: 3% 1% 2% 1%;">
 	<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
+	<iframe id="iframe2" name="iframe2" style="display:none"></iframe>
 	<div class="w3-display-container w3-margin-top w3-row w3-center" style="width: 40%; margin-left: 30%;">
-		<form method="post" class="w3-display-container w3-margin-top w3-row w3-center"  action="doChangeStoryTitle" target="iframe1">
+		<form class="w3-display-container w3-margin-top w3-row w3-center"  action="doChangeStoryTitle" target="iframe1">
 			<input type="text" class="w3-input w3-xlarge w3-margin-top w3-center" id="storyTitle" name="storyTitle" value="<%=storyTitle%>" placeholder="동화 제목을 입력해주세요">
 			<button type="submit" id="storyTitleSubmit_btn" style="display: none;"></button>
 		</form>
 	</div>
-	<form method="post" class="w3-display-container w3-margin-top w3-row w3-center"  action="doMakeFullStory">
+	<form class="w3-display-container w3-margin-top w3-row w3-center">
 	<ul class="sortable">
 	<% 
 		if(pageList != null) {
@@ -79,9 +83,12 @@
 			for(int i=0; i<pageSize; i++) { 
 				String pageImgUrl = pageList.get(i).getPageImgUrl();
 				String pageSentence = pageList.get(i).getPageSentence();
+				int pageId = pageList.get(i).getPageId();
 				int pageIndexJquery = i + 1;
 	%>
-	<li value="<%=pageIndexJquery%>">
+	<li id="pageId<%=pageIndexJquery%>">
+		<input type="hidden" id="pageId" name="pageId<%=pageIndexJquery%>" value="<%=pageId%>">
+		<input type="hidden" id="changedNum" name="changedNum<%=pageIndexJquery%>" value="<%=pageIndexJquery%>">
 		<div class="w3-container sort" style="border:2px solid #C4C4C4; border-radius:20px; margin-bottom: 2%; ">
 			<div class="w3-row w3-center">
 				<div class="w3-col w3-cell-middle" style="margin: 1% 1% 1% 3%; width: 10%;">
@@ -108,7 +115,8 @@
 	</div>
 	
 	<div class="btn">
-       <button type="SUBMIT" class="submit-btn"> 동화 완성  </button>
+	   <button type="SUBMIT" formmethod="post" formaction="doChangeStoryPageOrder" formtarget="iframe2" class="storyPageSubmit-btn" style="display:none;"></button>
+       <button type="SUBMIT" formmethod="post" formaction="doMakeFullStory" class="storySubmit-btn"> 동화 완성  </button>
     </div>
     </form>
     </div>
