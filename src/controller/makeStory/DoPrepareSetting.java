@@ -66,7 +66,10 @@ public class DoPrepareSetting extends HttpServlet {
 		
 		// 페이지 이미지 경로 session 저장
 	    String page_img_url = request.getParameter("pageImgUrl");
-	    session.setAttribute("currPageImg", page_img_url);
+	    session.setAttribute("currPageImg", page_img_url); //이미지 확인 한 뒤 세션에 저장
+	    
+	    
+	    //문장 구분 방법 고안하기
 //		rawTxt = rawTxt.replaceAll(System.getProperty("line.separator"), "");
 //	    String[] tempTxt = rawTxt.split("\\.|\\!|\\?"); //가공 1_문장 단위로 나누기 (기준은 . , !, ?)
 //	    System.out.println("가공 전 문장: " + Arrays.toString(tempTxt));
@@ -122,17 +125,10 @@ public class DoPrepareSetting extends HttpServlet {
 //	    }
 	    
 	    
-	    int i = 0;
-	    while(i < sentence_list.size()) {
-	    	System.out.print("화자: " + speaker_list.get(i));
-	    	System.out.println("문장: " + sentence_list.get(i));
-	    	i++;
-	    }
-	    //DummyData
 	    session.setAttribute("sentence_list", sentence_list); //모든 문장 -> setting에서 수정함
 	    session.setAttribute("speaker_list", speaker_list); //모든 화자 -> setting에서 수정함
 	      
-	    RequestDispatcher rd = request.getRequestDispatcher("/setting.jsp");
+	    RequestDispatcher rd = request.getRequestDispatcher("setting.jsp");
 	    rd.forward(request, response);
 	}
 

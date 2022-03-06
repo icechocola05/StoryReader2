@@ -73,12 +73,10 @@ public class DoTTSConnection extends HttpServlet {
 			// post request
 			JSONObject postParams = (JSONObject) resultJson.get(index);
 			String result = postParams.toString();
-			System.out.println(result);
 			
 			OutputStream wr = con.getOutputStream();
 			byte[] input = result.getBytes("UTF-8");
 			wr.write(input, 0, input.length);//request json 전송
-
 
 			int responseCode = con.getResponseCode();
 			System.out.println(responseCode);
@@ -101,12 +99,7 @@ public class DoTTSConnection extends HttpServlet {
 	            
 	            //파일 이름 중복 방지 랜덤 생성
 	            String audioFileName =null;
-	            //boolean flag=true;
-	            //while(flag) {
-	            	audioFileName = UUID.randomUUID().toString();
-	            	//flag = new File(path).exists();
-	            	//System.out.println(flag);
-	            //}
+	            audioFileName = UUID.randomUUID().toString();
 	            File audioFile = new File(path, audioFileName + ".wav");
 	            audioFile.createNewFile();
 	            
@@ -118,7 +111,7 @@ public class DoTTSConnection extends HttpServlet {
 				String audioFilePath = audioFileName + ".wav";//audioFile.getAbsolutePath();
 				sentenceSet.get(index).setSentenceWavUrl(audioFilePath);//파일 경로 저장
 				
-				System.out.println("생성!");
+				System.out.println("생성!" + index);
 				outputStream.close();
 				is.close();	
 			}

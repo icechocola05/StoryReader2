@@ -23,3 +23,15 @@
    
    color: #FFFFFF;
 }
+
+form {
+   width: 70%;
+   margin-left: auto;
+   margin-right: auto;
+   background-color: #FFFFFF;
+}
+
+ul {
+	list-style:none;
+	padding-left:0px;
+}

@@ -49,8 +49,8 @@ public class DoGetPageList extends HttpServlet {
 			e.printStackTrace();
 		}
 	    
-	    RequestDispatcher rd = request.getRequestDispatcher("/makeStory.jsp");
-		rd.forward(request, response);
+	    // 새로고침 시 데이터 적재 방지
+	    response.sendRedirect("makeStory.jsp");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -3,7 +3,9 @@ package model.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import model.dto.Page;
 import model.dto.Sentence;
 
 public class SentenceDAO {
@@ -45,5 +47,7 @@ public class SentenceDAO {
 		}
 		return null;
 	}
+	
+//	public static ArrayList<Sentence> getStoryPage(Connection con, int story_id) throws SQLException
 
 }

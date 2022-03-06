@@ -1,9 +1,12 @@
 package controller.makeStory;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,35 +14,47 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.dao.SentenceDAO;
+import model.dao.PageDAO;
 import model.dto.Emotion;
+import model.dto.Page;
 import model.dto.Sentence;
 import model.dto.Story;
 import model.dto.Voice;
 
-
-@WebServlet("/DoPreviewPage")
-public class DoPreviewPage extends HttpServlet {
+@WebServlet("/doMakeFullStory")
+public class DoMakeFullStory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public DoPreviewPage() {
+    public DoMakeFullStory() {
         super();
     }
-
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
-		
         HttpSession session = request.getSession(true);
+        int page_index =  (int) session.getAttribute("pageIndex");
+        int page_id = 0;
 		
-		ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
+		Story currStory = (Story) session.getAttribute("currStory");
+	    int story_id = currStory.getStoryId();
+	    ArrayList<Page> pageList = (ArrayList<Page>)session.getAttribute("pageList");
+		
+	    //완성한 Story의 page 들 중 가장 앞 순서의 index -> page_id 구하기
+	    for(int i=0; i<pageList.size(); i++) {
+	    	if(pageList.get(i).getPageNum() == page_index) {
+	    		page_id = pageList.get(i).getPageId();
+	    	}
+	    }
+	    
+	    ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
 		ArrayList<Voice> voiceSet = (ArrayList<Voice>)session.getAttribute("voiceSet");
 		ArrayList<Emotion> emotionSet = (ArrayList<Emotion>)session.getAttribute("emotionSet");
 		
 		ArrayList<String> voiceColorList = new ArrayList<String>();
 		ArrayList<String> emoticonNameList = new ArrayList<String>();
 		ArrayList<String> opacityList = new ArrayList<String>();
+		
 		
 		for(int i=0;i<sentenceSet.size();i++) {
 			
@@ -82,7 +97,7 @@ public class DoPreviewPage extends HttpServlet {
 			 opacityList.add(opacity);
 		}
 		
-		//request.setAttribute("sentenceSet", sentenceSet);
+		request.setAttribute("sentenceSet", sentenceSet);
 		request.setAttribute("voiceColorList", voiceColorList);
 		request.setAttribute("emoticonNameList", emoticonNameList);
 		request.setAttribute("opacityList", opacityList);
@@ -90,7 +105,7 @@ public class DoPreviewPage extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/previewPage.jsp");
 		rd.forward(request, response);
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

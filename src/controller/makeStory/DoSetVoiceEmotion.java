@@ -39,8 +39,6 @@ public class DoSetVoiceEmotion extends HttpServlet {
 	      request.setCharacterEncoding("UTF-8");
 	      HttpSession session = request.getSession(true);
 	      
-	      User currUser = (User) session.getAttribute("currUser");
-	      Story currStory = (Story) session.getAttribute("currStory");
 	      ArrayList<String> sentence_list = (ArrayList<String>) session.getAttribute("sentence_list");
 	      List<Voice> voiceSet = (List<Voice>) session.getAttribute("voiceSet");
 	      List<Emotion> emotionSet = (List<Emotion>) session.getAttribute("emotionSet");
@@ -59,11 +57,8 @@ public class DoSetVoiceEmotion extends HttpServlet {
 	        sentenceInput = request.getParameter("sentence"+n);
 	        speakerInput = request.getParameter("speaker"+n);
 	        voiceVal = request.getParameter("voiceVal" + n);
-	        System.out.println(voiceVal);
 	        emotionVal = request.getParameter("emotionVal" + n);
-	        System.out.println(emotionVal);
 	        intensity = Float.parseFloat(request.getParameter("intensity" + n));
-	        System.out.println(intensity);
 	        
 	        //Emotion, Voice의 id 값은 List에서 다시 구한다.
 	        int emotionId = 0;
