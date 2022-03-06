@@ -19,6 +19,13 @@
 <script type="text/javascript">
 
 	$(function() {
+		
+		// 제목 변경
+		$("#storyTitle").change(function() {
+			$('#storyTitleSubmit_btn').click();
+		})
+		
+		// 페이지 드래그 앤 드롭
 		var pageIndex = [];
 		$(".sortable").sortable({
 			connectWith: ".connectedSortable",
@@ -44,6 +51,7 @@
 </script>
 	<%
 		//session에 저장해 둔 currStory, pageList 가져오기
+		session = request.getSession();
 		Story currStory = (Story)session.getAttribute("currStory");
 		String storyTitle = currStory.getStoryTitle();
 		
@@ -54,11 +62,13 @@
 		session.setAttribute("pageIndex", pageIndex);
 		
 	%>
+	
 	<div class="settings" style="margin: 3% 1% 2% 1%;">
 	<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
-	<div class="w3-display-container w3-margin-top w3-row w3-center" style="width: 60%; margin-left: 20%;">
+	<div class="w3-display-container w3-margin-top w3-row w3-center" style="width: 40%; margin-left: 30%;">
 		<form method="post" class="w3-display-container w3-margin-top w3-row w3-center"  action="doChangeStoryTitle" target="iframe1">
-			<input type="text" class="w3-input w3-xlarge w3-margin-top w3-cell-middle" name="storyTitle" value="<%=storyTitle%>" placeholder="동화 제목을 입력해주세요"> <button type="submit">수정</button>
+			<input type="text" class="w3-input w3-xlarge w3-margin-top w3-center" id="storyTitle" name="storyTitle" value="<%=storyTitle%>" placeholder="동화 제목을 입력해주세요">
+			<button type="submit" id="storyTitleSubmit_btn" style="display: none;"></button>
 		</form>
 	</div>
 	<form method="post" class="w3-display-container w3-margin-top w3-row w3-center"  action="doMakeFullStory">

@@ -44,12 +44,14 @@ public class DoChangeStoryTitle extends HttpServlet {
 		//DB에 있던 Story 수정
 		try {
 			currStory = StoryDAO.updateStoryTitle(con, storyTitle, storyId, userId); // currUser.getUserId() 로 수정 필요
+			session.setAttribute("currStory", currStory);
+			System.out.println(currStory.getStoryTitle());
 	    } catch (SQLException e) {
 	    	e.printStackTrace();
 	    }
 		
 		PrintWriter writer = response.getWriter(); 
-		writer.println("<script>alert('수정 성공'); location.href='makeStory.jsp';</script>");
+		writer.println("<script>location.href='makeStory.jsp';</script>");
 		writer.close();
 	}
 

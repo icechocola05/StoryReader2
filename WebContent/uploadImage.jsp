@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="model.dao.*"%>
+<%@ page import="model.dto.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +25,13 @@
 		}
 	}
 </script>
-	
+
+<%
+		//session에 저장해 둔 currStory, pageList 가져오기
+		Story currStory = (Story)session.getAttribute("currStory");
+		String storyTitle = currStory.getStoryTitle();
+	%>
+	동화 이름: <%= currStory.getStoryTitle() %>
 	<div id="msg-container">이미지 등록 방식을 정해주세요</div>
 	<div id="btn-container">
 		<button onclick="location='fileInput.jsp'" style="font-size:25px;">사진 촬영하기</button> <br><br>
