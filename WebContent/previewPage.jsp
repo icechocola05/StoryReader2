@@ -44,9 +44,17 @@
 			</div> 
 		</div>
 		<div class="audio w3-row w3-container w3-margin-top w3-margin-bottom" >
-
-
-
+			<div class="w3-col w3-container w3-center" style="width:25%">
+				<img class="w3-button w3-hover-white" id="pre_btn" src="./IMG/previous_w.png">
+			</div>
+			<div class="w3-col w3-container" style="width:50%">
+	            <audio id='player' style="width:100%" autoplay controls>
+	               	<source id = "play-source">
+	               	<%for (int i = 0 ; i < sentenceSet.size(); i++ ){ %>
+	               	<source src="/output/<%=sentenceSet.get(i).getSentenceWavUrl()%>" type="audio/wav">
+	               	<%} %>
+	            </audio>
+            </div>
             <div class="w3-col w3-container w3-center" style="width:25%">
             	<img class="w3-button w3-hover-white" id="next_btn"  src="./IMG/next_w.png" >
             </div>

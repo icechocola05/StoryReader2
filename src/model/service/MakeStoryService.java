@@ -20,7 +20,7 @@ public class MakeStoryService {
 				while (rs.next()) {
 					Story story = new Story();
 					story.setStoryId(rs.getInt("story_id"));
-					story.setStoryTitle(rs.getString("story_name"));
+					story.setStoryTitle(rs.getString("story_title"));
 					story.setStoryUser(rs.getInt("user_id"));
 					storyList.add(story);
 				}

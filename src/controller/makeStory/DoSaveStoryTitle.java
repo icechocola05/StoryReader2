@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import model.dao.StoryDAO;
 import model.dto.Story;
+import model.dto.User;
 
 @WebServlet("/doSaveStoryTitle")
 public class DoSaveStoryTitle extends HttpServlet {
@@ -28,6 +29,9 @@ public class DoSaveStoryTitle extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession(true);
 		
+		//user 정보 받아오기
+		User currUser = (User)session.getAttribute("currUser");
+		
 		//Story 저장하기 위해 DB 연결
 		ServletContext sc = getServletContext();
 	    Connection con = (Connection)sc.getAttribute("DBconnection");
@@ -38,7 +42,7 @@ public class DoSaveStoryTitle extends HttpServlet {
 		
 		//DB에 Story 저장
 		try {
-			Story currStory = StoryDAO.insertStory(con, storyTitle, 1); // currUser.getUserId() 로 수정 필요
+			Story currStory = StoryDAO.insertStory(con, storyTitle, currUser.getUserId()); // currUser.getUserId() 로 수정 필요
 			session.setAttribute("currStory", currStory);
 	    } catch (SQLException e) {
 	    	e.printStackTrace();
