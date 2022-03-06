@@ -90,7 +90,7 @@
                         <span id='emotionFaceSpan<%=i%>' class='iconify' data-inline='false' data-icon='noto:neutral-face'></span>
                      </label> <br>
                      <select class='w3-select w3-margin-bottom' id='emotion<%=i%>' name='emotion<%=i%>' onchange="changeEmotion(this.value)" style="width: 50%; text-align: center; margin-bottom: 10%;">
-                              <% for (int ls=0; ls<emotionSet.size(); ls++)  {  // value 뒤에 붙은 i로 몇번째 emotion인지 판별 %> 
+                              <% for (int ls=0; ls<emotionSet.size(); ls++)  {  // value 뒤에 붙은 i로 몇번째 emotion인지 판별 %>
                                  <option value=<%= emotionSet.get(ls).getEmotionName() + i%>><%=emotionSet.get(ls).getEmotionNameKr() %></option>
                               <% } %>
                      </select>

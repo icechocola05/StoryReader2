@@ -71,7 +71,8 @@ public class DoConfirmPage extends HttpServlet {
 	    	// 현재 페이지의 page_num 구하기 (제일 마지막에 추가된 페이지: 동일 story_id 중에서 가장 큰 page_num + 1 한 값임.)
 		    int page_num = 0;
 		    int story_id = currStory.getStoryId();
-	    	page_num = PageDAO.getPageNum(con, story_id) + 1;
+	    	page_num = PageDAO.getPageNum(con, story_id);
+	    	page_num = page_num + 1;
 	    	
 			Page currPage = PageDAO.insertPage(con, page_num, pageImgUrl, pageSentence, story_id);
 			pageId = currPage.getPageId();
