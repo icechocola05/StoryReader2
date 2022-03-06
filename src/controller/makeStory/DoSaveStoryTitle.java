@@ -35,6 +35,7 @@ public class DoSaveStoryTitle extends HttpServlet {
 		//제목 가져오기
 		String storyTitle = request.getParameter("storyTitle");
 		
+		
 		//DB에 Story 저장
 		try {
 			Story currStory = StoryDAO.insertStory(con, storyTitle, 1); // currUser.getUserId() 로 수정 필요
@@ -43,8 +44,9 @@ public class DoSaveStoryTitle extends HttpServlet {
 	    	e.printStackTrace();
 	    }
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/makeStory.jsp");
-	    rd.forward(request, response);
+		
+		//새로고침 시 데이터 적재 방지
+		response.sendRedirect("makeStory.jsp");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
