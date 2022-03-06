@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>내 동화 보기</title>
 </head>
+<%@ include file="header.jsp" %>
 <body>
+<%
 
+%>
 </body>
 </html>
