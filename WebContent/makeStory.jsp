@@ -47,6 +47,20 @@
 		    }
 		});
 		
+		//페이지 삭제
+		$("#delete_page").each(function(index, element) {
+			$(element).click(function() {
+				if(confirm("페이지를 삭제하시겠습니까?") == true) {
+					$(element).children('input').val(1);
+					console.log($(element).children('input').val());
+					$(".storyPageDelete-btn").click();
+				}
+				else {
+					return;
+				}
+			});
+		});
+		
 		$(".sortable").disableSelection();
 		
 	});
@@ -69,6 +83,7 @@
 	<div class="settings" style="margin: 3% 1% 2% 1%;">
 	<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
 	<iframe id="iframe2" name="iframe2" style="display:none"></iframe>
+	<iframe id="iframe3" name="iframe3" style="display:none"></iframe>
 	<div class="w3-display-container w3-margin-top w3-row w3-center" style="width: 40%; margin-left: 30%;">
 		<form class="w3-display-container w3-margin-top w3-row w3-center"  action="doChangeStoryTitle" target="iframe1">
 			<input type="text" class="w3-input w3-xlarge w3-margin-top w3-center" id="storyTitle" name="storyTitle" value="<%=storyTitle%>" placeholder="동화 제목을 입력해주세요">
@@ -91,14 +106,17 @@
 		<input type="hidden" id="changedNum" name="changedNum<%=pageIndexJquery%>" value="<%=pageIndexJquery%>">
 		<div class="w3-container sort" style="border:2px solid #C4C4C4; border-radius:20px; margin-bottom: 2%; ">
 			<div class="w3-row w3-center">
-				<div class="w3-col w3-cell-middle" style="margin: 1% 1% 1% 3%; width: 10%;">
+				<div class="w3-col w3-cell-middle" style="margin: 2% 1% 1% 3%; width: 10%;">
 					<img name="page-img" src="<%=pageImgUrl%>" style="width:50%; height: 20%; object-fit:cover">
 				</div>
-				<div class="w3-col w3-cell-middle w3-xlarge" style="margin: 2% 1% 1% 10%; width: 60%;">
+				<div class="w3-col w3-cell-middle w3-xlarge w3-left-align" style="margin: 1% 1% 1% 5%; width: 63%;">
 					<%=pageSentence%>
 				</div>
-				<div class="w3-col w3-cell-middle w3-xlarge" style="margin: 2% 1% 1% 1%; width: 10%;">
-					삭제
+				<div class="w3-col w3-cell-middle w3-xlarge" style="margin: 3% 1% 1% 5%; width: 10%;">
+					<div id="delete_page">
+						<img class="w3-button w3-hover-white" style="width:70%;" src="./IMG/delete.png" >
+						<input type="hidden" id="deleteFlag" name="deleteFlag<%=pageIndexJquery%>" value="0">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -116,6 +134,7 @@
 	
 	<div class="btn">
 	   <button type="SUBMIT" formmethod="post" formaction="doChangeStoryPageOrder" formtarget="iframe2" class="storyPageSubmit-btn" style="display:none;"></button>
+	   <button type="SUBMIT" formmethod="post" formaction="doDeleteStoryPage" class="storyPageDelete-btn" style="display:none;"></button>
        <button type="SUBMIT" formmethod="post" formaction="doMakeFullStory" class="storySubmit-btn"> 동화 완성  </button>
     </div>
     </form>

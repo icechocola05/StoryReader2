@@ -15,16 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.dao.PageDAO;
-import model.dto.*;
+import model.dto.Page;
+import model.dto.Story;
 
-@WebServlet("/doChangeStoryPageOrder")
-public class DoChangeStoryPageOrder extends HttpServlet {
+@WebServlet("/doDeleteStoryPage")
+public class DoDeleteStoryPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-     
-    public DoChangeStoryPageOrder() {
+       
+    public DoDeleteStoryPage() {
         super();
     }
-
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
@@ -39,31 +40,31 @@ public class DoChangeStoryPageOrder extends HttpServlet {
 	    int storyId = currStory.getStoryId();
 	    int pageSize = pageList.size();
 	    String n = "";
+	    int flag = 0;
 	    int pageId = 0;
-	    int pageOrder = 0;
 	    
 	    try {
 	    	
-	    for(int i=1; i<=pageSize; i++) {
-	    	n = Integer.toString(i);
-	    	pageId = Integer.parseInt(request.getParameter("pageId"+n)); // pageId
-	    	pageOrder = Integer.parseInt(request.getParameter("changedNum"+n)); //바뀐 순서
+		    for(int i=1; i<=pageSize; i++) {
+		    	n = Integer.toString(i);
+		    	pageId = Integer.parseInt(request.getParameter("pageId"+n)); // pageId
+		    	flag = Integer.parseInt(request.getParameter("deleteFlag"+n));
+		    	
+		    	if(flag == 1) { //flag 값이 1이면 삭제할 pageId
+		    		PageDAO.deletePage(con, pageId);
+		    	}
+		    }
+		    
+		    pageList = PageDAO.getStoryPage(con, storyId);
 	    	
-	    	PageDAO.updatePageOrder(con, pageId, pageOrder);
-	    }
-	    
-	    pageList = PageDAO.getStoryPage(con, storyId);
-    	
-    	session.setAttribute("pageList", pageList);
-    	
-	    } catch (SQLException e) {
-	    	e.printStackTrace();
-	    }
-	    
-	    PrintWriter writer = response.getWriter(); 
-		writer.println("<script>location.href='makeStory.jsp';</script>");
-		writer.close();
-	    
+	    	session.setAttribute("pageList", pageList);
+	    	
+		    } catch (SQLException e) {
+		    	e.printStackTrace();
+		    }
+		    
+		 // 새로고침 시 데이터 적재 방지
+		   response.sendRedirect("makeStory.jsp");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
