@@ -20,6 +20,8 @@ public class PageDAO {
 	private final static String SQLST_SELECT_PAGE = "SELECT * FROM page WHERE story_id = ?";
 	//페이지 순서 수정
 	private final static String SQLST_UPDATE_PAGE_ORDER = "UPDATE page SET page_num = ? WHERE page_id = ?";
+	//페이지 삭제
+	private final static String SQLST_DELETE_PAGE = "DELETE FROM page WHERE page_id = ?";
 			
 	public static Page insertPage(Connection con, int page_num, String page_img_url, String page_sentence, int story_id) throws SQLException {
 		PreparedStatement pstmt = null;
@@ -148,6 +150,30 @@ public class PageDAO {
 			e.printStackTrace();
 		} finally {
 			if(pstmt != null) {pstmt.close(); }
+		}
+	}
+	
+	//Page 삭제 -> CASCADE 기능을 이용하여 page 삭제 시 문장도 함께 삭제 
+	public static void deletePage(Connection con, int page_id) {
+		PreparedStatement pstmt = null;
+		try {
+			con.setAutoCommit(false);
+			
+			pstmt = con.prepareStatement(SQLST_DELETE_PAGE);
+			pstmt.setInt(1, page_id);
+			
+			pstmt.executeUpdate();
+			con.commit();
+			con.setAutoCommit(true);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} }
 		}
 	}
 
