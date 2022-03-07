@@ -16,6 +16,8 @@ public class StoryDAO {
 	private final static String SQLST_INSERT_STORY = "INSERT INTO story (story_title, user_id) VALUES (?, ?)";
 	//Story 찾기
 	private final static String SQLST_SELECT_USER_STORY = "SELECT * FROM story WHERE user_id = ?";
+	//Story 찾기(story id)
+	private final static String SQLST_SELECT_STORY_BY_ID = "SELECT * FROM story WHERE story_id = ?";
 	//Story title 수정
 	private final static String SQLST_UPDATE_STORY_TITLE = "UPDATE story SET story_title = ? WHERE story_id = ?";
 	//Story 삭제
@@ -55,7 +57,7 @@ public class StoryDAO {
 		}
 		return story;
 	}
-	
+	//Story 찾기(user)
 	public static ArrayList<Story> getUserStories(Connection con, int user_id) {
 		PreparedStatement pstmt = null;
 		try {
@@ -73,6 +75,35 @@ public class StoryDAO {
 			e.printStackTrace();
 			return null;
 		}
+		
+	}
+	
+	//Story 찾기(story id)
+	public static Story getStoryById(Connection con, int story_id) {
+		PreparedStatement pstmt = null;
+		try {
+			con.setAutoCommit(false);
+			
+			pstmt = con.prepareStatement(SQLST_SELECT_STORY_BY_ID, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, story_id);
+			
+			ResultSet rs = pstmt.executeQuery();
+			con.commit();
+			con.setAutoCommit(true);
+			
+			if(rs.next()) { //existing story
+				
+			}
+			else { //invalid story
+				return null;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+
+		}
+		return null;
 		
 	}
 	
