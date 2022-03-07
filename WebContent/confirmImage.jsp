@@ -20,7 +20,7 @@
 	 <form action="doPrepareSetting" method="POST">
 	 	<div class="w3-row-padding w3-margin-top">
 	 		<div class="w3-container w3-half w3-padding-large" style="text-align:center;">
-		 		<img name="input-img" style="width:90%;" src="<%=uploadFilePath %>">
+		 		<img name="input-img" style="object-fit: contain;"src="<%=uploadFilePath %>">
 		 		<input type="hidden" name="pageImgUrl" value="<%=uploadFilePath %>" >
 		 	</div>
 			 <div name="input-text" class="w3-container w3-half w3-padding-large" style="text-align:center;">

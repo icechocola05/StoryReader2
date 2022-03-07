@@ -48,6 +48,7 @@ public class DoMakeFullStory extends HttpServlet {
 	    }
 	    
 	    ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
+	    
 		ArrayList<Voice> voiceSet = (ArrayList<Voice>)session.getAttribute("voiceSet");
 		ArrayList<Emotion> emotionSet = (ArrayList<Emotion>)session.getAttribute("emotionSet");
 		
@@ -102,7 +103,11 @@ public class DoMakeFullStory extends HttpServlet {
 		request.setAttribute("emoticonNameList", emoticonNameList);
 		request.setAttribute("opacityList", opacityList);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/previewPage.jsp");
+		session.removeAttribute("currStory");
+		session.removeAttribute("pageList");
+	    session.removeAttribute("sentenceSet");
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/DoGetMyStoryList");
 		rd.forward(request, response);
 	}
 	

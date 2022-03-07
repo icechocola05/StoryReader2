@@ -81,6 +81,7 @@ public class StoryDAO {
 	//Story 찾기(story id)
 	public static Story getStoryById(Connection con, int story_id) {
 		PreparedStatement pstmt = null;
+		Story story = new Story();
 		try {
 			con.setAutoCommit(false);
 			
@@ -92,7 +93,10 @@ public class StoryDAO {
 			con.setAutoCommit(true);
 			
 			if(rs.next()) { //existing story
-				
+				story.setStoryId(rs.getInt(1));
+				story.setStoryTitle(rs.getString(2));
+				story.setStoryUser(rs.getInt(3));
+				return story;
 			}
 			else { //invalid story
 				return null;
