@@ -16,19 +16,21 @@
 		ArrayList<Story> myStory = (ArrayList<Story>)session.getAttribute("myStoryList");//내 스토리 리스트 받아오기
 		ArrayList<String> myStoryImgUrl = (ArrayList<String>)session.getAttribute("myStoryListImgUrl");//내 스토리 리스트 받아오기
 		System.out.println(myStory.size());
-		%>
-		
+	%>
+	<div class="w3-row-padding w3-margin-top">
 	<%
 		for (int i=0;i< myStory.size();i++){
 	%>
 		<form method = "Post" action = "DoReadMyScript">
-			<div class = "w3-border w3-round-large w3-quater">
-				<div id="story-img<%=i%>" class="w3-margin-top w3-margin-bottom">
-					<img src="<%=myStoryImgUrl.get(i)%>">
+			<div class = "w3-container w3-border w3-round-large w3-quarter w3-margin-bottom w3-margin-right">
+				<div id="story-img<%=i%>" class="w3-margin-top w3-margin-bottom" >
+					<img src="<%=myStoryImgUrl.get(i)%>" style="width:100%; height:40vh; object-fit: contain;">
 				</div>
-				<div id="story-title<%=i%>" class=""><%=myStory.get(i).getStoryTitle()%></div>
+				<div id="story-title<%=i%>" class="w3-center"><%=myStory.get(i).getStoryTitle()%></div>
+				<input type="hidden" name="story_id" value="<%=i%>">
 			</div>
 		</form>
-		<%} %>
+	<%}%>
+	</div>
 </body>
 </html>
