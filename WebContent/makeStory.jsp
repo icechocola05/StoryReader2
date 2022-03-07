@@ -48,8 +48,9 @@
 		});
 		
 		//페이지 삭제
-		$("#delete_page").each(function(index, element) {
+		$(".delete_page").each(function(index, element) {
 			$(element).click(function() {
+				console.log($(element));
 				if(confirm("페이지를 삭제하시겠습니까?") == true) {
 					$(element).children('input').val(1);
 					console.log($(element).children('input').val());
@@ -113,9 +114,9 @@
 					<%=pageSentence%>
 				</div>
 				<div class="w3-col w3-cell-middle w3-xlarge" style="margin: 3% 1% 1% 5%; width: 10%;">
-					<div id="delete_page">
+					<div class="delete_page">
 						<img class="w3-button w3-hover-white" style="width:70%;" src="./IMG/delete.png" >
-						<input type="hidden" id="deleteFlag" name="deleteFlag<%=pageIndexJquery%>" value="0">
+						<input type="hidden" class="deleteFlag" name="deleteFlag<%=pageIndexJquery%>" value="0">
 					</div>
 				</div>
 			</div>
