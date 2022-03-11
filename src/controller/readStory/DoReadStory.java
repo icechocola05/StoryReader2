@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import model.dao.PageDAO;
 import model.dao.SentenceDAO;
+import model.dao.SettingDAO;
 import model.dao.StoryDAO;
 import model.dto.Emotion;
 import model.dto.Page;
@@ -35,28 +37,40 @@ public class DoReadStory extends HttpServlet {
 		HttpSession session = request.getSession(true);
 		
 		User currUser = (User)session.getAttribute("currUser");
-		int story_id = Integer.parseInt(request.getParameter("story_id"));
 		
-		ArrayList<Voice> voiceSet = (ArrayList<Voice>)session.getAttribute("voiceSet");
-		ArrayList<Emotion> emotionSet = (ArrayList<Emotion>)session.getAttribute("emotionSet");
-		ArrayList<String> voiceColorList = new ArrayList<String>();
+		
+		//DB의 Emotion, Voice 가져오기 + session에 저장
+	    ServletContext sc = getServletContext();
+	    Connection con = (Connection)sc.getAttribute("DBconnection");
+	    List<Voice> voiceSet = SettingDAO.getVoice(con);
+	    List<Emotion> emotionSet = SettingDAO.getEmotion(con);
+	    
+	    session.setAttribute("voiceSet", voiceSet);
+	    session.setAttribute("emotionSet", emotionSet);
+		
+	    ArrayList<String> voiceColorList = new ArrayList<String>();
 		ArrayList<String> emoticonNameList = new ArrayList<String>();
 		ArrayList<String> opacityList = new ArrayList<String>();
 		ArrayList<Page> currPages =  new ArrayList<Page>();
 	    ArrayList<Sentence> currSentences = new ArrayList<Sentence>();
 		
 		//story 정보 가져오기 위해 DB 연결
-		ServletContext sc = getServletContext();
-	    Connection con = (Connection)sc.getAttribute("DBconnection");
+		//ServletContext sc = getServletContext();
+	    //Connection con = (Connection)sc.getAttribute("DBconnection");
 	    
 	    if(request.getParameter("readPage")==null) {
+	    	int story_id = Integer.parseInt(request.getParameter("story_id"));
 		    //Story 정보
 		    Story currStory = StoryDAO.getStoryById(con, story_id);
+		    System.out.println("Story Id : "+story_id);
 		    //Page 정보
 		    try {
 				currPages =  PageDAO.getStoryPage(con, story_id);
-				//Sentence 정보
+				System.out.println("Page Size : "+currPages.size());
+				System.out.println("Page Id : "+currPages.get(0).getPageId());
+				//첫 Page에 대한 Sentence 정보
 				currSentences=SentenceDAO.getPageSentence(con, currPages.get(0).getPageId());
+				System.out.println("Sentence Size : "+currSentences.size());
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -70,6 +84,7 @@ public class DoReadStory extends HttpServlet {
 	    	currPages = (ArrayList<Page>)session.getAttribute("currPages");
 	    	int page_num = Integer.parseInt(request.getParameter("readPage"));
 	    	try {
+	    		System.out.println(page_num);
 				currSentences=SentenceDAO.getPageSentence(con, currPages.get(page_num).getPageId());
 			} catch (SQLException e) {
 				e.printStackTrace();

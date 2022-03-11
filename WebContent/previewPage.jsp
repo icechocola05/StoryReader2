@@ -106,7 +106,6 @@
 		});
 		
 		//다음 버튼을 눌렀을 때(onclick)
-		
 		$('#next_btn').click(function() {
 			index_c = index-2;
 			$("#sentence"+index_c).css("background-color", "#FFFFFF");

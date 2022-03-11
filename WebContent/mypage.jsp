@@ -27,7 +27,7 @@
 					<img src="<%=myStoryImgUrl.get(i)%>" style="width:100%; height:40vh; object-fit: contain;">
 				</div>
 				<div id="story-title<%=i%>" class="w3-center"><%=myStory.get(i).getStoryTitle()%></div>
-				<input type="hidden" name="story_id" value="<%=i%>">
+				<input type="hidden" name="story_id" value="<%=myStory.get(i).getStoryId()%>">
 				<input type="submit" id = "readBtn<%=i%>" name="readBtn" style="display:none;">
 			</div>
 		</form>
