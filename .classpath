@@ -16,6 +16,6 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/honglab403/Documents/StoryReader2/WebContent/WEB-INF/lib/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

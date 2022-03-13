@@ -36,27 +36,33 @@ public class DoProcessText extends HttpServlet {
 		String processMethod = request.getParameter("processing-type");
 		String text = request.getParameter("pageText");
 		ArrayList<String> sentence_list = new ArrayList<String>();
+		System.out.println(text);
 		
+		System.out.println("servlet: " + processMethod);
 		//가공 방식에 따른 값 변화
 		switch(processMethod) {
 		case "byEnter":
 			sentence_list = TextProcessing.processByEnter(text);
+			break;
+		case "bySpeaker":
+			sentence_list = TextProcessing.processBySpeaker(text);
+			break;
 		}
 		
+		for(int i=0; i<sentence_list.size(); i++) {
+			System.out.println(i + ": " + sentence_list.get(i));
+		}
 		
 		//가공한 텍스트 세션 저장
-		int totalElements = sentence_list.size();// arrayList의 요소의 갯수를 구한다.
-//		for (int index = 0; index < totalElements; index++) {
-//			   System.out.println(sentence_list.get(index));
-//			  }
 		session.setAttribute("sentence_list", sentence_list);
 		session.setAttribute("pageText", text);
+		session.setAttribute("processingMethod", processMethod);
 		
 //    	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
 //    	rd.forward(request, response);
 		
 		PrintWriter writer = response.getWriter(); 
-		writer.println("<script>window.location.reload(); location.href='confirmImage.jsp';</script>");
+		writer.println("<script> location.href='confirmImage.jsp'; </script>");
 		writer.close();
 		//response.sendRedirect("confirmImage.jsp");
 		

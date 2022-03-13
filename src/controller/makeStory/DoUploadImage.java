@@ -158,8 +158,8 @@ public class DoUploadImage extends HttpServlet {
 		// Del ) request.setAttribute("pageImage", pageImage);//업로드 파일 경로 + 이름
 	    //request.setAttribute("pageText",pageText); //추출 텍스트
 		pageText = "비가 추적추적 내리는 어두컴컴한 저녁이었어요.\r\n 무민 가족이 둘러앉아 버섯을 다듬고 있었어요.\r\n 무민파파가 빨간 버섯을 보며 중얼거렸어요.\r\n"
-				+ "“미이가 또 못 먹는 버섯을 따 왔네. 작년에도 그러더니.”\r\n"
-				+ "“내년에는 맛있는 버섯을 따 올지도 몰라요. 희망을 가질 수 있으니 얼마나 좋아요.”\r\n"
+				+ "\"미이가 또 못 먹는 버섯을 따 왔네. 작년에도 그러더니.\"\r\n"
+				+ "\"내년에는 맛있는 버섯을 따 올지도 몰라요. 희망을 가질 수 있으니 얼마나 좋아요.\"\r\n"
 				+ "무민마마의 대답에 미이가 깔깔댔어요.\r\n"
 				+ "그 뒤로 한동안 버섯을 다듬으며 평화로운 시간이 이어졌어요.";
 		session.setAttribute("pageText", pageText);
@@ -167,6 +167,7 @@ public class DoUploadImage extends HttpServlet {
 		ArrayList<String> sentence_list = new ArrayList<String>();
 		sentence_list = TextProcessing.processByEnter(pageText);
 		session.setAttribute("sentence_list", sentence_list);
+		session.setAttribute("processingMethod", "byEnter");
 		
 		response.sendRedirect("confirmImage.jsp");
 //    	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
