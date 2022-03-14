@@ -23,10 +23,13 @@
 	 %>
 	<div class="main w3-row-padding w3-margin">
 		<div class="preview-page w3-row-padding">
-			<div class = "page-image w3-container w3-half" style="text-align:center;background-color:#C4C4C4;">
-				<img name="page-img" src="<%= pageImgUrl%>" style="max-height:65vh;object-fit:contain;">
+			<div class="page-image w3-container w3-half w3-mobile">
+			<div class = "w3-margin" style="text-align:center;background-color:#C4C4C4;">
+				<img name="page-img" src="<%= pageImgUrl%>" style="max-width:100%; max-height:65vh;object-fit:contain;">
 			</div>
-			<div class = "page-script w3-container w3-half w3-center w3-padding-large w3-border w3-round-large" style="text-align:center;">
+			</div>
+			<div class="page-script w3-container w3-half w3-mobile">
+			<div class = "w3-padding-large w3-margin w3-border w3-round-large" style="text-align:center;">
 				<%for(int i=0 ; i<sentenceSet.size() ; i++){ %>
 				<div id = 'sentenceset<%=i%>' class = "sentenceset w3-row w3-border-bottom w3-center w3-margin-top w3-margin-bottom w3-padding-bottom" style="width:100%;"> 
 					<div class="speaker w3-col s4" id='speaker<%=i%>'style="width:10%;"><%= sentenceSet.get(i).getSpeaker()%></div>
@@ -42,6 +45,8 @@
 				</div>
 				<%}%>
 			</div> 
+			</div>
+		
 		</div>
 		<div class="audio w3-row w3-container w3-margin-top w3-margin-bottom" >
 			<div class="w3-col w3-container w3-center" style="width:25%">

@@ -140,7 +140,7 @@
 		
 		//음성 재생이 끝났을 때(onended) 
 		$("#player").bind('ended', function(){
-			if(index+1 >= $('#player source').length) $("#page_next_btn").trigger("click");//한 페이지의 모든 문장이 재생 되었을 때
+			if(index+1 > $('#player source').length) $("#page_next_btn").trigger("click");//한 페이지의 모든 문장이 재생 되었을 때
 			else{
 				index_c = index-2;
 				$("#sentence"+index_c).css("display", "none");

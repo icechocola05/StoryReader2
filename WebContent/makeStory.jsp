@@ -64,6 +64,15 @@
 		
 		$(".sortable").disableSelection();
 		
+		//페이지 선택 -> 미리 보기
+		$(".sort").click(function() {
+			$('#selectedPageId').attr('value',
+					$("div.sort").children('input.selectPageId').val());
+			console.log($("div.sort").children('input.selectPageId').val());
+			console.log($('#selectedPageId').attr('value'));
+			$("#previewSelectedPage_btn").click();
+		});
+		
 	});
 	
 </script>
@@ -91,8 +100,9 @@
 			<button type="submit" id="storyTitleSubmit_btn" style="display: none;"></button>
 		</form>
 	</div>
-	<form method="post" action="DoPrieviewSavePage">
+	<form method="post" action="DoPreviewSavePage">
 		<input type="hidden" id="selectedPageId" name="selectedPageId" value="">
+		<button type="submit" id="previewSelectedPage_btn" style="display: none;"></button>
 	</form>
 	<form class="container w3-display-container w3-margin-top w3-row w3-center">
 	<ul class="sortable">
@@ -109,6 +119,7 @@
 		<input type="hidden" class="pageId" name="pageId<%=pageIndexJquery%>" value="<%=pageId%>">
 		<input type="hidden" class="changedNum" name="changedNum<%=pageIndexJquery%>" value="<%=pageIndexJquery%>">
 		<div class="w3-container sort" style="border:2px solid #C4C4C4; border-radius:20px; margin-bottom: 2%; ">
+			<input type="hidden" class="selectPageId" name="selectPageId<%=pageIndexJquery%>" value="<%=pageId%>">
 			<div class="w3-row w3-center">
 				<div class="w3-col w3-cell-middle" style="margin: 2% 1% 1% 3%; width: 10%;">
 					<img name="page-img" src="<%=pageImgUrl%>" style="width:50%; height: 20%; object-fit:cover">
