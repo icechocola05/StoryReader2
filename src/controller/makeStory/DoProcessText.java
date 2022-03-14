@@ -47,6 +47,8 @@ public class DoProcessText extends HttpServlet {
 		case "bySpeaker":
 			sentence_list = TextProcessing.processBySpeaker(text);
 			break;
+		case "byMark":
+			sentence_list = TextProcessing.processByMark(text);
 		}
 		
 		for(int i=0; i<sentence_list.size(); i++) {

@@ -83,7 +83,7 @@
 			 	<input type="hidden" id="processing_method" value="<%=processingMethod %>">
 			 	<input type="radio" class="processing-type" name="processing-type" value="byEnter">줄 바꿈 분리
 			 	<input type="radio" class="processing-type" name="processing-type" value="bySpeaker"> 화자 별 분리
-			 	<input type="radio" class="processing-type" name="processing-type" value="bySentence"> 문장 별 분리
+			 	<input type="radio" class="processing-type" name="processing-type" value="byMark"> 문장 별 분리
 			 </div>
 			 <div name="processed-text" class="w3-container w3-half w3-padding-large" style="text-align:center;">
 			 	<%for(int i=0; i<sentence_list.size(); i++) { %>
