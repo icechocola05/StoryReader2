@@ -24,7 +24,7 @@
       ArrayList<String> speaker_list = (ArrayList<String>) session.getAttribute("speaker_list");
       ArrayList<String> sentence_list = (ArrayList<String>) session.getAttribute("sentence_list");
       
-      //DB의 Emotion, Voice 가져오기 + session에 저장 -> index.jsp에서 처리 -> 가져옴
+      //DB의 Emotion, Voice 가져오기 + session에 저장 -> index.jsp(DoPrepareSetting)에서 처리 -> 가져옴
       List<Voice> voiceSet = (List<Voice>)session.getAttribute("voiceSet");
       List<Emotion> emotionSet = (List<Emotion>)session.getAttribute("emotionSet");
       

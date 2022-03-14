@@ -23,8 +23,8 @@
 	 %>
 	<div class="main w3-row-padding w3-margin">
 		<div class="preview-page w3-row-padding">
-			<div class = "page-image w3-container w3-half" style="text-align:center;">
-				<img name="page-img" src="<%= pageImgUrl%>" style="width:80%;height:50vh;">
+			<div class = "page-image w3-container w3-half" style="text-align:center;background-color:#C4C4C4;">
+				<img name="page-img" src="<%= pageImgUrl%>" style="max-height:65vh;object-fit:contain;">
 			</div>
 			<div class = "page-script w3-container w3-half w3-center w3-padding-large w3-border w3-round-large" style="text-align:center;">
 				<%for(int i=0 ; i<sentenceSet.size() ; i++){ %>
@@ -106,7 +106,6 @@
 		});
 		
 		//다음 버튼을 눌렀을 때(onclick)
-		
 		$('#next_btn').click(function() {
 			index_c = index-2;
 			$("#sentence"+index_c).css("background-color", "#FFFFFF");

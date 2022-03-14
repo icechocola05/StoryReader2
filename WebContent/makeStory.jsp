@@ -91,7 +91,10 @@
 			<button type="submit" id="storyTitleSubmit_btn" style="display: none;"></button>
 		</form>
 	</div>
-	<form class="w3-display-container w3-margin-top w3-row w3-center">
+	<form method="post" action="DoPrieviewSavePage">
+		<input type="hidden" id="selectedPageId" name="selectedPageId" value="">
+	</form>
+	<form class="container w3-display-container w3-margin-top w3-row w3-center">
 	<ul class="sortable">
 	<% 
 		if(pageList != null) {
@@ -103,8 +106,8 @@
 				int pageIndexJquery = i + 1;
 	%>
 	<li id="pageId<%=pageIndexJquery%>">
-		<input type="hidden" id="pageId" name="pageId<%=pageIndexJquery%>" value="<%=pageId%>">
-		<input type="hidden" id="changedNum" name="changedNum<%=pageIndexJquery%>" value="<%=pageIndexJquery%>">
+		<input type="hidden" class="pageId" name="pageId<%=pageIndexJquery%>" value="<%=pageId%>">
+		<input type="hidden" class="changedNum" name="changedNum<%=pageIndexJquery%>" value="<%=pageIndexJquery%>">
 		<div class="w3-container sort" style="border:2px solid #C4C4C4; border-radius:20px; margin-bottom: 2%; ">
 			<div class="w3-row w3-center">
 				<div class="w3-col w3-cell-middle" style="margin: 2% 1% 1% 3%; width: 10%;">

@@ -72,12 +72,14 @@
 	 <iframe id="iframe1" name="iframe1" style="display:none"></iframe>
 	 <form>
 	 	<div class="w3-row-padding w3-margin-top">
-	 		<div class="w3-container w3-half w3-padding-large" style="text-align:center;">
-		 		<img name="input-img" style="object-fit: contain;"src="<%=uploadFilePath %>">
-		 		<input type="hidden" name="pageImgUrl" value="<%=uploadFilePath %>" >
+	 		<div class="w3-container w3-half w3-padding-large w3-mobile" style="text-align:center;">
+		 		<div style="background-color:#C4C4C4;width:100%;">
+			 		<img name="input-img" style="max-width:100%; max-height:60vh;object-fit: contain;"src="<%=uploadFilePath %>">
+			 		<input type="hidden" name="pageImgUrl" value="<%=uploadFilePath %>" >
+			 	</div>
 		 	</div>
-			 <div name="input-text" class="w3-container w3-half w3-padding-large" style="text-align:center;">
-			 	<textarea id="pageText" class = "w3-round-large w3-padding" name="pageText" cols="50" rows="10" style="width:90%;"><%=pageText%></textarea>
+			 <div name="input-text" class="w3-container w3-half w3-mobile w3-margin-top" style="text-align:center;">
+			 	<textarea id="pageText" class = "w3-round-large " name="pageText" cols="50" rows="10" style="width:90%;"><%=pageText%></textarea>
 			 </div>
 			 <div class="w3-container w3-half w3-padding-large">
 			 	<input type="hidden" id="processing_method" value="<%=processingMethod %>">
