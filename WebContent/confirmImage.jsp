@@ -13,7 +13,6 @@
 	$(function() {
 		
 		//radio 값 유지
-		
 		method = $("#processing_method").val();
 		$("input:radio[name='processing-type']").each(function(index, element) {
 			//console.log($(element).val());
@@ -53,7 +52,7 @@
 	<%
 		session = request.getSession();
 		String processingMethod = (String) session.getAttribute("processingMethod");
-		System.out.println("jsp: " + processingMethod);
+		String describeMethod = (String) session.getAttribute("describeMethod");
 		//이미지 경로 받기
 		String uploadFilePath = "";
 		if(session.getAttribute("uploadFilePath") != null) uploadFilePath = (String) session.getAttribute("uploadFilePath");
@@ -79,11 +78,17 @@
 			 <div name="input-text" class="w3-container w3-half w3-padding-large" style="text-align:center;">
 			 	<textarea id="pageText" class = "w3-round-large w3-padding" name="pageText" cols="50" rows="10" style="width:90%;"><%=pageText%></textarea>
 			 </div>
-			 <div class="w3-container w3-half w3-padding-large">
+			 <div class="w3-center">
+			 	<img  src="./IMG/down-arrow.png" >
+			 </div>
+			 <div class="w3-container w3-half w3-padding-large w3-large">
 			 	<input type="hidden" id="processing_method" value="<%=processingMethod %>">
-			 	<input type="radio" class="processing-type" name="processing-type" value="byEnter">줄 바꿈 분리
-			 	<input type="radio" class="processing-type" name="processing-type" value="bySpeaker"> 화자 별 분리
-			 	<input type="radio" class="processing-type" name="processing-type" value="byMark"> 문장 별 분리
+			 	<input type="radio" class="w3-margin-left processing-type" name="processing-type" value="byEnter">줄 바꿈 분리
+			 	<input type="radio" class="w3-margin-left processing-type" name="processing-type" value="bySpeaker"> 화자 별 분리
+			 	<input type="radio" class="w3-margin-left processing-type" name="processing-type" value="byMark"> 문장 별 분리
+			 </div>
+			 <div>
+			 	<span id="describe-type" class="w3-padding-large w3-margin-left"><%=describeMethod%></span>
 			 </div>
 			 <div name="processed-text" class="w3-container w3-half w3-padding-large" style="text-align:center;">
 			 	<%for(int i=0; i<sentence_list.size(); i++) { %>
