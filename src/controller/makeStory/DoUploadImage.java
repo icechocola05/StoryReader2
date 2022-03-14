@@ -168,6 +168,7 @@ public class DoUploadImage extends HttpServlet {
 		sentence_list = TextProcessing.processByEnter(pageText);
 		session.setAttribute("sentence_list", sentence_list);
 		session.setAttribute("processingMethod", "byEnter");
+		session.setAttribute("describeMethod", "엔터 단위로 문장을 분리합니다.");
 		
 		response.sendRedirect("confirmImage.jsp");
 //    	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");

@@ -36,19 +36,21 @@ public class DoProcessText extends HttpServlet {
 		String processMethod = request.getParameter("processing-type");
 		String text = request.getParameter("pageText");
 		ArrayList<String> sentence_list = new ArrayList<String>();
-		System.out.println(text);
-		
-		System.out.println("servlet: " + processMethod);
+		String describeMethod = "";
 		//가공 방식에 따른 값 변화
 		switch(processMethod) {
 		case "byEnter":
 			sentence_list = TextProcessing.processByEnter(text);
+			describeMethod = "엔터 단위로 문장을 분리합니다.";
 			break;
 		case "bySpeaker":
 			sentence_list = TextProcessing.processBySpeaker(text);
+			describeMethod = "따옴표를 하나의 단위로 문장을 분리합니다. 따옴표가 없으면 엔터 단위로 분리합니다.";
 			break;
 		case "byMark":
 			sentence_list = TextProcessing.processByMark(text);
+			describeMethod = "한 문장을 하나의 단위로 분리합니다. ";
+			break;
 		}
 		
 		for(int i=0; i<sentence_list.size(); i++) {
@@ -59,6 +61,7 @@ public class DoProcessText extends HttpServlet {
 		session.setAttribute("sentence_list", sentence_list);
 		session.setAttribute("pageText", text);
 		session.setAttribute("processingMethod", processMethod);
+		session.setAttribute("describeMethod", describeMethod);
 		
 //    	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
 //    	rd.forward(request, response);
