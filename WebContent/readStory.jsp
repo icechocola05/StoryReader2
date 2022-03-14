@@ -46,17 +46,17 @@
 			<button class="w3-button w3-circle w3-white w3-right" id="next_btn">▶</button>
 		</div>
 	</div>
-	<div class="w3-row w3-center w3-margin-top w3-margin-bottom">
+	<div class="w3-mobile w3-row w3-center w3-margin-top w3-margin-bottom">
 	<form id="read_story" action="DoReadStory" method="post">
 		<input type="hidden" id="page_num" name="readPage" value="<%=currPage.getPageNum()-1%>"><!-- 현재 페이지 쪽 번호 -->
 		<input type="hidden" id="page_total" name="totalPage" value="<%=currPages.size()%>"><!-- 전체 페이지 개수 -->
-		<div class="w3-col w3-container w3-center" style="width:15%;min-height:30vh;max-height:60vh;display:flex;align-items:center; justify-content:right;">
+		<div class="w3-col w3-container w3-center" style="width:20%;min-height:65vh;display:flex;align-items:center; justify-content:right;">
 			<button class="w3-button w3-circle w3-white w3-right" id="page_pre_btn" style="float:right;">◀</button>
 		</div>
-		<div class="w3-col w3-center" style="width:70%;">
-			<img style="width:100%;max-height:60vh;" src="<%=currPage.getPageImgUrl()%>">
+		<div class="w3-col w3-center" style="width:60%; background-color:#C4C4C4;">
+			<img style="max-height:65vh; max-width:60vw;object-fit:contain;" src="<%=currPage.getPageImgUrl()%>">
 		</div>
-		<div class="w3-col w3-container w3-center" style="width:15%;min-height:30vh;max-height:60vh;display:flex;align-items:center; ">
+		<div class="w3-col w3-container w3-center" style="width:20%;min-height:65vh;display:flex;align-items:center; ">
 			<button class="w3-button w3-circle w3-white w3-left" id="page_next_btn">▶</button>
 		</div>
 	</form>
