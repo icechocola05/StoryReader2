@@ -52,8 +52,9 @@ public class DoGetMyStoryList extends HttpServlet {
 		}
 		session.setAttribute("myStoryList", storyList);
 		session.setAttribute("myStoryListImgUrl", myStoryImgUrl);
-		RequestDispatcher rd = request.getRequestDispatcher("/mypage.jsp");
-		rd.forward(request, response);
+//		
+		// 새로고침 시 데이터 적재 방지
+		 response.sendRedirect("mypage.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
