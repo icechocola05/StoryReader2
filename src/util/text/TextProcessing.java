@@ -27,12 +27,17 @@ public class TextProcessing {
         int flag = 0; //따옴표 있는 문장에서는 1
         char nowSpeaking = '\'';
         String rawSentence = "";
+        //줄바꿈 문자 제거
+        text = text.replace(System.getProperty("line.separator").toString(), " ");
+        //특수 문자의 경우 변환
+        text = text.replace("”", "\"");
+        text = text.replace("“", "\"");
 
         for(int i=0; i<text.length(); i++) {
             nowChar = text.charAt(i);
 
             //띄어쓰기면 건너뛰기
-            if(nowChar == ' ' && nowChar == '\r' && nowChar == '\n') continue;
+            if(nowChar == '\0') continue;
 
             //따옴표가 있는 문장
             if(nowChar == '\"' || nowChar == '\'' ) {
@@ -40,8 +45,6 @@ public class TextProcessing {
                     flag = 0;
                     endIndex = i;
                     rawSentence = text.substring(startIndex, endIndex+1).trim();
-                    rawSentence = rawSentence.replaceAll("\n", "");
-                    rawSentence = rawSentence.replaceAll("\r", " ");
                     speakerSplitList.add(rawSentence);
                 }
                 else if(flag == 0 && startIndex < i) { //따옴표의 시작
@@ -100,12 +103,16 @@ public class TextProcessing {
         char nowSpeaking = '\'';
         String rawSentence = "";
         int speakingSum = 0;
+        text = text.replace(System.getProperty("line.separator").toString(), " ");
+        //특수 문자의 경우 변환
+        text = text.replace("”", "\"");
+        text = text.replace("“", "\"");
 
         for(int i=0; i<text.length(); i++) {
             nowChar = text.charAt(i);
 
             //띄어쓰기면 건너뛰기
-            if(nowChar == ' ' || nowChar == '\r' || nowChar == '\n' || nowChar == '\0' ) continue;
+            if(nowChar == ' ') continue;
 
             //따옴표가 포함되어 있는 문장
             if(nowChar == '\"' || nowChar == '\'' ) {
@@ -126,7 +133,6 @@ public class TextProcessing {
             else if (flag == 1) {
                 //문장의 끝
                 if(nowChar == '.' || nowChar == '!' || nowChar == '?' || nowChar == '~') {
-                    System.out.println("index / char : " + i + " / " + nowChar);
                     //종결문자가 위 세 개 중에 없을 때 (종결문자끼리 혼합되었을 때)
                     if(endIndex == i -1) {
                         endIndex = i;
@@ -135,7 +141,6 @@ public class TextProcessing {
                         builder.setCharAt(lastSentence.length() - 1, '\0');
                         String subSent = builder.toString();
                         String addSentence = subSent + nowChar + nowSpeaking;
-                        System.out.println("sub" + subSent);
                         markSplitList.set(markSplitList.size() - 1, addSentence);
                     }
                     else {
@@ -166,7 +171,6 @@ public class TextProcessing {
                 //문장의 시작
                 else if(endIndex > startIndex) {
                     startIndex = i;
-                    System.out.println("start Index : " + nowChar);
                 }
                 
             }
@@ -198,9 +202,6 @@ public class TextProcessing {
                 }
             }
         }
-//        for(int i=0; i<markSplitList.size(); i++) {
-//            System.out.println(i + " : " + markSplitList.get(i));
-//        }
         
         return markSplitList;
 	}

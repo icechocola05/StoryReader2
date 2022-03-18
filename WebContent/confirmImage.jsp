@@ -62,11 +62,6 @@
 		
 		//세션에 저장해둔 가공 텍스트 가져오기
 		ArrayList<String> sentence_list = (ArrayList<String>)session.getAttribute("sentence_list");
-		//String fullSentence = "";
-		//for(int i=0; i<sentence_list.size(); i++) {
-			//fullSentence = fullSentence + sentence_list.get(i) + "\n";
-			//System.out.println(fullSentence);
-		//}
 	 %>
 	 <iframe id="iframe1" name="iframe1" style="display:none"></iframe>
 	 <form>

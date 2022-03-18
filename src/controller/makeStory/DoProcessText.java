@@ -45,11 +45,11 @@ public class DoProcessText extends HttpServlet {
 			break;
 		case "bySpeaker":
 			sentence_list = TextProcessing.processBySpeaker(text);
-			describeMethod = "따옴표를 하나의 단위로 문장을 분리합니다. 따옴표가 없으면 엔터 단위로 분리합니다.";
+			describeMethod = "따옴표를 하나의 단위로 문장을 분리합니다. 따옴표가 없으면 엔터 단위로 분리합니다. \n(따옴표와 문장 부호를 책과 동일하게 입력했는지 확인해주세요.)";
 			break;
 		case "byMark":
 			sentence_list = TextProcessing.processByMark(text);
-			describeMethod = "한 문장을 하나의 단위로 분리합니다. ";
+			describeMethod = "한 문장을 하나의 단위로 분리합니다. \n(따옴표와 문장 부호를 책과 동일하게 입력했는지 확인해주세요.)";
 			break;
 		}
 		
