@@ -1,0 +1,48 @@
+@charset "UTF-8";
+
+#msg-container{
+	display: block;
+	width: 100%;
+	height: auto;
+	margin-top:5%;
+	margin-bottom:5%;
+	text-align:center;
+	
+	font-family: Noto Sans KR;
+   font-style: normal;
+   font-weight: bold;
+   font-size: 30px;
+   line-height: 43px;
+   letter-spacing: -0.02em;
+   
+}
+#btn-container{
+	display: block;
+	width: 70%;
+	height: 100%;
+	margin-left:15%;
+	margin-right:15%;
+	margin-top:5%;
+	text-align:center;
+}
+button {
+	display: inline-block;
+	width: 50vw;
+	height: 10vh;
+	background-color: #927D71;
+	border: none;
+	text-align:center;
+	font-family: Noto Sans KR;
+   font-style: normal;
+   font-weight: bold;
+   font-size: 30px;
+   line-height: 43px;
+   letter-spacing: -0.02em;
+	
+	color: #FFFFFF;
+}
+
+button:hover {
+	background: #4f443e;
+}
+
