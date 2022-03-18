@@ -28,7 +28,10 @@
 	<%
 		ArrayList<Story> myStory = (ArrayList<Story>)session.getAttribute("myStoryList");//내 스토리 리스트 받아오기
 		ArrayList<String> myStoryImgUrl = (ArrayList<String>)session.getAttribute("myStoryListImgUrl");//내 스토리 리스트 받아오기
-		System.out.println(myStory.size());
+		for(int i=0; i<myStory.size(); i++) {
+			System.out.println(myStory.get(i).getStoryTitle());
+		}
+		
 	%>
 	<div class="w3-row w3-margin">
 	<%
@@ -49,8 +52,8 @@
 					<div id="editStory" onclick="editStory(<%=i%>)" class="w3-container w3-cell w3-center w3-margin w3-padding w3-border-right" style="font-size:15px;">수정</div>
 					<div id="deleteStory" onclick="deleteStory(<%=i%>)" class="w3-container w3-cell w3-center w3-margin w3-padding" style="font-size:15px;">삭제</div>
 					
-					<button type="SUBMIT" formmethod="post" formaction="doEditStory" id="editBtn<%=i%>" name="readBtn" style="display:none;"></button>
-					<button type="SUBMIT" formmethod="post" formaction="DoReadStory" id="deleteBtn<%=i%>" name="readBtn" style="display:none;"></button>
+					<button type="SUBMIT" formmethod="post" formaction="doEditStory" id="editBtn<%=i%>" name="editBtn" style="display:none;"></button>
+					<button type="SUBMIT" formmethod="post" formaction="doDeleteStory" id="deleteBtn<%=i%>" name="deleteBtn" style="display:none;"></button>
 				</div>
 			</div>
 			</div>
@@ -58,6 +61,8 @@
 	<%}%>
 	</div>
 <script>
+
+
 function readStory(num){
 	document.getElementById("readBtn"+num).click();
 }
@@ -67,7 +72,12 @@ function editStory(num) {
 }
 
 function deleteStory(num) {
-	document.getElementById("deleteBtn"+num).click();
+	if(confirm("동화를 삭제하시겠습니까?") == true) {
+		document.getElementById("deleteBtn"+num).click();
+	} else {
+		return false;
+	}
+	
 }
 </script>
 </body>
