@@ -19,7 +19,7 @@
 <body>
    
    <% 
- //▶<-미리듣기 버튼 수정하기
+
       //저장한 이야기, 문장, 화자 정보 받아오기
       ArrayList<String> speaker_list = (ArrayList<String>) session.getAttribute("speaker_list");
       ArrayList<String> sentence_list = (ArrayList<String>) session.getAttribute("sentence_list");
@@ -113,9 +113,7 @@
             
             <!-- 미리듣기 버튼 붙이기 -->
             <div class="w3-col w3-cell-middle" style="margin: 6% 0 0 1%; width: 10%;">
-               <button type="button" id="pre-listen" value="미리듣기" onclick="getPreListen(<%=i%>); return false;">
-                  <img id="pre-listen-img" src="./IMG/play-button.png" alt="image">
-               </button>
+               <button type="button" id="pre-listen" class="w3-button w3-circle" value="미리듣기" onclick="getPreListen(<%=i%>); return false;" style="background-color:#A39082;color:white;height:45px;">▶</button>
             </div>
          </div>
       </div>

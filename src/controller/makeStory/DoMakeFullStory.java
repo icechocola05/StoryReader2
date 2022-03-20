@@ -23,35 +23,36 @@ import model.dto.Voice;
 
 @WebServlet("/doMakeFullStory")
 public class DoMakeFullStory extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
        
     public DoMakeFullStory() {
         super();
     }
     
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html; charset=UTF-8");
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      response.setContentType("text/html; charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         HttpSession session = request.getSession(true);
         int page_index =  (int) session.getAttribute("pageIndex");
         int page_id = 0;
-		
-		Story currStory = (Story) session.getAttribute("currStory");
-	    int story_id = currStory.getStoryId();
-	    ArrayList<Page> pageList = (ArrayList<Page>)session.getAttribute("pageList");
-			
-		session.removeAttribute("currStory");
-		session.removeAttribute("pageList");
-	    session.removeAttribute("sentenceSet");
-		
-		RequestDispatcher rd = request.getRequestDispatcher("/DoGetMyStoryList");
-		rd.forward(request, response);
-		
-		
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+      
+      Story currStory = (Story) session.getAttribute("currStory");
+       int story_id = currStory.getStoryId();
+       ArrayList<Page> pageList = (ArrayList<Page>)session.getAttribute("pageList");
+         
+      session.removeAttribute("currStory");
+      session.removeAttribute("pageList");
+       session.removeAttribute("sentenceSet");
+      
+      RequestDispatcher rd = request.getRequestDispatcher("/DoGetMyStoryList");
+      rd.forward(request, response);
+      
+      
+   }
+   
+   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      doGet(request, response);
+   }
+
 
 }

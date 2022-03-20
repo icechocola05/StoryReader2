@@ -85,6 +85,9 @@ public class DoConfirmPage extends HttpServlet {
 			e.printStackTrace();
 		}
 	    
+	    session.removeAttribute("sentenceSet");
+	    session.removeAttribute("currPageImg");
+	    
 	    RequestDispatcher rd = request.getRequestDispatcher("/doGetPageList");
 		rd.forward(request, response);
 		
