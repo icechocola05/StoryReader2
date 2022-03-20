@@ -1,9 +1,13 @@
-package controller.makeStory;
+package controller.editStory;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,32 +16,33 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import model.dao.SentenceDAO;
+import model.dao.SettingDAO;
 import model.dto.Emotion;
 import model.dto.Sentence;
-import model.dto.Story;
 import model.dto.Voice;
 import util.view.ViewProcessing;
 
-
-@WebServlet("/DoPreviewPage")
-public class DoPreviewPage extends HttpServlet {
+@WebServlet("/DoPrepareEdit")
+public class DoPrepareEdit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public DoPreviewPage() {
+    public DoPrepareEdit() {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		response.setContentType("text/html; charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
+		HttpSession session = request.getSession(true);
 		
-        HttpSession session = request.getSession(true);
-		
-		ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
-		ArrayList<Voice> voiceSet = (ArrayList<Voice>)session.getAttribute("voiceSet");
-		ArrayList<Emotion> emotionSet = (ArrayList<Emotion>)session.getAttribute("emotionSet");
-		
+		//DB의 Emotion, Voice 가져오기 + session에 저장
+	    ServletContext sc = getServletContext();
+	    Connection con = (Connection)sc.getAttribute("DBconnection");
+	    List<Voice> voiceSet = SettingDAO.getVoice(con);
+	    List<Emotion> emotionSet = SettingDAO.getEmotion(con);
+	    ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
+	    
 		ArrayList<String> voiceColorList = new ArrayList<String>();
 		ArrayList<String> emoticonNameList = new ArrayList<String>();
 		ArrayList<String> opacityList = new ArrayList<String>();
@@ -56,12 +61,13 @@ public class DoPreviewPage extends HttpServlet {
 			 opacityList.add(vp.getColorOpacityList(sentenceSet.get(i)));
 		}
 		
-		//request.setAttribute("sentenceSet", sentenceSet);
-		request.setAttribute("voiceColorList", voiceColorList);
+	    session.setAttribute("sentenceSet", sentenceSet);
+	    request.setAttribute("voiceColorList", voiceColorList);
 		request.setAttribute("emoticonNameList", emoticonNameList);
 		request.setAttribute("opacityList", opacityList);
+		session.setAttribute("isSaved", true);//설정값이 저장된 내용인지 변수 -> 이 변수에 따라 jsp페이지의 다음 경로가 달라짐
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/previewPage.jsp");
+	    RequestDispatcher rd = request.getRequestDispatcher("/edit.jsp");
 		rd.forward(request, response);
 	}
 

@@ -18,6 +18,7 @@
 		ArrayList<String> voiceColorList = (ArrayList<String>)request.getAttribute("voiceColorList");
 		ArrayList<String> emoticonNameList = (ArrayList<String>)request.getAttribute("emoticonNameList");
 		ArrayList<String> opacityList = (ArrayList<String>)request.getAttribute("opacityList");
+		boolean isSaved = (boolean)session.getAttribute("isSaved");
 		String pageImgUrl = (String)session.getAttribute("currPageImg");
 		int size = sentenceSet.size()-1;
 	 %>
@@ -67,9 +68,22 @@
 	</div>
 	
 	<div class="w3-center">
+	<%if (isSaved==true){ //확인 버튼%>
+		<form method="post" action="DoPrepareSetting">
+			<button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 수정 </button>
+		</form>
+		<form method="post" action="DoGetPageList">
+			<button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 확인 </button>
+		</form>
+	<%
+		}else if(isSaved==false){ //저장 버튼%>
+		<form method="post" action="DoPrepareSetting">
+			<button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 수정 </button>
+		</form>
 		<form method="post" action="DoConfirmPage">
 			<button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 저장 </button>
 		</form>
+	<%} %>
 	</div>
 	<script src="//code.jquery.com/jquery.min.js"></script>
 	<script>
