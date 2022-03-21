@@ -61,6 +61,7 @@ public class DoPrepareSetting extends HttpServlet {
 	    String page_img_url = request.getParameter("pageImgUrl");
 	    session.setAttribute("currPageImg", page_img_url); //이미지 확인 한 뒤 세션에 저장
 	    
+	    session.setAttribute("isSaved", 0);
 	    RequestDispatcher rd = request.getRequestDispatcher("setting.jsp");
 	    rd.forward(request, response);
 	}

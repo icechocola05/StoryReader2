@@ -20,10 +20,8 @@
    
    <% 
       //저장한 이야기, 문장, 화자 정보 받아오기
-	  ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)request.getAttribute("sentenceSet");
-	  ArrayList<String> voiceColorList = (ArrayList<String>)request.getAttribute("voiceColorList");
-	  ArrayList<String> emoticonNameList = (ArrayList<String>)request.getAttribute("emoticonNameList");
-	  ArrayList<String> opacityList = (ArrayList<String>)request.getAttribute("opacityList");
+      ArrayList<String> speaker_list = (ArrayList<String>) session.getAttribute("speaker_list");
+      ArrayList<String> sentence_list = (ArrayList<String>) session.getAttribute("sentence_list");
       
       //DB의 Emotion, Voice 가져오기 + session에 저장 -> index.jsp(DoPrepareSetting)에서 처리 -> 가져옴
       List<Voice> voiceSet = (List<Voice>)session.getAttribute("voiceSet");
@@ -48,9 +46,9 @@
       
       //js로 보낼 speakerNum 2차원 배열 생성
       StringBuffer voiceBuff = new StringBuffer();
-      for(int i=0; i<sentenceSet.size(); i++) {
-    	 if(sentenceSet.get(i).getSpeaker() == null) break;
-    	 voiceBuff.append(sentenceSet.get(i).getSpeaker());
+      for(int i=0; i<speaker_list.size(); i++) {
+    	 if(speaker_list.get(i) == null) break;
+    	 voiceBuff.append(speaker_list.get(i));
     	 voiceBuff.append(",");
       }
       voiceBuff.deleteCharAt(voiceBuff.lastIndexOf(","));
@@ -62,7 +60,7 @@
       <br>
       <%
          //문장 수 만큼 div 생성
-         int len = sentenceSet.size(); 
+         int len = sentence_list.size(); 
          for(int i=0; i<len; i++) { 
       %>
          
@@ -71,7 +69,7 @@
             <div class="w3-col w3-xlarge" style="color: #3A91DA; font-weight: bold; margin: 5% 0 0 2%; width: 15%;">
                <!-- speaker 붙이기-->
 
-               <input type="text" id='speaker<%=i%>' name='speaker<%=i%>' value="<%= sentenceSet.get(i).getSpeaker() %>" placeholder="화자" style="color: #3A91DA; font-weight: bold; text-align: center; width: 90%;"> <br>
+               <input type="text" id='speaker<%=i%>' name='speaker<%=i%>' value="<%= speaker_list.get(i) %>" placeholder="화자" style="color: #3A91DA; font-weight: bold; text-align: center; width: 90%;"> <br>
                
                <!-- voice option 붙이기-->
                <select class='w3-select w3-large w3-margin-bottom' id='voice<%=i%>' name='voice<%=i%>' onchange="changeVoice(this.value, <%=i%>);" style="font-weight: bold; text-align: center; width: 90%;">
@@ -83,19 +81,19 @@
             
             <div class="w3-col w3-cell-middle" style="margin: 1% 3% 1% 3%; width: 8%;">
                <!-- voice 형태 붙이기 -->
-               <div class="voiceColor<%=i%>" id="voiceColor<%=i%>" style="border:3px solid <%=voiceColorList.get(i)%>; border-radius: 35%; background-color: <%=voiceColorList.get(i)%>; width: 150%; height: 180%p; padding-top: 10%;" > 
-                  <input type="text" style="display:none;" id ="voiceVal<%=i%>" name="voiceVal<%=i%>" value="<%=voiceSet.get(sentenceSet.get(i).getVoiceId()-1).getVoiceName()%>">
+               <div class="voiceColor<%=i%>" id="voiceColor<%=i%>" style="border:3px solid #EF9CA1; border-radius: 35%; background-color: #EF9CA1; width: 150%; height: 180%p; padding-top: 10%;" > 
+                  <input type="text" style="display:none;" id ="voiceVal<%=i%>" name="voiceVal<%=i%>" value="ema&nea">
                   <!-- emotion 붙이기-->
                   <div class="w3-center w3-cell-middle" style="margin: 1%;">
                      <label id="emotionFace<%=i%>"  style="opacity: 70%;">
-                        <span id='emotionFaceSpan<%=i%>' class='iconify' data-inline='false' data-icon='<%=emoticonNameList.get(i)%>'></span>
+                        <span id='emotionFaceSpan<%=i%>' class='iconify' data-inline='false' data-icon='noto:neutral-face'></span>
                      </label> <br>
                      <select class='w3-select w3-margin-bottom' id='emotion<%=i%>' name='emotion<%=i%>' onchange="changeEmotion(this.value)" style="width: 50%; text-align: center; margin-bottom: 10%;">
                               <% for (int ls=0; ls<emotionSet.size(); ls++)  {  // value 뒤에 붙은 i로 몇번째 emotion인지 판별 %>
                                  <option value=<%= emotionSet.get(ls).getEmotionName() + i%>><%=emotionSet.get(ls).getEmotionNameKr() %></option>
                               <% } %>
                      </select>
-                         <input type="text" style="display:none;" id ="emotionVal<%=i%>" name="emotionVal<%=i%>" value="<%=emotionSet.get(sentenceSet.get(i).getEmotionId()-1).getEmotionName()%>>
+                         <input type="text" style="display:none;" id ="emotionVal<%=i%>" name="emotionVal<%=i%>" value="neutral">
                      
                   </div>
                </div>
@@ -103,13 +101,13 @@
             
             <!-- emotion intensity 붙이기-->
             <div class="w3-col w3-display-container" style="margin: 8% 1% 0 2%; width: 15%">
-               <input type="range" class="w3-display-middle" name="intensity<%=i%>" min="0" max ="1" step="0.1" value="<%=sentenceSet.get(i).getIntensity()%>" onchange="changeIntensity(this.value, <%=i%>)">
-               <input type="text" style="display:none;" id ="intensityVal<%=i%>" name="intensityVal<%=i%>" value="<%=sentenceSet.get(i).getIntensity()%>">
+               <input type="range" class="w3-display-middle" name="intensity<%=i%>" min="0" max ="1" step="0.1" value="0.5" onchange="changeIntensity(this.value, <%=i%>)">
+               <input type="text" style="display:none;" id ="intensityVal<%=i%>" name="intensityVal<%=i%>" value="0.5">
             </div>
             
             <!-- sentence 붙이기-->
             <div class="w3-col" style="margin: 5% 0% 0% 0%; width: 40%">
-               <textarea id="sentence<%=i%>" name="sentence<%=i%>" class="w3-col s12 w3-large"><%= sentenceSet.get(i).getSentence() %></textarea>
+               <textarea id="sentence<%=i%>" name="sentence<%=i%>" class="w3-col s12 w3-large"><%= sentence_list.get(i) %></textarea>
             </div>
             
             <!-- 미리듣기 버튼 붙이기 -->

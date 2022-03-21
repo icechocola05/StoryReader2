@@ -1,7 +1,5 @@
 package util.view;
 
-import java.util.ArrayList;
-
 import model.dto.Sentence;
 
 public class ViewProcessing {
