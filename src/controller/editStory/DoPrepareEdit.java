@@ -22,6 +22,7 @@ import model.dto.Sentence;
 import model.dto.Voice;
 import util.view.ViewProcessing;
 
+//설정 수정 페이지로 전환
 @WebServlet("/DoPrepareEdit")
 public class DoPrepareEdit extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,7 +42,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 	    Connection con = (Connection)sc.getAttribute("DBconnection");
 	    List<Voice> voiceSet = SettingDAO.getVoice(con);
 	    List<Emotion> emotionSet = SettingDAO.getEmotion(con);
-	    ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
+	    int selectedPageId = (int)session.getAttribute("selectedPageId");
+	    ArrayList<Sentence> sentenceSet =  (ArrayList<Sentence>)session.getAttribute("sentenceSet");
 	    
 		ArrayList<String> voiceColorList = new ArrayList<String>();
 		ArrayList<String> emoticonNameList = new ArrayList<String>();
@@ -65,7 +67,6 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 	    request.setAttribute("voiceColorList", voiceColorList);
 		request.setAttribute("emoticonNameList", emoticonNameList);
 		request.setAttribute("opacityList", opacityList);
-		session.setAttribute("isSaved", true);//설정값이 저장된 내용인지 변수 -> 이 변수에 따라 jsp페이지의 다음 경로가 달라짐
 		
 	    RequestDispatcher rd = request.getRequestDispatcher("/edit.jsp");
 		rd.forward(request, response);

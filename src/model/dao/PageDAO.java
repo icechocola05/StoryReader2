@@ -18,8 +18,12 @@ public class PageDAO {
 	private final static String SQLST_INSERT_PAGE = "INSERT INTO page (page_num, page_img_url, page_sentence, story_id) VALUES (?, ?, ?, ?)";
 	//페이지 찾기
 	private final static String SQLST_SELECT_PAGE = "SELECT * FROM page WHERE story_id = ?";
+	//페이지 찾기
+	private final static String SQLST_SELECT_PAGEIMGURL_BY_PAGE_ID = "SELECT page_img_url FROM page WHERE page_id = ?";
 	//페이지 순서 수정
 	private final static String SQLST_UPDATE_PAGE_ORDER = "UPDATE page SET page_num = ? WHERE page_id = ?";
+	//페이지 대표 문장 수정
+	private final static String SQLST_UPDATE_PAGE_SENTENCE = "UPDATE page SET page_sentence = ? WHERE page_id = ?";
 	//페이지 삭제
 	private final static String SQLST_DELETE_PAGE = "DELETE FROM page WHERE page_id = ?";
 			
@@ -132,6 +136,32 @@ public class PageDAO {
 		return 0; //첫번째 삽입되는 페이지임을 나타냄
 	}
 	
+	// 페이지 사진 찾기
+	public static String getPageImgUrl(Connection con, int page_id) throws SQLException {
+		PreparedStatement pstmt = null;
+		try {
+			String img_url=null;
+			
+			con.setAutoCommit(false);
+			
+			pstmt = con.prepareStatement(SQLST_SELECT_PAGEIMGURL_BY_PAGE_ID, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setInt(1, page_id);
+			ResultSet rs = pstmt.executeQuery();
+			con.commit();
+			con.setAutoCommit(true);
+			while(rs.next()) {
+				img_url = rs.getString(1);
+			}
+			return img_url;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {pstmt.close(); }
+		}
+		return null;
+	}
+	
 	//페이지 순서 변경 적용
 	public static void updatePageOrder(Connection con, int page_id, int page_num) throws SQLException {
 		PreparedStatement pstmt = null;
@@ -140,6 +170,27 @@ public class PageDAO {
 			
 			pstmt = con.prepareStatement(SQLST_UPDATE_PAGE_ORDER, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, page_num);
+			pstmt.setInt(2, page_id);
+			
+			pstmt.executeUpdate();
+			con.commit();
+			con.setAutoCommit(true);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(pstmt != null) {pstmt.close(); }
+		}
+	}
+	
+	//페이지 문장 변경 적용
+	public static void updatePageSentence(Connection con, int page_id, String page_sentence) throws SQLException {
+		PreparedStatement pstmt = null;
+		try {
+			con.setAutoCommit(false);
+			
+			pstmt = con.prepareStatement(SQLST_UPDATE_PAGE_SENTENCE, Statement.RETURN_GENERATED_KEYS);
+			pstmt.setString(1, page_sentence);
 			pstmt.setInt(2, page_id);
 			
 			pstmt.executeUpdate();

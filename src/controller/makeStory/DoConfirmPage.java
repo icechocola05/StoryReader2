@@ -50,6 +50,7 @@ public class DoConfirmPage extends HttpServlet {
 	    ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
 	    ArrayList<Sentence> sentenceResultSet = new ArrayList<Sentence>();
 	    String pageImgUrl = (String)session.getAttribute("currPageImg");
+	    int isSaved = (int)session.getAttribute("isSaved");
 	    int pageId = -1;
 	    Sentence tempSent=new Sentence();
 	    
@@ -73,20 +74,34 @@ public class DoConfirmPage extends HttpServlet {
 		    int story_id = currStory.getStoryId();
 	    	page_num = PageDAO.getPageNum(con, story_id);
 	    	page_num = page_num + 1;
+	    	System.out.println(isSaved);
+	    	if (isSaved==0) {//처음 설정 후 저장할 때
+	    		Page currPage = PageDAO.insertPage(con, page_num, pageImgUrl, pageSentence, story_id);
+				pageId = currPage.getPageId();
+				
+				for (int i=0;i<sentenceSet.size();i++) {
+					tempSent = sentenceSet.get(i);
+					SentenceDAO.insertSent(con, tempSent.getSentence(), tempSent.getSpeaker(), tempSent.getEmotionId(), tempSent.getVoiceId(), tempSent.getIntensity(), tempSent.getSentenceWavUrl(), pageId);
+				}
+	    	}else if(isSaved==1) {//수정 후 저장할 때
+	    		pageId = (int)session.getAttribute("selectedPageId");
+	    		PageDAO.updatePageSentence(con, pageId, pageSentence);
+	    		ArrayList<Sentence> sentenceSetBefore = SentenceDAO.getPageSentence(con, pageId);
+	    		for (int i=0;i<sentenceSet.size();i++) {
+					tempSent = sentenceSet.get(i);
+					SentenceDAO.updateSentence(con, sentenceSetBefore.get(i).getSentenceId(),tempSent.getSentence(), tempSent.getSpeaker(), tempSent.getEmotionId(), tempSent.getVoiceId(), tempSent.getIntensity(), tempSent.getSentenceWavUrl());
+					System.out.println(sentenceSetBefore.get(i).getPageId()+"\n sen"+tempSent.getSentence()+"\n spe"+tempSent.getSpeaker()+"\n emo"+tempSent.getEmotionId()+"\n voi"+tempSent.getVoiceId()+"\n inte"+ tempSent.getIntensity()+"\n wav"+ tempSent.getSentenceWavUrl());
+	    		}
+	    	}
 	    	
-			Page currPage = PageDAO.insertPage(con, page_num, pageImgUrl, pageSentence, story_id);
-			pageId = currPage.getPageId();
 			
-			for (int i=0;i<sentenceSet.size();i++) {
-				tempSent = sentenceSet.get(i);
-				SentenceDAO.insertSent(con, tempSent.getSentence(), tempSent.getSpeaker(), tempSent.getEmotionId(), tempSent.getVoiceId(), tempSent.getIntensity(), tempSent.getSentenceWavUrl(), pageId);
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	    
 	    session.removeAttribute("sentenceSet");
 	    session.removeAttribute("currPageImg");
+	    session.removeAttribute("isSaved");
 	    
 	    RequestDispatcher rd = request.getRequestDispatcher("/doGetPageList");
 		rd.forward(request, response);

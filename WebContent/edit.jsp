@@ -12,7 +12,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>동화 만들기 : 설정</title>
+<title>동화 페이지 : 수정</title>
 <link rel="stylesheet" href="CSS/setting.css" type='text/css' >
 </head>
 <%@ include file="header.jsp" %>
@@ -20,7 +20,7 @@
    
    <% 
       //저장한 이야기, 문장, 화자 정보 받아오기
-	  ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)request.getAttribute("sentenceSet");
+	  ArrayList<Sentence> sentenceSet = (ArrayList<Sentence>)session.getAttribute("sentenceSet");
 	  ArrayList<String> voiceColorList = (ArrayList<String>)request.getAttribute("voiceColorList");
 	  ArrayList<String> emoticonNameList = (ArrayList<String>)request.getAttribute("emoticonNameList");
 	  ArrayList<String> opacityList = (ArrayList<String>)request.getAttribute("opacityList");
@@ -56,7 +56,7 @@
       voiceBuff.deleteCharAt(voiceBuff.lastIndexOf(","));
    %>
 
-   <form method="Post" action="DoSetVoiceEmotion">
+   <form method="Post" action="DoEditVoiceEmotion">
    <!-- sentence setting -->
    <div class="settings" style="margin: 3% 0 0 0;">
       <br>
@@ -87,7 +87,7 @@
                   <input type="text" style="display:none;" id ="voiceVal<%=i%>" name="voiceVal<%=i%>" value="<%=voiceSet.get(sentenceSet.get(i).getVoiceId()-1).getVoiceName()%>">
                   <!-- emotion 붙이기-->
                   <div class="w3-center w3-cell-middle" style="margin: 1%;">
-                     <label id="emotionFace<%=i%>"  style="opacity: 70%;">
+                     <label id="emotionFace<%=i%>"  style="opacity: <%=opacityList.get(i)%>;">
                         <span id='emotionFaceSpan<%=i%>' class='iconify' data-inline='false' data-icon='<%=emoticonNameList.get(i)%>'></span>
                      </label> <br>
                      <select class='w3-select w3-margin-bottom' id='emotion<%=i%>' name='emotion<%=i%>' onchange="changeEmotion(this.value)" style="width: 50%; text-align: center; margin-bottom: 10%;">
@@ -95,11 +95,11 @@
                                  <option value=<%= emotionSet.get(ls).getEmotionName() + i%>><%=emotionSet.get(ls).getEmotionNameKr() %></option>
                               <% } %>
                      </select>
-                         <input type="text" style="display:none;" id ="emotionVal<%=i%>" name="emotionVal<%=i%>" value="<%=emotionSet.get(sentenceSet.get(i).getEmotionId()-1).getEmotionName()%>>
-                     
+                         <input type="text" style="display:none;" id ="emotionVal<%=i%>" name="emotionVal<%=i%>" value="<%=emotionSet.get(sentenceSet.get(i).getEmotionId()-1).getEmotionName()%>">
                   </div>
-               </div>
-            </div>
+              </div>
+            </div>   
+         
             
             <!-- emotion intensity 붙이기-->
             <div class="w3-col w3-display-container" style="margin: 8% 1% 0 2%; width: 15%">
@@ -134,8 +134,8 @@
       </div>
    </form>
    <br>
-   
-   <script>
+
+  <script>
       function changeVoice(val, tar) {
     	  console.log("val : "+val);
     	  console.log("tar : "+tar);
