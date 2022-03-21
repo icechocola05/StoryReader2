@@ -32,6 +32,9 @@ public class DoSaveStoryTitle extends HttpServlet {
 		//user 정보 받아오기
 		User currUser = (User)session.getAttribute("currUser");
 		
+		//기존 세션 정보 지우기
+		session.removeAttribute("pageList");
+		
 		//Story 저장하기 위해 DB 연결
 		ServletContext sc = getServletContext();
 	    Connection con = (Connection)sc.getAttribute("DBconnection");

@@ -65,12 +65,23 @@
 		$(".sortable").disableSelection();
 		
 		//페이지 선택 -> 미리 보기
-		$(".sort").click(function() {
+		$(".page-click").click(function() {
 			$('#selectedPageId').attr('value',
 					$("div.sort").children('input.selectPageId').val());
 			console.log($("div.sort").children('input.selectPageId').val());
 			console.log($('#selectedPageId').attr('value'));
 			$("#previewSelectedPage_btn").click();
+		});
+		
+		//동화 완성 눌렀을 때 페이지 존재하는지 확인하기		
+		$(".checkPageExist").click(function() {
+			if($('.pageId').length == 0){ 
+				//페이지 존재하지 않는 경우
+				alert("페이지를 추가해주세요!");
+			}
+			else {
+				$(".storySubmit-btn").click();
+			}
 		});
 		
 	});
@@ -121,10 +132,10 @@
 		<div class="w3-container sort" style="border:2px solid #C4C4C4; border-radius:20px; margin-bottom: 2%; ">
 			<input type="hidden" class="selectPageId" name="selectPageId<%=pageIndexJquery%>" value="<%=pageId%>">
 			<div class="w3-row w3-center">
-				<div class="w3-col w3-cell-middle" style="margin: 2% 1% 1% 3%; width: 10%;">
+				<div class="page-click w3-col w3-cell-middle" style="margin: 2% 1% 1% 3%; width: 10%;">
 					<img name="page-img" src="<%=pageImgUrl%>" style="width:50%; height: 20%; object-fit:cover">
 				</div>
-				<div class="w3-col w3-cell-middle w3-xlarge w3-left-align" style="margin: 1% 1% 1% 5%; width: 63%;">
+				<div class="page-click w3-col w3-cell-middle w3-xlarge w3-left-align" style="margin: 1% 1% 1% 5%; width: 63%;">
 					<%=pageSentence%>
 				</div>
 				<div class="w3-col w3-cell-middle w3-xlarge" style="margin: 3% 1% 1% 5%; width: 10%;">
@@ -150,7 +161,8 @@
 	<div class="btn">
 	   <button type="SUBMIT" formmethod="post" formaction="doChangeStoryPageOrder" formtarget="iframe2" class="storyPageSubmit-btn" style="display:none;"></button>
 	   <button type="SUBMIT" formmethod="post" formaction="doDeleteStoryPage" class="storyPageDelete-btn" style="display:none;"></button>
-       <button type="SUBMIT" formmethod="post" formaction="doMakeFullStory" class="storySubmit-btn"> 동화 완성  </button>
+	   <button type="SUBMIT" formmethod="post" formaction="doMakeFullStory" class="storySubmit-btn" style="display:none;"></button>
+       <button type="BUTTON" class="checkPageExist"> 동화 완성  </button>
     </div>
     </form>
     </div>

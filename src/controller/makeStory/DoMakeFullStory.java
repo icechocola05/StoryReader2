@@ -35,6 +35,8 @@ public class DoMakeFullStory extends HttpServlet {
         HttpSession session = request.getSession(true);
         int page_index =  (int) session.getAttribute("pageIndex");
         int page_id = 0;
+        
+        System.out.print("동화 완성 이동");
 		
 		Story currStory = (Story) session.getAttribute("currStory");
 	    int story_id = currStory.getStoryId();
