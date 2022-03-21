@@ -74,7 +74,7 @@ public class DoConfirmPage extends HttpServlet {
 		    int story_id = currStory.getStoryId();
 	    	page_num = PageDAO.getPageNum(con, story_id);
 	    	page_num = page_num + 1;
-	    	
+	    	System.out.println(isSaved);
 	    	if (isSaved==0) {//처음 설정 후 저장할 때
 	    		Page currPage = PageDAO.insertPage(con, page_num, pageImgUrl, pageSentence, story_id);
 				pageId = currPage.getPageId();
@@ -89,8 +89,9 @@ public class DoConfirmPage extends HttpServlet {
 	    		ArrayList<Sentence> sentenceSetBefore = SentenceDAO.getPageSentence(con, pageId);
 	    		for (int i=0;i<sentenceSet.size();i++) {
 					tempSent = sentenceSet.get(i);
-					SentenceDAO.updateSentence(con, sentenceSetBefore.get(i).getPageId(),tempSent.getSentence(), tempSent.getSpeaker(), tempSent.getEmotionId(), tempSent.getVoiceId(), tempSent.getIntensity(), tempSent.getSentenceWavUrl());
-				}
+					SentenceDAO.updateSentence(con, sentenceSetBefore.get(i).getSentenceId(),tempSent.getSentence(), tempSent.getSpeaker(), tempSent.getEmotionId(), tempSent.getVoiceId(), tempSent.getIntensity(), tempSent.getSentenceWavUrl());
+					System.out.println(sentenceSetBefore.get(i).getPageId()+"\n sen"+tempSent.getSentence()+"\n spe"+tempSent.getSpeaker()+"\n emo"+tempSent.getEmotionId()+"\n voi"+tempSent.getVoiceId()+"\n inte"+ tempSent.getIntensity()+"\n wav"+ tempSent.getSentenceWavUrl());
+	    		}
 	    	}
 	    	
 			

@@ -15,7 +15,7 @@ public class SentenceDAO {
 	
 	private final static String SQLST_INSERT_SENTENCE = "INSERT INTO sentence (sentence_txt, sentence_speaker, emotion_id, voice_id, intensity, sentence_wav_url, page_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private final static String SQLST_SELECT_SENTENCE_BY_PAGEID = "SELECT * FROM sentence WHERE page_id = ?";
-	private final static String SQLST_UPDATE_SENTENCE = "UPDATE sentence SET sentence_txt = ?, sentence_speaker=?, voice_id=?, emoticon_id=?, intensity=?, sentence_wav_url=? WHERE sentence_id = ?";
+	private final static String SQLST_UPDATE_SENTENCE = "UPDATE sentence SET sentence_txt = ?, sentence_speaker=?, voice_id=?, emotion_id=?, intensity=?, sentence_wav_url=? WHERE sentence_id = ?";
 	public static Sentence insertSent(Connection con, String sentence_txt, String sentence_speaker, int emotionId, int voiceId, float intensity, String sentence_wav_url, int page_id) throws SQLException {
 		PreparedStatement pstmt = null;
 		try {

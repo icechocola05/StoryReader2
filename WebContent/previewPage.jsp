@@ -67,23 +67,31 @@
          </div>
 	</div>
 	
-	<div class="w3-center">
-	<%if (isSaved==2){ //확인 버튼%>
-		<form method="post" action="DoPrepareEdit">
-			<button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 수정 </button>
+	<div class="w3-center w3-margin-bottom">
+	
+	<%
+	System.out.println("isSaved : "+isSaved);
+	
+	if (isSaved==2){ //확인 버튼%>
+		<form method="post" action="DoPrepareEdit" style="display:inline-block;width:40%; ">
+			<button type="submit" class="w3-button w3-padding-large w3-right" style="width:50%; background-color: #927D71;"> 수정 </button>
 		</form>
-		<form method="post" action="DoGetPageList">
-			<button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 확인 </button>
+		<form method="post" action="doGetPageList" style="display:inline-block;width:40%; ">
+			<button type="submit" class="w3-button w3-padding-large w3-left" style="width:50%; background-color: #927D71;"> 확인 </button>
 		</form>
 	<%
-		}else if(isSaved==1||isSaved==0){ //저장 버튼%>
-		<form method="post" action="DoPrepareEdit">
-			<button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 수정 </button>
+		}else if(isSaved==1){ //저장 버튼%>
+		<form method="post" action="DoPrepareEdit" style="display:inline-block; width:40%; ">
+			<button type="submit" class="w3-button w3-padding-large w3-right" style="width:50%; background-color: #927D71;"> 수정 </button>
 		</form>
-		<form method="post" action="DoConfirmPage">
+		<form method="post" action="DoConfirmPage" style="display:inline-block;width:40%; ">
+			<button type="submit" class="w3-button w3-padding-large w3-left" style="width:50%; background-color: #927D71;"> 저장 </button>
+		</form>
+	<%} else if(isSaved==0){%>
+		<form method="post" action="DoConfirmPage" style="display:inline-block;width:40%;">
 			<button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 저장 </button>
 		</form>
-	<%} %>
+	<%}%>
 	</div>
 	<script src="//code.jquery.com/jquery.min.js"></script>
 	<script>
