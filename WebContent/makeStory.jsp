@@ -73,6 +73,17 @@
 			$("#previewSelectedPage_btn").click();
 		});
 		
+		//동화 완성 눌렀을 때 페이지 존재하는지 확인하기		
+		$(".checkPageExist").click(function() {
+			if($('.pageId').length == 0){ 
+				//페이지 존재하지 않는 경우
+				alert("페이지를 추가해주세요!");
+			}
+			else {
+				$(".storySubmit-btn").click();
+			}
+		});
+		
 	});
 	
 </script>
@@ -150,7 +161,8 @@
 	<div class="btn">
 	   <button type="SUBMIT" formmethod="post" formaction="doChangeStoryPageOrder" formtarget="iframe2" class="storyPageSubmit-btn" style="display:none;"></button>
 	   <button type="SUBMIT" formmethod="post" formaction="doDeleteStoryPage" class="storyPageDelete-btn" style="display:none;"></button>
-       <button type="SUBMIT" formmethod="post" formaction="doMakeFullStory" class="storySubmit-btn"> 동화 완성  </button>
+	   <button type="SUBMIT" formmethod="post" formaction="doMakeFullStory" class="storySubmit-btn" style="display:none;"></button>
+       <button type="BUTTON" class="checkPageExist"> 동화 완성  </button>
     </div>
     </form>
     </div>
