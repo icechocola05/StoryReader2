@@ -12,28 +12,25 @@
 <script>
 	$(function() {
 		
+		checkQuo = <%=session.getAttribute("checkQuo") %>;
+		console.log("체크값 : " + checkQuo);
+		if(checkQuo == 1) {
+			$('#fake_textarea').html($('#fake_textarea').html().replace(/\"/g, '<span style="color:#336699">\"</span>'));
+		}
+		
 		//radio 값 유지
 		method = $("#processing_method").val();
 		$("input:radio[name='processing-type']").each(function(index, element) {
-			//console.log($(element).val());
 			if(method == $(element).val()) {
 				console.log(method);
 				$(element).attr('checked', true);
 			}
-    		//pageIndex[index] = element.value;
-    		//console.log($(element).children('input:eq(1)').val());
-    		//$(element).children('input:eq(1)').val(index+1);
-    		//console.log(pageIndex);
     	});
-		
-		
-		//method = $("#processing_method").val();
-		//$('input:radio[name="processing-type"][value=method]').prop('checked', true);
-		//console.log(method);
-		//$('#myform input:radio[name=myradio]:input[value=myvalue1]').attr('checked',true);
 		
 		// radio 값 변경
 		$("input[name='processing-type']").change(function() {
+			$('#pageText').val($('#fake_textarea').html());
+			console.log($('#pageText').val());
 			$('.processingTextSubmit-btn').click();
 			setTimeout(function() { 
 				location.reload(); }, 300);
@@ -41,6 +38,8 @@
 		
 		//텍스트 변경
 		$("#pageText").change(function() {
+			$('#pageText').val($('#fake_textarea').html());
+			console.log($('#pageText').val());
 			$('.processingTextSubmit-btn').click();
 			setTimeout(function() { 
 				location.reload(); }, 300);
@@ -72,8 +71,9 @@
 			 		<input type="hidden" name="pageImgUrl" value="<%=uploadFilePath %>" >
 			 	</div>
 		 	</div>
-			 <div name="input-text" class="w3-container w3-half w3-mobile w3-margin-top" style="text-align:center;">
-			 	<textarea id="pageText" class = "w3-round-large " name="pageText" cols="50" rows="10" style="width:90%;"><%=pageText%></textarea>
+			 <div name="input-text" class="w3-container w3-half w3-mobile w3-margin-top" >
+			 	<div id='fake_textarea' contenteditable="true"><%=pageText%></div>
+			 	<input type='hidden' id='pageText' name='pageText'/>
 			 </div>
 			 <div class="w3-center">
 			 	<img  src="./IMG/down-arrow.png" >

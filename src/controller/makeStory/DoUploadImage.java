@@ -164,9 +164,13 @@ public class DoUploadImage extends HttpServlet {
 		
 		ArrayList<String> sentence_list = new ArrayList<String>();
 		sentence_list = TextProcessing.processByEnter(pageText);
+		int checkQuo = TextProcessing.checkQuotationPair(pageText);
+
 		session.setAttribute("sentence_list", sentence_list);
 		session.setAttribute("processingMethod", "byEnter");
 		session.setAttribute("describeMethod", "엔터 단위로 문장을 분리합니다.");
+		session.setAttribute("checkQuo", checkQuo);
+		
 		
 		response.sendRedirect("confirmImage.jsp");
 //    	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");

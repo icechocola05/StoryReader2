@@ -37,6 +37,10 @@ public class DoProcessText extends HttpServlet {
 		String text = request.getParameter("pageText");
 		ArrayList<String> sentence_list = new ArrayList<String>();
 		String describeMethod = "";
+		
+		//문장 따옴표 확인
+		int checkQuo = TextProcessing.checkQuotationPair(text);
+		
 		//가공 방식에 따른 값 변화
 		switch(processMethod) {
 		case "byEnter":
@@ -62,6 +66,7 @@ public class DoProcessText extends HttpServlet {
 		session.setAttribute("pageText", text);
 		session.setAttribute("processingMethod", processMethod);
 		session.setAttribute("describeMethod", describeMethod);
+		session.setAttribute("checkQuo", checkQuo);
 		
 //    	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
 //    	rd.forward(request, response);
