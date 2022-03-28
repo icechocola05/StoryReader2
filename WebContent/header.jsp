@@ -23,7 +23,7 @@
 	  			</c:otherwise>
 	  		</c:choose>
 
-			<a class="w3-bar-item w3-button w3-hover-none w3-text-black w3-hover-text-white w3-padding-24" href="#">도움말</a>
+			<a class="w3-bar-item w3-button w3-hover-none w3-text-black w3-hover-text-white w3-padding-24" href="help.jsp" target="_blank">도움말</a>
 			
 	  		<c:choose>
 	  			<c:when test="${user eq null }">
