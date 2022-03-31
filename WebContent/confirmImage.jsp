@@ -12,10 +12,12 @@
 <script>
 	$(function() {
 		
-		checkQuo = <%=session.getAttribute("checkQuo") %>;
+		var checkQuo = <%=session.getAttribute("checkQuo") %>;
 		console.log("체크값 : " + checkQuo);
 		if(checkQuo == 1) {
-			$('#fake_textarea').html($('#fake_textarea').html().replace(/\"/g, '<span style="color:#336699">\"</span>'));
+			//span 태그 추가
+			$('#fake_textarea').html($('#fake_textarea').html().replace(/\"/g, "<span style='background-color:#fac9c9; border-radius:10%; display: inline-block;'>\"</span>"));
+			$('#fake_textarea').html($('#fake_textarea').html().replace(/\'/g, "<span style='background-color:#fac9c9; border-radius:10%; display: inline-block;'>\'</span>"));
 		}
 		
 		//radio 값 유지
@@ -37,14 +39,25 @@
 		});
 		
 		//텍스트 변경
-		$("#pageText").change(function() {
-			$('#pageText').val($('#fake_textarea').html());
-			console.log($('#pageText').val());
-			$('.processingTextSubmit-btn').click();
-			setTimeout(function() { 
+		
+		$("#fake_textarea").on('blur', () => {
+		    let item = $(this)
+		    if (item.data('html') !== item.html()) {
+		    	//span 태그만 제거
+				$('#fake_textarea').find("span").each(function(index) {
+				    var text = $(this).text();//get span content
+				    $(this).replaceWith(text);//replace all span with just content
+				});
+				$('#pageText').val($('#fake_textarea').text());
+		    	//$('#pageText').val($('#fake_textarea').html());
+				console.log($('#pageText').val());
+				$('.processingTextSubmit-btn').click();
+				setTimeout(function() { 
 				location.reload(); }, 300);
-			
+		    }
 		});
+		
+		
 		
 	});
 </script>
@@ -71,8 +84,8 @@
 			 		<input type="hidden" name="pageImgUrl" value="<%=uploadFilePath %>" >
 			 	</div>
 		 	</div>
-			 <div name="input-text" class="w3-container w3-half w3-mobile w3-margin-top" >
-			 	<div id='fake_textarea' contenteditable="true"><%=pageText%></div>
+			 <div name="input-text" class="w3-container w3-half w3-mobile w3-margin-top w3-margin-bottom" >
+			 	<div class="w3-input w3-border w3-round-large w3-padding-large" id='fake_textarea' contenteditable="true"><%=pageText%></div>
 			 	<input type='hidden' id='pageText' name='pageText'/>
 			 </div>
 			 <div class="w3-center">
