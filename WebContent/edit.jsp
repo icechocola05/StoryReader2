@@ -75,9 +75,15 @@
                
                <!-- voice option 붙이기-->
                <select class='w3-select w3-large w3-margin-bottom' id='voice<%=i%>' name='voice<%=i%>' onchange="changeVoice(this.value, <%=i%>);" style="font-weight: bold; text-align: center; width: 90%;">
-                  <% for(int ls=0; ls<voiceSet.size(); ls++) { // value 뒤에 붙은 ls로 몇번째 voice인지 판별%>
+                  <%
+                  for(int ls=0; ls<voiceSet.size(); ls++) { // value 뒤에 붙은 ls로 몇번째 voice인지 판별
+	                  if(voiceSet.get(ls).getVoiceName().equals(voiceSet.get(sentenceSet.get(i).getVoiceId()-1).getVoiceName())){%>
+                     <option value= <%=voiceSet.get(ls).getVoiceName() + ls%> style="background-color: #<%=voiceColorSet[ls]%> " selected> <%=voiceSet.get(ls).getVoiceNameKr()%> </option>
+                     <%}else{ %>
                      <option value= <%=voiceSet.get(ls).getVoiceName() + ls%> style="background-color: #<%=voiceColorSet[ls]%> "> <%=voiceSet.get(ls).getVoiceNameKr()%> </option>
-                  <% } %>
+                  <%
+                     }
+                  } %>
                </select>
             </div>
             
@@ -91,9 +97,14 @@
                         <span id='emotionFaceSpan<%=i%>' class='iconify' data-inline='false' data-icon='<%=emoticonNameList.get(i)%>'></span>
                      </label> <br>
                      <select class='w3-select w3-margin-bottom' id='emotion<%=i%>' name='emotion<%=i%>' onchange="changeEmotion(this.value)" style="width: 50%; text-align: center; margin-bottom: 10%;">
-                              <% for (int ls=0; ls<emotionSet.size(); ls++)  {  // value 뒤에 붙은 i로 몇번째 emotion인지 판별 %>
+                              <% for (int ls=0; ls<emotionSet.size(); ls++)  {  // value 뒤에 붙은 i로 몇번째 emotion인지 판별 
+                            	  if(emotionSet.get(ls).getEmotionName().equals(emotionSet.get(sentenceSet.get(i).getEmotionId()-1).getEmotionName())){%>
+                                 <option value=<%= emotionSet.get(ls).getEmotionName() + i%> selected><%=emotionSet.get(ls).getEmotionNameKr() %></option>
+                                 <%}else{ %>
                                  <option value=<%= emotionSet.get(ls).getEmotionName() + i%>><%=emotionSet.get(ls).getEmotionNameKr() %></option>
-                              <% } %>
+                              <% 
+                                 }
+                              } %>   
                      </select>
                          <input type="text" style="display:none;" id ="emotionVal<%=i%>" name="emotionVal<%=i%>" value="<%=emotionSet.get(sentenceSet.get(i).getEmotionId()-1).getEmotionName()%>">
                   </div>

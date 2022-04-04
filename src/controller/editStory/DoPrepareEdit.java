@@ -63,6 +63,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 			 opacityList.add(vp.getColorOpacityList(sentenceSet.get(i)));
 		}
 		
+		session.setAttribute("voiceSet", voiceSet);
+		session.setAttribute("emotionSet", emotionSet);
 	    session.setAttribute("sentenceSet", sentenceSet);
 	    request.setAttribute("voiceColorList", voiceColorList);
 		request.setAttribute("emoticonNameList", emoticonNameList);

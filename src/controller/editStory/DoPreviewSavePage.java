@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import model.dao.PageDAO;
 import model.dao.SentenceDAO;
+import model.dao.SettingDAO;
 import model.dto.Emotion;
 import model.dto.Sentence;
 import model.dto.Voice;
@@ -46,8 +48,12 @@ public class DoPreviewSavePage extends HttpServlet {
 	    
 	    ArrayList<Sentence> sentenceSet = new ArrayList<Sentence>();
 	    
-	    ArrayList<Voice> voiceSet = (ArrayList<Voice>)session.getAttribute("voiceSet");
-		ArrayList<Emotion> emotionSet = (ArrayList<Emotion>)session.getAttribute("emotionSet");
+//	    ArrayList<Voice> voiceSet = (ArrayList<Voice>)session.getAttribute("voiceSet");
+//		ArrayList<Emotion> emotionSet = (ArrayList<Emotion>)session.getAttribute("emotionSet");
+//		ServletContext sc = getServletContext();
+//	    Connection con = (Connection)sc.getAttribute("DBconnection");
+	    List<Voice> voiceSet = SettingDAO.getVoice(con);
+	    List<Emotion> emotionSet = SettingDAO.getEmotion(con);
 		
 		ArrayList<String> voiceColorList = new ArrayList<String>();
 		ArrayList<String> emoticonNameList = new ArrayList<String>();
