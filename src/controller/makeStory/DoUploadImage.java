@@ -164,13 +164,18 @@ public class DoUploadImage extends HttpServlet {
 		
 		ArrayList<String> sentence_list = new ArrayList<String>();
 		sentence_list = TextProcessing.processByEnter(pageText);
-		int checkQuo = TextProcessing.checkQuotationPair(pageText);
+		int checkLargeQuo = TextProcessing.checkLargeQuotationPair(pageText);
+		int checkSmallQuo = TextProcessing.checkSmallQuotationPair(pageText);
 
 		session.setAttribute("sentence_list", sentence_list);
 		session.setAttribute("processingMethod", "byEnter");
 		session.setAttribute("describeMethod", "엔터 단위로 문장을 분리합니다.");
-		session.setAttribute("checkQuo", checkQuo);
-		
+		session.setAttribute("checkLargeQuo", checkLargeQuo);
+		session.setAttribute("checkSmallQuo", checkSmallQuo);
+		if(checkLargeQuo == 1 || checkSmallQuo == 1)
+			session.setAttribute("checkQuoMsg", "따옴표와 문장 부호를 책과 동일하게 입력했는지 확인해주세요.");
+		else
+			session.setAttribute("checkQuoMsg", "");
 		
 		response.sendRedirect("confirmImage.jsp");
 //    	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");

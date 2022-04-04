@@ -4,19 +4,40 @@ import java.util.*;
 
 public class TextProcessing {
 	
-	//0. 문장 따옴표 수 검사
-	public static int checkQuotationPair(String text) {
+	//0. 문장 작은 따옴표 수 검사
+	public static int checkSmallQuotationPair(String text) {
 		char nowChar = '.';
         int quoSum = 0; //따옴표 있는 문장에서는 1
         int checkQuo = 0; // 따옴표 짝이 맞다면 0, 짝이 맞지 않는다면 1
-        text = text.replace("”", "\"");
-        text = text.replace("“", "\"");
         text = text.replace("‘", "\'");
         text = text.replace("’", "\'");
 
         for(int i=0; i<text.length(); i++) {
             nowChar = text.charAt(i);
-            if(nowChar == '\"' || nowChar == '\'' ) {
+            if(nowChar == '\'' ) {
+                quoSum++;
+            }
+        }
+
+        //따옴표의 전체 수가 짝수가 아니라면
+        if(quoSum % 2 != 0) {
+            checkQuo = 1;
+        }
+        
+        return checkQuo;
+	}
+	
+	//0. 문장 큰 따옴표 수 검사
+	public static int checkLargeQuotationPair(String text) {
+		char nowChar = '.';
+        int quoSum = 0; //따옴표 있는 문장에서는 1
+        int checkQuo = 0; // 따옴표 짝이 맞다면 0, 짝이 맞지 않는다면 1
+        text = text.replace("”", "\"");
+        text = text.replace("“", "\"");
+
+        for(int i=0; i<text.length(); i++) {
+            nowChar = text.charAt(i);
+            if(nowChar == '\"') {
                 quoSum++;
             }
         }

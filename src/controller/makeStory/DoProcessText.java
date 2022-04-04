@@ -39,7 +39,8 @@ public class DoProcessText extends HttpServlet {
 		String describeMethod = "";
 		
 		//문장 따옴표 확인
-		int checkQuo = TextProcessing.checkQuotationPair(text);
+		int checkLargeQuo = TextProcessing.checkLargeQuotationPair(text);
+		int checkSmallQuo = TextProcessing.checkSmallQuotationPair(text);
 		
 		//가공 방식에 따른 값 변화
 		switch(processMethod) {
@@ -49,11 +50,11 @@ public class DoProcessText extends HttpServlet {
 			break;
 		case "bySpeaker":
 			sentence_list = TextProcessing.processBySpeaker(text);
-			describeMethod = "따옴표를 하나의 단위로 문장을 분리합니다. 따옴표가 없으면 엔터 단위로 분리합니다. \n(따옴표와 문장 부호를 책과 동일하게 입력했는지 확인해주세요.)";
+			describeMethod = "따옴표를 하나의 단위로 문장을 분리합니다. 따옴표가 없으면 엔터 단위로 분리합니다.";
 			break;
 		case "byMark":
 			sentence_list = TextProcessing.processByMark(text);
-			describeMethod = "한 문장을 하나의 단위로 분리합니다. \n(따옴표와 문장 부호를 책과 동일하게 입력했는지 확인해주세요.)";
+			describeMethod = "한 문장을 하나의 단위로 분리합니다.";
 			break;
 		}
 		
@@ -66,8 +67,12 @@ public class DoProcessText extends HttpServlet {
 		session.setAttribute("pageText", text);
 		session.setAttribute("processingMethod", processMethod);
 		session.setAttribute("describeMethod", describeMethod);
-		session.setAttribute("checkQuo", checkQuo);
-		
+		session.setAttribute("checkLargeQuo", checkLargeQuo);
+		session.setAttribute("checkSmallQuo", checkSmallQuo);
+		if(checkLargeQuo == 1 || checkSmallQuo == 1)
+			session.setAttribute("checkQuoMsg", "따옴표와 문장 부호를 책과 동일하게 입력했는지 확인해주세요.");
+		else
+			session.setAttribute("checkQuoMsg", "");
 //    	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
 //    	rd.forward(request, response);
 		
