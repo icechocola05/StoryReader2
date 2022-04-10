@@ -73,13 +73,10 @@ public class DoProcessText extends HttpServlet {
 			session.setAttribute("checkQuoMsg", "따옴표와 문장 부호를 책과 동일하게 입력했는지 확인해주세요.");
 		else
 			session.setAttribute("checkQuoMsg", "");
-//    	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
-//    	rd.forward(request, response);
 		
 		PrintWriter writer = response.getWriter(); 
 		writer.println("<script> location.href='confirmImage.jsp'; </script>");
 		writer.close();
-		//response.sendRedirect("confirmImage.jsp");
 		
 	}
 

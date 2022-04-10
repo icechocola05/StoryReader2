@@ -100,15 +100,16 @@
 			 		<input type="hidden" name="pageImgUrl" value="<%=uploadFilePath %>" >
 			 	</div>
 		 	</div>
-			 <div name="input-text" class="w3-container w3-half w3-mobile w3-margin-top" >
+		 	<div class="w3-container w3-half w3-mobile">
+			 <div name="input-text" class="w3-container w3-margin-top" >
 			 	<pre class="w3-input w3-border w3-round-large w3-padding-large" id='fake_textarea' contenteditable="true" style="font-family: Noto Sans KR; word-wrap: break-word; white-space:pre-wrap; display:inline-block;"><%=pageText%></pre>
 			 	<input type='hidden' id='pageText' name='pageText'/>
 			 </div>
-			 <div style='background-color:#fcec9f; border-radius:2px; display: inline-block; margin: 0 0.3% 2% 0.3%; padding: 0 0.3% 0 0.3%;''><%=checkQuoMsg%></div>
+			 <div style='background-color:#fac9c9; border-radius:2px; display: inline-block; margin: 0 0.3% 2% 0.3%; padding: 0 0.3% 0 0.3%;''><%=checkQuoMsg%></div>
 			 <div class="w3-center">
 			 	<img  src="./IMG/down-arrow.png" >
 			 </div>
-			 <div class="w3-container w3-half w3-padding-large w3-large">
+			 <div class="w3-container w3-padding-large w3-large">
 			 	<input type="hidden" id="processing_method" value="<%=processingMethod %>">
 			 	<input type="radio" class="w3-margin-left processing-type" name="processing-type" value="byEnter">줄 바꿈 분리
 			 	<input type="radio" class="w3-margin-left processing-type" name="processing-type" value="bySpeaker"> 화자 별 분리
@@ -117,10 +118,11 @@
 			 <div>
 			 	<span id="describe-type" class="w3-padding-large w3-margin-left"><%=describeMethod%></span>
 			 </div>
-			 <div name="processed-text" class="w3-container w3-half w3-padding-large" style="text-align:center;">
+			 <div name="processed-text" class="w3-container w3-padding" style="text-align:center;">
 			 	<%for(int i=0; i<sentence_list.size(); i++) { %>
 			 		<div id="processedText<%=i%>" class = "w3-panel w3-border w3-round-large w3-padding-16" name="processedText<%=i%>" ><%=sentence_list.get(i) %></div>
 			 	<%} %>
+			 </div>
 			 </div>
 		 </div>
 		 <div class="w3-center">
