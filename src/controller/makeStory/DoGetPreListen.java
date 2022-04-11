@@ -60,7 +60,7 @@ public class DoGetPreListen extends HttpServlet {
 	    String text="", voice_name="", emotion_name="", intensityVal="";
 		try {
 			obj = (JSONObject)parser.parse(jb.toString());
-			text = obj.get("sentence").toString();
+			text = obj.get("sentence").toString()+".";
 		    voice_name = obj.get("voice_name").toString();
 		    emotion_name = obj.get("emotion_name").toString();
 		    intensityVal = obj.get("intensity").toString();

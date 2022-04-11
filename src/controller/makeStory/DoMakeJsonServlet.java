@@ -45,7 +45,7 @@ public class DoMakeJsonServlet extends HttpServlet {
 			for(int i = 0; i<sentenceSet.size(); i++) {
 				Sentence sent = sentenceSet.get(i);
 				
-				String text = sent.getSentence();
+				String text = sent.getSentence()+".";
 				String voice_name = voiceSet.get(sent.getVoiceId()-1).getVoiceName();
 				String emotion_name = emotionSet.get(sent.getEmotionId()-1).getEmotionName();
 				float intensityVal = sent.getIntensity();
