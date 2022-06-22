@@ -25,12 +25,9 @@ public class UserDAO {
 			PreparedStatement pstmt = null;
 			User user = new User();
 			try {
-				con.setAutoCommit(false);
 				pstmt = con.prepareStatement(SQLST_SELECT_USER_BY_ID);
 				pstmt.setString(1, user_input_id);
 				ResultSet rs = pstmt.executeQuery();
-				con.commit();
-				con.setAutoCommit(true);
 				
 				if(rs.next()) { //existing user
 					String user_login_pw = rs.getString(3);
@@ -70,12 +67,9 @@ public class UserDAO {
 	   public static boolean selectID(Connection con, String id) throws SQLException{
 	      PreparedStatement pstmt=null;
 	      try {
-	         con.setAutoCommit(false);
 	         pstmt = con.prepareStatement(SQLST_SELECT_USER_ID);
 	         pstmt.setString(1, id);
 	         ResultSet rs = pstmt.executeQuery();
-	         con.commit();
-	         con.setAutoCommit(true);
 	         if (rs.next()) {
 	            return false;
 	         } else {
@@ -100,14 +94,11 @@ public class UserDAO {
 	   public static boolean insertUser(Connection con, User user) throws SQLException{
 	      PreparedStatement pstmt=null;
 	      try {
-	         con.setAutoCommit(false);
 	         pstmt = con.prepareStatement(SQLST_INSERT_USER);
 	         pstmt.setString(1, user.getUserLoginId());
 	         pstmt.setString(2, user.getUserLoginPw());
 	         pstmt.setString(3, user.getUserName());
 	         int insertCount = pstmt.executeUpdate();
-	         con.commit();
-	         con.setAutoCommit(true);
 	         if (insertCount == 1) { // 회원정보 삽입에 성공한다면
 	            return true;
 	         } else {

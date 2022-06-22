@@ -34,7 +34,7 @@
 	<div id="msg-container">이미지 등록 방식을 정해주세요</div>
 	<div id="btn-container">
 		<button onclick="location='fileInput.jsp'" style="font-size:25px;">기본 이미지 사용하기</button> <br><br>
-		<form action="doUploadImage" id="uploadForm" method="post" enctype="multipart/form-data">
+		<form action="doUploadStoryImage" id="uploadForm" method="post" enctype="multipart/form-data">
 			<input type="file" id="input-file" name="input-file" onchange="checkImgUploaded()" style="display: none;"/>
 			<button type="submit" id="submit_btn" style="display: none;"></button>
 		</form>

@@ -9,21 +9,28 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
+  <!--  
   <context-param>
   	<param-name>JDBCUrl</param-name>
-  	<param-value>jdbc:mysql://localhost:3306/storyreader2</param-value>
+  	<param-value>jdbc:mysql://220.69.171.38:3306/storyreader?autoReconnect=true</param-value>
   </context-param>
   <context-param>
   	<param-name>DBuser</param-name>
-  	<param-value>storyreader2</param-value>
+  	<param-value>storyreader</param-value>
   </context-param>
   <context-param>
   	<param-name>DBpasswd</param-name>
-  	<param-value>storyreader2</param-value>
+  	<param-value>storyreader</param-value>
   </context-param>
   <context-param>
   	<param-name>DBTimeZone</param-name>
-  	<param-value>UTC</param-value>
-  </context-param>
+  	<param-value>Asia/Seoul</param-value>
+  </context-param>-->
+  <resource-ref>
+     <description>DBCP test</description>
+     <res-ref-name>jdbc/storyreader2</res-ref-name>
+     <res-type>javax.sql.DataSource</res-type>
+     <res-auth>Container</res-auth>
+  </resource-ref>
+  
 </web-app>

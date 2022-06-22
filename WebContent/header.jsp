@@ -32,7 +32,7 @@
 				</c:when>
 	  			<c:otherwise>
 	  			<form id="f" name = "post" action = "logout">
-	  				<a class="w3-bar-item w3-button w3-hover-none w3-text-black w3-hover-text-white w3-padding-24 w3-right w3-margin-right" href="#">안녕하세요. ${user.userName}님</a>
+	  				<a class="w3-bar-item w3-button w3-hover-none w3-text-black w3-hover-text-white w3-padding-24 w3-right w3-margin-right" href="myinfo.jsp">안녕하세요. ${user.userName}님</a>
 					<a class="w3-bar-item w3-button w3-hover-none w3-text-black w3-hover-text-white w3-padding-24 w3-right w3-margin-right" href="javascript:void(0);" onclick="doLogout();">로그아웃</a>
 	  			</form>
 	  			</c:otherwise>

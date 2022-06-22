@@ -19,8 +19,6 @@ public class SentenceDAO {
 	public static Sentence insertSent(Connection con, String sentence_txt, String sentence_speaker, int emotionId, int voiceId, float intensity, String sentence_wav_url, int page_id) throws SQLException {
 		PreparedStatement pstmt = null;
 		try {
-			con.setAutoCommit(false);
-			
 			pstmt = con.prepareStatement(SQLST_INSERT_SENTENCE);
 			pstmt.setString(1, sentence_txt);
 			pstmt.setString(2, sentence_speaker);
@@ -32,8 +30,6 @@ public class SentenceDAO {
 			
 			
 			pstmt.executeUpdate();
-			con.commit();
-			con.setAutoCommit(true);
 			
 			Sentence sent = new Sentence();
 			sent.setSentence(sentence_txt);
@@ -55,13 +51,9 @@ public class SentenceDAO {
 	public static ArrayList<Sentence> getPageSentence(Connection con, int page_id) throws SQLException{
 		PreparedStatement pstmt = null;
 		try {
-			con.setAutoCommit(false);
-			
 			pstmt = con.prepareStatement(SQLST_SELECT_SENTENCE_BY_PAGEID, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, page_id);
 			ResultSet rs = pstmt.executeQuery();
-			con.commit();
-			con.setAutoCommit(true);
 			
 			ArrayList<Sentence> sentenceList = new ArrayList<Sentence>();
 			while(rs.next()) {
@@ -89,8 +81,6 @@ public class SentenceDAO {
 	public static void updateSentence(Connection con,int sentence_id, String sentence_txt, String sentence_speaker, int emotionId, int voiceId, float intensity, String sentence_wav_url) throws SQLException{
 		PreparedStatement pstmt = null;
 		try {
-			con.setAutoCommit(false);
-			
 			pstmt = con.prepareStatement(SQLST_UPDATE_SENTENCE, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, sentence_txt);
 			pstmt.setString(2, sentence_speaker);
@@ -100,8 +90,6 @@ public class SentenceDAO {
 			pstmt.setString(6, sentence_wav_url);
 			pstmt.setInt(7, sentence_id);
 			pstmt.executeUpdate();
-			con.commit();
-			con.setAutoCommit(true);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
