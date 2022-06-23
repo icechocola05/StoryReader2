@@ -1,6 +1,7 @@
 package controller.makeStory;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -97,82 +98,95 @@ public class DoUploadImage extends HttpServlet {
 		System.out.println(pageImage);
 		
 
-//		try {
-//	         GoogleCredentials credentials = GoogleCredentials.getApplicationDefault(); // fromStream(new FileInputStream(googleCredentialsConfiguration.getLocation()));
-//         
-//	         List<AnnotateImageRequest> requests = new ArrayList<>();
-//	         ByteString imgBytes = ByteString.readFrom(new FileInputStream(pageImage));
-//	         Image img = Image.newBuilder().setContent(imgBytes).build();
-//	         Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
-//	         AnnotateImageRequest req = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
-//	         requests.add(req);
-//	         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
-//	            BatchAnnotateImagesResponse resp = client.batchAnnotateImages(requests);
-//	            List<AnnotateImageResponse> resps = resp.getResponsesList();
-//	            for (AnnotateImageResponse res : resps) {
-//	               if (res.hasError()) {
-//	                  System.out.printf("Error: %s\n", res.getError().getMessage());
-//	                  return;
-//	               }
-//	               
-//	             // For full list of available annotations, see http://g.co/cloud/vision/docs
-//	             TextAnnotation annotation = res.getFullTextAnnotation();
-//		             for (Page page: annotation.getPagesList()) {
-//		             String pageText1 = "";
-//		             for (Block block : page.getBlocksList()) {
-//		             String blockText = "";
-//		             for (Paragraph para : block.getParagraphsList()) {
-//			             String paraText = "";
-//			             for (Word word: para.getWordsList()) {
-//				             String wordText = "";
-//				             for (Symbol symbol: word.getSymbolsList()) {
-//					             wordText = wordText + symbol.getText();
-//					             System.out.format("Symbol text: %s (confidence: %f)\n", symbol.getText(),
-//					             symbol.getConfidence());
-//				             }
-//				             System.out.format("Word text: %s (confidence: %f)\n\n", wordText, word.getConfidence());
-//				             paraText = String.format("%s %s", paraText, wordText);
-//			             }
-//			             // Output Example using Paragraph:
-//			             System.out.println("\nParagraph: \n" + paraText);
-//			             System.out.format("Paragraph Confidence: %f\n", para.getConfidence());
-//			             blockText = blockText + paraText;
-//			          }
-//			             pageText = pageText + blockText;
-//		             }
-//	             }
-//	             System.out.println("\nComplete annotation:");
-//	             System.out.println(annotation.getText());
-//	             
-//	               pageText = res.getTextAnnotationsList().get(0).getDescription();
-//	               System.out.println("Text : ");
-//	               System.out.println(pageText);
-//	         
-//	            }
-//	         }
-//	      }
-//	      catch(Exception e) {
-//	         e.printStackTrace();
-//	      }
+		try {
+			
+			//String googleCredentialString = getServletContext().getInitParameter("GoogleApplicationCredentials");
+			//GoogleCredentials credentials = GoogleCredentials.fromStream(new ByteArrayInputStream(googleCredentialString.getBytes()));
+			GoogleCredentials credentials = GoogleCredentials.getApplicationDefault(); // fromStream(new FileInputStream(googleCredentialsConfiguration.getLocation()));
+         
+	         List<AnnotateImageRequest> requests = new ArrayList<>();
+	         ByteString imgBytes = ByteString.readFrom(new FileInputStream(pageImage));
+	         Image img = Image.newBuilder().setContent(imgBytes).build();
+	         Feature feat = Feature.newBuilder().setType(Type.TEXT_DETECTION).build();
+	         AnnotateImageRequest req = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+	         requests.add(req);
+	         try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+	            BatchAnnotateImagesResponse resp = client.batchAnnotateImages(requests);
+	            List<AnnotateImageResponse> resps = resp.getResponsesList();
+	            for (AnnotateImageResponse res : resps) {
+	               if (res.hasError()) {
+	                  System.out.printf("Error: %s\n", res.getError().getMessage());
+	                  return;
+	               }
+	               
+	             // For full list of available annotations, see http://g.co/cloud/vision/docs
+	             TextAnnotation annotation = res.getFullTextAnnotation();
+		             for (Page page: annotation.getPagesList()) {
+		             String pageText1 = "";
+		             for (Block block : page.getBlocksList()) {
+		             String blockText = "";
+		             for (Paragraph para : block.getParagraphsList()) {
+			             String paraText = "";
+			             for (Word word: para.getWordsList()) {
+				             String wordText = "";
+				             for (Symbol symbol: word.getSymbolsList()) {
+					             wordText = wordText + symbol.getText();
+					             System.out.format("Symbol text: %s (confidence: %f)\n", symbol.getText(),
+					             symbol.getConfidence());
+				             }
+				             System.out.format("Word text: %s (confidence: %f)\n\n", wordText, word.getConfidence());
+				             paraText = String.format("%s %s", paraText, wordText);
+			             }
+			             // Output Example using Paragraph:
+			             System.out.println("\nParagraph: \n" + paraText);
+			             System.out.format("Paragraph Confidence: %f\n", para.getConfidence());
+			             blockText = blockText + paraText;
+			          }
+			             pageText = pageText + blockText;
+		             }
+	             }
+	             System.out.println("\nComplete annotation:");
+	             System.out.println(annotation.getText());
+	             
+	               pageText = res.getTextAnnotationsList().get(0).getDescription();
+	               System.out.println("Text : ");
+	               System.out.println(pageText);
+	         
+	            }
+	         }
+	      }
+	      catch(Exception e) {
+	         e.printStackTrace();
+	      }
 		session.setAttribute("uploadFilePath", uploadFilePath);
-		// Del ) request.setAttribute("pageImage", pageImage);//업로드 파일 경로 + 이름
-	    //request.setAttribute("pageText",pageText); //추출 텍스트
-		pageText = "비가 추적추적 내리는 어두컴컴한 저녁이었어요.\r\n 무민 가족이 둘러앉아 버섯을 다듬고 있었어요.\r\n 무민파파가 빨간 버섯을 보며 중얼거렸어요.\r\n"
-				+ "\"미이가 또 못 먹는 버섯을 따 왔네. 작년에도 그러더니.\"\r\n"
-				+ "\"내년에는 맛있는 버섯을 따 올지도 몰라요. 희망을 가질 수 있으니 얼마나 좋아요.\"\r\n"
-				+ "무민마마의 대답에 미이가 깔깔댔어요.\r\n"
-				+ "그 뒤로 한동안 버섯을 다듬으며 평화로운 시간이 이어졌어요.";
+//		pageText = "비가 추적추적 내리는 어두컴컴한 저녁이었어요.\r\n 무민 가족이 둘러앉아 버섯을 다듬고 있었어요.\r\n 무민파파가 빨간 버섯을 보며 중얼거렸어요.\r\n"
+//				+ "\"미이가 또 못 먹는 버섯을 따 왔네. 작년에도 그러더니.\"\r\n"
+//				+ "\"내년에는 맛있는 버섯을 따 올지도 몰라요. 희망을 가질 수 있으니 얼마나 좋아요.”\r\n"
+//				+ "무민마마의 대답에 미이가 깔깔댔어요.\r\n"
+//				+ "그 뒤로 한동안 버섯을 다듬으며 평화로운 시간이 이어졌어요.";
+		//특수 문자의 경우 변환
+		pageText = pageText.replace("”", "\"");
+		pageText = pageText.replace("“", "\"");
+		pageText = pageText.replace("‘", "\'");
+		pageText = pageText.replace("’", "\'");
 		session.setAttribute("pageText", pageText);
 		
 		ArrayList<String> sentence_list = new ArrayList<String>();
 		sentence_list = TextProcessing.processByEnter(pageText);
+		int checkLargeQuo = TextProcessing.checkLargeQuotationPair(pageText);
+		int checkSmallQuo = TextProcessing.checkSmallQuotationPair(pageText);
+
 		session.setAttribute("sentence_list", sentence_list);
 		session.setAttribute("processingMethod", "byEnter");
 		session.setAttribute("describeMethod", "엔터 단위로 문장을 분리합니다.");
+		session.setAttribute("checkLargeQuo", checkLargeQuo);
+		session.setAttribute("checkSmallQuo", checkSmallQuo);
+		if(checkLargeQuo == 1 || checkSmallQuo == 1)
+			session.setAttribute("checkQuoMsg", "따옴표와 문장 부호를 책과 동일하게 입력했는지 확인해주세요.");
+		else
+			session.setAttribute("checkQuoMsg", "");
 		
 		response.sendRedirect("confirmImage.jsp");
-//    	RequestDispatcher rd = request.getRequestDispatcher("/confirmImage.jsp");
-//        rd.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -41,19 +41,29 @@ public class DoGetMyStoryList extends HttpServlet {
 		ArrayList<Story> storyList = StoryDAO.getUserStories(con, currUser.getUserId());
 		ArrayList<Page> myStoryPages = new ArrayList<Page>();
 		ArrayList<String> myStoryImgUrl = new ArrayList<String>();
-		for (int i=0;i< storyList.size();i++){
+		int storySize = storyList.size();
+		for (int i=0; i<storySize; i++){
 			try {
 				myStoryPages = (ArrayList<Page>)PageDAO.getStoryPage(con, storyList.get(i).getStoryId());
-				myStoryImgUrl.add(myStoryPages.get(0).getPageImgUrl());
-				
+				// 제목만 저장하고 페이지 추가하지 않은 경우 Story 삭제
+				if(myStoryPages.isEmpty()) {
+					StoryDAO.deleteStory(con, storyList.get(i).getStoryId());					
+				}
+				else {
+					myStoryImgUrl.add(myStoryPages.get(0).getPageImgUrl());
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+		//Story 삭제 결정 후 다시 list setting하기
+		storyList = StoryDAO.getUserStories(con, currUser.getUserId());
+		
 		session.setAttribute("myStoryList", storyList);
 		session.setAttribute("myStoryListImgUrl", myStoryImgUrl);
-		RequestDispatcher rd = request.getRequestDispatcher("/mypage.jsp");
-		rd.forward(request, response);
+		
+		// 새로고침 시 데이터 적재 방지
+		 response.sendRedirect("mypage.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

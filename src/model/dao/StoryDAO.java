@@ -29,7 +29,6 @@ public class StoryDAO {
 		PreparedStatement pstmt = null;
 		Story story = new Story();
 		try {
-			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(SQLST_INSERT_STORY, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, title);
 			pstmt.setInt(2, user_id);
@@ -40,9 +39,6 @@ public class StoryDAO {
 			ResultSet rs = pstmt.getGeneratedKeys();  
 			rs.next();  
 			int id = rs.getInt(1);
-			
-			con.commit();
-			con.setAutoCommit(true);
 			
 			story.setStoryId(id);
 			story.setStoryTitle(title);
@@ -61,8 +57,6 @@ public class StoryDAO {
 	public static ArrayList<Story> getUserStories(Connection con, int user_id) {
 		PreparedStatement pstmt = null;
 		try {
-			con.setAutoCommit(false);
-			
 			pstmt = con.prepareStatement(SQLST_SELECT_USER_STORY, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, user_id);
 			
@@ -83,14 +77,10 @@ public class StoryDAO {
 		PreparedStatement pstmt = null;
 		Story story = new Story();
 		try {
-			con.setAutoCommit(false);
-			
 			pstmt = con.prepareStatement(SQLST_SELECT_STORY_BY_ID, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, story_id);
 			
 			ResultSet rs = pstmt.executeQuery();
-			con.commit();
-			con.setAutoCommit(true);
 			
 			if(rs.next()) { //existing story
 				story.setStoryId(rs.getInt(1));
@@ -116,15 +106,11 @@ public class StoryDAO {
 		PreparedStatement pstmt = null;
 		Story story = new Story();
 		try {
-			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(SQLST_UPDATE_STORY_TITLE, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, story_title);
 			pstmt.setInt(2, story_id);
 			
 			pstmt.executeUpdate();
-			
-			con.commit();
-			con.setAutoCommit(true);
 			
 			story.setStoryId(story_id);
 			story.setStoryTitle(story_title);
@@ -144,14 +130,11 @@ public class StoryDAO {
 	public static void deleteStory(Connection con, int story_id) {
 		PreparedStatement pstmt = null;
 		try {
-			con.setAutoCommit(false);
 			
 			pstmt = con.prepareStatement(SQLST_DELETE_STORY);
 			pstmt.setInt(1, story_id);
 			
 			pstmt.executeUpdate();
-			con.commit();
-			con.setAutoCommit(true);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -159,7 +142,6 @@ public class StoryDAO {
 			if(pstmt != null) {try {
 				pstmt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} }
 		}

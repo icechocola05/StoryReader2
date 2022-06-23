@@ -16,6 +16,7 @@ import model.dto.Emotion;
 import model.dto.Sentence;
 import model.dto.Story;
 import model.dto.Voice;
+import util.view.ViewProcessing;
 
 
 @WebServlet("/DoPreviewPage")
@@ -41,45 +42,18 @@ public class DoPreviewPage extends HttpServlet {
 		ArrayList<String> emoticonNameList = new ArrayList<String>();
 		ArrayList<String> opacityList = new ArrayList<String>();
 		
+		ViewProcessing vp = new ViewProcessing();
+		
 		for(int i=0;i<sentenceSet.size();i++) {
 			
 			//각 문장의 voice_id와 맞는 voice_color를 리스트 형태로 저장
 			voiceColorList.add(voiceSet.get(sentenceSet.get(i).getVoiceId()-1).getVoiceColor());
 			
 			//각 문장의 emotion_id에 적절한 emoticon의 이름을 저장
-			String emoticon = "";
-			switch(sentenceSet.get(i).getEmotionId()) {
-			case 1://슬픔
-				emoticon = "noto:neutral-face";
-				break;
-			case 2://기쁨
-				emoticon = "noto:grinning-face-with-smiling-eyes";
-				break;
-			case 3:
-				emoticon = "noto:angry-face";
-				break;
-			case 4:
-				emoticon = "noto:crying-face";
-				break;
-			}
-			emoticonNameList.add(emoticon);
+			emoticonNameList.add(vp.getEmotionName(sentenceSet.get(i)));
 			
 			//각 문장의 emotion_intensity를 적절한 opacity로 분류
-			float val = sentenceSet.get(i).getIntensity();
-			String opacity ="";
-			if(val>=(float)0.1&& val<=(float)0.3) {//0.1보다 크고 0.3보다 작은 경우
-	             opacity = "20%";
-	          }
-	          else if(val>=(float)0.4&&val<=(float)0.7) {
-	            opacity = "70%";
-	          }
-	          else if(val>=(float)0.8) {
-	            opacity = "100%";
-	         }
-	          else {
-	        	  opacity = Float.toString(val);
-	          }
-			 opacityList.add(opacity);
+			 opacityList.add(vp.getColorOpacityList(sentenceSet.get(i)));
 		}
 		
 		//request.setAttribute("sentenceSet", sentenceSet);

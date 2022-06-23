@@ -49,6 +49,8 @@ public class DoGetPageList extends HttpServlet {
 			e.printStackTrace();
 		}
 	    
+	    session.removeAttribute("sentenceSet");//DoPreviewSavePage -> sentenceSet 세션 삭제(sentence 데이터 중복 방지)
+	    
 	    // 새로고침 시 데이터 적재 방지
 	    response.sendRedirect("makeStory.jsp");
 	}

@@ -18,6 +18,7 @@
 		ArrayList<String> voiceColorList = (ArrayList<String>)request.getAttribute("voiceColorList");
 		ArrayList<String> emoticonNameList = (ArrayList<String>)request.getAttribute("emoticonNameList");
 		ArrayList<String> opacityList = (ArrayList<String>)request.getAttribute("opacityList");
+		int isSaved = (int)session.getAttribute("isSaved");
 		String pageImgUrl = (String)session.getAttribute("currPageImg");
 		int size = sentenceSet.size()-1;
 	 %>
@@ -31,17 +32,17 @@
 			<div class="page-script w3-container w3-half w3-mobile">
 			<div class = "w3-padding-large w3-margin w3-border w3-round-large" style="text-align:center;">
 				<%for(int i=0 ; i<sentenceSet.size() ; i++){ %>
-				<div id = 'sentenceset<%=i%>' class = "sentenceset w3-row w3-border-bottom w3-center w3-margin-top w3-margin-bottom w3-padding-bottom" style="width:100%;"> 
-					<div class="speaker w3-col s4" id='speaker<%=i%>'style="width:10%;"><%= sentenceSet.get(i).getSpeaker()%></div>
+				<div id = 'sentenceset<%=i%>' class = "sentenceset w3-row w3-border-bottom w3-center w3-padding-bottom" style="width:100%;display:inline-block;"> 
+					<div id='speaker<%=i%>'style="width:10%;display:inline-block;"><%= sentenceSet.get(i).getSpeaker()%></div>
 					<!--voice 붙이기 -->
-	                <div class="voice w3-col w3-border w3-round-xxlarge w3-center" id="voiceVal<%=i%>" style="background-color:<%=voiceColorList.get(i)%>; width:5%;">
+	                <div id="voiceVal<%=i%>" class="w3-center w3-border w3-round-xlarge" style="background-color:<%=voiceColorList.get(i)%>; max-width:40px; min-width:30px; font-size:20px;display:inline-block;">
 	                	<div class="emotion w3-center" id ="emotionVal<%=i%>" style="width:100%;">
 	                        <label id="emotionFace<%=i%>" style="opacity:<%=opacityList.get(i)%>;">
 	                           <span id='emotionFaceSpan<%=i%>' class='iconify' data-inline='false' data-icon='<%=emoticonNameList.get(i)%>'></span>
 	                        </label>
 	                     </div>
-	                </div>
-					<div class="sentence w3-col s4 w3-round-large" id='sentence<%=i%>' style="width:85%;"><%= sentenceSet.get(i).getSentence() %></div>
+	             </div>
+					<div class="sentence w3-round-large" id='sentence<%=i%>' style="width:80%;display:inline-block;"><%= sentenceSet.get(i).getSentence() %></div>
 				</div>
 				<%}%>
 			</div> 
@@ -65,11 +66,33 @@
             </div>
          </div>
 	</div>
-	<form method="post" action="DoConfirmPage">
-	<div class="w3-center">
-		 <button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 저장 </button>
+	
+	<div class="w3-center w3-margin-bottom">
+	
+	<%
+	System.out.println("isSaved : "+isSaved);
+	
+	if (isSaved==2){ //확인 버튼%>
+		<form method="post" action="DoPrepareEdit" style="display:inline-block;width:40%; ">
+			<button type="submit" class="w3-button w3-padding-large w3-right" style="width:50%; background-color: #927D71;"> 수정 </button>
+		</form>
+		<form method="post" action="doGetPageList" style="display:inline-block;width:40%; ">
+			<button type="submit" class="w3-button w3-padding-large w3-left" style="width:50%; background-color: #927D71;"> 확인 </button>
+		</form>
+	<%
+		}else if(isSaved==1){ //저장 버튼%>
+		<form method="post" action="DoPrepareEdit" style="display:inline-block; width:40%; ">
+			<button type="submit" class="w3-button w3-padding-large w3-right" style="width:50%; background-color: #927D71;"> 수정 </button>
+		</form>
+		<form method="post" action="DoConfirmPage" style="display:inline-block;width:40%; ">
+			<button type="submit" class="w3-button w3-padding-large w3-left" style="width:50%; background-color: #927D71;"> 저장 </button>
+		</form>
+	<%} else if(isSaved==0){%>
+		<form method="post" action="DoConfirmPage" style="display:inline-block;width:40%;">
+			<button type="submit" class="w3-button w3-padding-large" style="width:50%; background-color: #927D71;"> 저장 </button>
+		</form>
+	<%}%>
 	</div>
-	</form>
 	<script src="//code.jquery.com/jquery.min.js"></script>
 	<script>
 		var index = 2;
