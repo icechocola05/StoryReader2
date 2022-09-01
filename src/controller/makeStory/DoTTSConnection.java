@@ -86,7 +86,7 @@ public class DoTTSConnection extends HttpServlet {
 				int read = 0;
 				byte[] bytes = new byte[1024];
 				
-				String path = "C:"+File.separator+"StoryReader2"+File.separator+"output"; //getServletContext().getRealPath("output/"); 
+				String path = "C:"+File.separator+"StoryReader"+File.separator+"output"; //getServletContext().getRealPath("output/"); 
 				
 	            System.out.println(path);
 	            request.setAttribute("path", path);

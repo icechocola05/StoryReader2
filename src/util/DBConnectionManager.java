@@ -58,7 +58,7 @@ public class DBConnectionManager implements ServletContextListener {
     	     Context envContext = (Context)initContext.lookup("java:comp/env");
     	     // lookup() 등록된 naming서비스로부터 자원을 찾고자 할 때 사용하는 메소드
     	     // context 객체를 통해 이름으로 Resource 획득
-    	     dataSource = (DataSource)envContext.lookup("jdbc/storyreader2");
+    	     dataSource = (DataSource)envContext.lookup("jdbc/storyreader");
     	     System.out.println("Load dbcp Driver");
     	} catch (NamingException e1) {
     	     e1.printStackTrace();

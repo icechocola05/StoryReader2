@@ -30,14 +30,14 @@
 	<!-- timeBetweenEvictionRunsMillis="3600000" -->
     <ResourceLink auth="Container" driverClassName="com.mysql.cj.jdbc.Driver"
   		factory="org.apache.tomcat.dbcp.dbcp2.BasicDataSourceFactory"
-  		name="jdbc/storyreader2" password="storyreader2"
+  		name="jdbc/storyreader" password="storyreader"
   		validationQuery="select 1"
   		testOnBorrow="true"
   		testOnReturn="false"
   		testWhileIdle="true"
-  		timeBetweenEvictionRunsMillis="7200000"
+  		timeBetweenEvictionRunsMillis="3600000"
   		logAbandoned="false"
   		type="javax.sql.DataSource"
-  		url="jdbc:mysql://220.69.171.47:3306/storyreader2?serverTimezone=Asia/Seoul&amp;autoReconnect=true"
-  		username="storyreader2"/>
+  		url="jdbc:mysql://localhost:3306/storyreader?serverTimezone=Asia/Seoul&amp;autoReconnect=true"
+  		username="storyreader"/>
 </Context>
