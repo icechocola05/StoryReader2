@@ -63,17 +63,12 @@ public class DoReadStory extends HttpServlet {
 		    //Story 정보
 		    Story currStory = StoryDAO.getStoryById(con, story_id);
 		    System.out.println("Story Id : "+story_id);
-		    //Page 정보
-		    try {
-				currPages =  PageDAO.getStoryPage(con, story_id);
-				System.out.println("Page Size : "+currPages.size());
-				System.out.println("Page Id : "+currPages.get(0).getPageId());
-				//첫 Page에 대한 Sentence 정보
-				currSentences=SentenceDAO.getPageSentence(con, currPages.get(0).getPageId());
-				System.out.println("Sentence Size : "+currSentences.size());
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		    currPages =  PageDAO.getStoryPage(con, story_id);
+			System.out.println("Page Size : "+currPages.size());
+			System.out.println("Page Id : "+currPages.get(0).getPageId());
+			//첫 Page에 대한 Sentence 정보
+			currSentences=SentenceDAO.getPageSentence(con, currPages.get(0).getPageId());
+			System.out.println("Sentence Size : "+currSentences.size());
 		    
 		    session.setAttribute("currStory", currStory);//현재 스토리
 		    session.setAttribute("currPages", currPages);//현재 스토리에 대한 페이지 리스트
@@ -83,12 +78,8 @@ public class DoReadStory extends HttpServlet {
 	    }else {
 	    	currPages = (ArrayList<Page>)session.getAttribute("currPages");
 	    	int page_num = Integer.parseInt(request.getParameter("readPage"));
-	    	try {
-	    		System.out.println(page_num);
-				currSentences=SentenceDAO.getPageSentence(con, currPages.get(page_num).getPageId());
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+	    	System.out.println(page_num);
+			currSentences=SentenceDAO.getPageSentence(con, currPages.get(page_num).getPageId());
 	    	
 	    	request.setAttribute("currPage", currPages.get(page_num));
 		    request.setAttribute("currSentences", currSentences);//첫 페이지에 대한 문장 리스트

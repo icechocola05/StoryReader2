@@ -43,13 +43,8 @@ public class DoSaveStoryTitle extends HttpServlet {
 		String storyTitle = request.getParameter("storyTitle");
 		
 		
-		//DB에 Story 저장
-		try {
-			Story currStory = StoryDAO.insertStory(con, storyTitle, currUser.getUserId()); // currUser.getUserId() 로 수정 필요
-			session.setAttribute("currStory", currStory);
-	    } catch (SQLException e) {
-	    	e.printStackTrace();
-	    }
+		Story currStory = StoryDAO.insertStory(con, storyTitle, currUser.getUserId()); // currUser.getUserId() 로 수정 필요
+		session.setAttribute("currStory", currStory);
 		
 		
 		//새로고침 시 데이터 적재 방지

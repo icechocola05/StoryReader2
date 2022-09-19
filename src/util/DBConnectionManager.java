@@ -7,23 +7,26 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import javax.sql.*;//DataSource 클래스를 위해 사용
+
 import javax.naming.*;//JNDI를 위해 사용
 
 
 @WebListener
 public class DBConnectionManager implements ServletContextListener {
+	private Connection conn;
+
+	public DBConnectionManager() {
+	}
     public void contextDestroyed(ServletContextEvent sce)  { 
-    	Connection conn=(Connection) sce.getServletContext().getAttribute("DBconnection");
     	try {
-    		conn.close();
-    	} catch (SQLException e) {
-    		e.printStackTrace();
-    	}
+			if (conn != null)
+				conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     }
     
     public void contextInitialized(ServletContextEvent sce)  { 
-    	//서버 시작 시 DB 연결 
-    	Connection conn = null;
 		
     	/*Properties connectionProps = new Properties();
 		

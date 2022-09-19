@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.dao.SentenceDAO;
 import model.dto.Emotion;
 import model.dto.Sentence;
-import model.dto.Story;
 import model.dto.Voice;
 import util.view.ViewProcessing;
 
@@ -54,6 +52,7 @@ public class DoPreviewPage extends HttpServlet {
 			
 			//각 문장의 emotion_intensity를 적절한 opacity로 분류
 			 opacityList.add(vp.getColorOpacityList(sentenceSet.get(i)));
+		
 		}
 		
 		//request.setAttribute("sentenceSet", sentenceSet);

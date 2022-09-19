@@ -25,11 +25,10 @@ public class StoryDAO {
 	
 	
 	//Story 삽입 성공 시 story 객체 return
-	public static Story insertStory(Connection con, String title, int user_id) throws SQLException {
-		PreparedStatement pstmt = null;
+	public static Story insertStory(Connection con, String title, int user_id) {
 		Story story = new Story();
 		try {
-			pstmt = con.prepareStatement(SQLST_INSERT_STORY, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_INSERT_STORY, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, title);
 			pstmt.setInt(2, user_id);
 			
@@ -48,16 +47,13 @@ public class StoryDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
+			return story;
 		}
-		return story;
 	}
 	//Story 찾기(user)
 	public static ArrayList<Story> getUserStories(Connection con, int user_id) {
-		PreparedStatement pstmt = null;
 		try {
-			pstmt = con.prepareStatement(SQLST_SELECT_USER_STORY, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_SELECT_USER_STORY, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, user_id);
 			
 			ResultSet storyRS = pstmt.executeQuery();
@@ -74,10 +70,9 @@ public class StoryDAO {
 	
 	//Story 찾기(story id)
 	public static Story getStoryById(Connection con, int story_id) {
-		PreparedStatement pstmt = null;
 		Story story = new Story();
 		try {
-			pstmt = con.prepareStatement(SQLST_SELECT_STORY_BY_ID, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_SELECT_STORY_BY_ID, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, story_id);
 			
 			ResultSet rs = pstmt.executeQuery();
@@ -94,19 +89,15 @@ public class StoryDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-
+			return null;
 		}
-		return null;
-		
 	}
 	
 	//Story 제목 수정
-	public static Story updateStoryTitle(Connection con, String story_title, int story_id, int user_id) throws SQLException {
-		PreparedStatement pstmt = null;
+	public static Story updateStoryTitle(Connection con, String story_title, int story_id, int user_id) {
 		Story story = new Story();
 		try {
-			pstmt = con.prepareStatement(SQLST_UPDATE_STORY_TITLE, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_UPDATE_STORY_TITLE, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, story_title);
 			pstmt.setInt(2, story_id);
 			
@@ -120,30 +111,21 @@ public class StoryDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
+			return story;
 		}
-		return story;
 	}
 
 	//Story 삭제 -> CASCADE 기능을 이용하여 Story 삭제 시 문장도 함께 삭제 
 	public static void deleteStory(Connection con, int story_id) {
-		PreparedStatement pstmt = null;
 		try {
 			
-			pstmt = con.prepareStatement(SQLST_DELETE_STORY);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_DELETE_STORY);
 			pstmt.setInt(1, story_id);
 			
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} }
 		}
 	}
 	

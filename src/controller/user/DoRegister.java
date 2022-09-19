@@ -65,34 +65,29 @@ public class DoRegister extends HttpServlet {
 		boolean check_result = false;
 		boolean join_result = false;
 		
-		//try join
-		try {
-			check_result = UserDAO.selectID(conn, user_input_id);
-			//아이디 중복
-			if (check_result==false) {
+		check_result = UserDAO.selectID(conn, user_input_id);
+		//아이디 중복
+		if (check_result==false) {
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('중복된 아이디입니다.'); location.href='../StoryReader2/join.jsp';</script>");
+			out.flush();
+		}
+		//아이디 미중복
+		else {
+			
+			join_result = UserDAO.insertUser(conn, user);
+			//가입 실패
+			if(join_result == false) {
 				PrintWriter out = response.getWriter();
-				out.println("<script>alert('중복된 아이디입니다.'); location.href='../StoryReader2/join.jsp';</script>");
+				out.println("<script>alert('회원 정보를 확인해주세요.'); location.href='../StoryReader2/join.jsp';</script>");
 				out.flush();
 			}
-			//아이디 미중복
-			else {
-				
-				join_result = UserDAO.insertUser(conn, user);
-				//가입 실패
-				if(join_result == false) {
-					PrintWriter out = response.getWriter();
-					out.println("<script>alert('회원 정보를 확인해주세요.'); location.href='../StoryReader2/join.jsp';</script>");
-					out.flush();
-				}
-				//가입 성공
-				else { 
-					PrintWriter out = response.getWriter();
-					out.println("<script>alert('회원가입 성공'); location.href='../StoryReader2/login.jsp';</script>");
-					out.flush();
-				}
+			//가입 성공
+			else { 
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('회원가입 성공'); location.href='../StoryReader2/login.jsp';</script>");
+				out.flush();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 	}
 	

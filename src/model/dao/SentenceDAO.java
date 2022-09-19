@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 
-import model.dto.Page;
 import model.dto.Sentence;
 
 public class SentenceDAO {
@@ -16,10 +14,9 @@ public class SentenceDAO {
 	private final static String SQLST_INSERT_SENTENCE = "INSERT INTO sentence (sentence_txt, sentence_speaker, emotion_id, voice_id, intensity, sentence_wav_url, page_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private final static String SQLST_SELECT_SENTENCE_BY_PAGEID = "SELECT * FROM sentence WHERE page_id = ?";
 	private final static String SQLST_UPDATE_SENTENCE = "UPDATE sentence SET sentence_txt = ?, sentence_speaker=?, voice_id=?, emotion_id=?, intensity=?, sentence_wav_url=? WHERE sentence_id = ?";
-	public static Sentence insertSent(Connection con, String sentence_txt, String sentence_speaker, int emotionId, int voiceId, float intensity, String sentence_wav_url, int page_id) throws SQLException {
-		PreparedStatement pstmt = null;
+	public static Sentence insertSent(Connection con, String sentence_txt, String sentence_speaker, int emotionId, int voiceId, float intensity, String sentence_wav_url, int page_id) {
 		try {
-			pstmt = con.prepareStatement(SQLST_INSERT_SENTENCE);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_INSERT_SENTENCE);
 			pstmt.setString(1, sentence_txt);
 			pstmt.setString(2, sentence_speaker);
 			pstmt.setInt(3, emotionId);
@@ -42,16 +39,13 @@ public class SentenceDAO {
 			return sent;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
+			return null;
 		}
-		return null;
 	}
 	
-	public static ArrayList<Sentence> getPageSentence(Connection con, int page_id) throws SQLException{
-		PreparedStatement pstmt = null;
+	public static ArrayList<Sentence> getPageSentence(Connection con, int page_id){
 		try {
-			pstmt = con.prepareStatement(SQLST_SELECT_SENTENCE_BY_PAGEID, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_SELECT_SENTENCE_BY_PAGEID, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, page_id);
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -72,16 +66,13 @@ public class SentenceDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
+			return null; //첫번째 삽입되는 페이지임을 나타냄
 		}
-		return null; //첫번째 삽입되는 페이지임을 나타냄
 	}
 	
-	public static void updateSentence(Connection con,int sentence_id, String sentence_txt, String sentence_speaker, int emotionId, int voiceId, float intensity, String sentence_wav_url) throws SQLException{
-		PreparedStatement pstmt = null;
+	public static void updateSentence(Connection con, int sentence_id, String sentence_txt, String sentence_speaker, int emotionId, int voiceId, float intensity, String sentence_wav_url){
 		try {
-			pstmt = con.prepareStatement(SQLST_UPDATE_SENTENCE, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_UPDATE_SENTENCE, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, sentence_txt);
 			pstmt.setString(2, sentence_speaker);
 			pstmt.setInt(3, voiceId);
@@ -93,8 +84,6 @@ public class SentenceDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
 		}
 	}
 

@@ -35,23 +35,31 @@ public class DoLogin extends HttpServlet {
 		ServletContext sc = getServletContext();
 		Connection conn = (Connection)sc.getAttribute("DBconnection");
 		
-		//try login
-		User currUser = new User();
-		try {
-			currUser = UserDAO.findUser(conn, user_input_id, user_input_pw);
-			if(currUser == null) { //login failed
-				PrintWriter out = response.getWriter();
-				out.println("<script>alert('회원 정보를 확인해주세요.'); location.href='../StoryReader2/login.jsp';</script>");
-				out.flush();
-			}
-			else { //login success
-				PrintWriter out = response.getWriter();
-				out.println("<script>alert('로그인 성공'); location.href='../StoryReader2/index.jsp';</script>");
-				session.setAttribute("currUser", currUser);
-				out.flush();
-			}
+		try {//Connection timeout 오류 해결용 코드
+			UserDAO.throwConnection(conn);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}
+		
+		ServletContext sc_tmp = null;
+		Connection conn_tmp = null;
+		
+		//try login
+		User currUser = new User();
+		sc_tmp = getServletContext();
+		conn_tmp = (Connection)sc_tmp.getAttribute("DBconnection");
+		
+		currUser = UserDAO.findUser(conn_tmp, user_input_id, user_input_pw);
+		if(currUser == null) {
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('회원 정보를 확인해주세요.'); location.href='../StoryReader2/login.jsp';</script>");
+			out.flush();
+		}
+		else { //login success
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('로그인 성공'); location.href='../StoryReader2/index.jsp';</script>");
+			session.setAttribute("currUser", currUser);
+			out.flush();
 		}
 	}
 

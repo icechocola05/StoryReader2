@@ -49,7 +49,7 @@ public class DoUploadImage extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String uploadPath = request.getSession().getServletContext().getRealPath("/UploadImg");
+		String uploadPath = request.getSession().getServletContext().getRealPath("/UploadImg");// 파일 업로드 디렉토리 경로
 	    System.out.println("절대경로 : " + uploadPath);
 	    HttpSession session = request.getSession(true);
 	     
@@ -97,7 +97,7 @@ public class DoUploadImage extends HttpServlet {
 	    //이미지에서 텍스트 추출
 		System.out.println(pageImage);
 		
-
+/*
 		try {
 			
 			//String googleCredentialString = getServletContext().getInitParameter("GoogleApplicationCredentials");
@@ -158,12 +158,13 @@ public class DoUploadImage extends HttpServlet {
 	      catch(Exception e) {
 	         e.printStackTrace();
 	      }
+	*/
 		session.setAttribute("uploadFilePath", uploadFilePath);
-//		pageText = "비가 추적추적 내리는 어두컴컴한 저녁이었어요.\r\n 무민 가족이 둘러앉아 버섯을 다듬고 있었어요.\r\n 무민파파가 빨간 버섯을 보며 중얼거렸어요.\r\n"
-//				+ "\"미이가 또 못 먹는 버섯을 따 왔네. 작년에도 그러더니.\"\r\n"
-//				+ "\"내년에는 맛있는 버섯을 따 올지도 몰라요. 희망을 가질 수 있으니 얼마나 좋아요.”\r\n"
-//				+ "무민마마의 대답에 미이가 깔깔댔어요.\r\n"
-//				+ "그 뒤로 한동안 버섯을 다듬으며 평화로운 시간이 이어졌어요.";
+		pageText = "비가 추적추적 내리는 어두컴컴한 저녁이었어요.\r\n 무민 가족이 둘러앉아 버섯을 다듬고 있었어요.\r\n 무민파파가 빨간 버섯을 보며 중얼거렸어요.\r\n"
+				+ "\"미이가 또 못 먹는 버섯을 따 왔네. 작년에도 그러더니.\"\r\n"
+				+ "\"내년에는 맛있는 버섯을 따 올지도 몰라요. 희망을 가질 수 있으니 얼마나 좋아요.”\r\n"
+				+ "무민마마의 대답에 미이가 깔깔댔어요.\r\n"
+				+ "그 뒤로 한동안 버섯을 다듬으며 평화로운 시간이 이어졌어요.";
 		//특수 문자의 경우 변환
 		pageText = pageText.replace("”", "\"");
 		pageText = pageText.replace("“", "\"");

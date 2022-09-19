@@ -26,10 +26,9 @@ public class PageDAO {
 	//페이지 삭제
 	private final static String SQLST_DELETE_PAGE = "DELETE FROM page WHERE page_id = ?";
 			
-	public static Page insertPage(Connection con, int page_num, String page_img_url, String page_sentence, int story_id) throws SQLException {
-		PreparedStatement pstmt = null;
+	public static Page insertPage(Connection con, int page_num, String page_img_url, String page_sentence, int story_id) {
 		try {
-			pstmt = con.prepareStatement(SQLST_INSERT_PAGE, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_INSERT_PAGE, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, page_num);
 			pstmt.setString(2, page_img_url);
 			pstmt.setString(3, page_sentence);
@@ -54,17 +53,15 @@ public class PageDAO {
 			return page;
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
+			return null;
 		}
-		return null;
+		
 	}
 	
 	//페이지 목록 page_num 순서대로 반환
-	public static ArrayList<Page> getStoryPage(Connection con, int story_id) throws SQLException {
-		PreparedStatement pstmt = null;
+	public static ArrayList<Page> getStoryPage(Connection con, int story_id){
 		try {
-			pstmt = con.prepareStatement(SQLST_SELECT_PAGE, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_SELECT_PAGE, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, story_id);
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -87,18 +84,15 @@ public class PageDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
+			return null; //첫번째 삽입되는 페이지임을 나타냄
 		}
-		return null; //첫번째 삽입되는 페이지임을 나타냄
 	}
 	
 	//삽입될 페이지 순서 찾기
-	public static int getPageNum(Connection con, int story_id) throws SQLException {
-		PreparedStatement pstmt = null;
+	public static int getPageNum(Connection con, int story_id) {
 		try {
 			
-			pstmt = con.prepareStatement(SQLST_SELECT_PAGE, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_SELECT_PAGE, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, story_id);
 			ResultSet rs = pstmt.executeQuery();
 			
@@ -118,19 +112,17 @@ public class PageDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
+			return 0; //첫번째 삽입되는 페이지임을 나타냄
 		}
-		return 0; //첫번째 삽입되는 페이지임을 나타냄
+		
 	}
 	
 	// 페이지 사진 찾기
-	public static String getPageImgUrl(Connection con, int page_id) throws SQLException {
-		PreparedStatement pstmt = null;
+	public static String getPageImgUrl(Connection con, int page_id){
 		try {
 			String img_url=null;
 			
-			pstmt = con.prepareStatement(SQLST_SELECT_PAGEIMGURL_BY_PAGE_ID, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_SELECT_PAGEIMGURL_BY_PAGE_ID, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, page_id);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -140,18 +132,15 @@ public class PageDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
+			return null;
 		}
-		return null;
 	}
 	
 	//페이지 순서 변경 적용
-	public static void updatePageOrder(Connection con, int page_id, int page_num) throws SQLException {
-		PreparedStatement pstmt = null;
+	public static void updatePageOrder(Connection con, int page_id, int page_num){
 		try {
 			
-			pstmt = con.prepareStatement(SQLST_UPDATE_PAGE_ORDER, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_UPDATE_PAGE_ORDER, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setInt(1, page_num);
 			pstmt.setInt(2, page_id);
 			
@@ -159,17 +148,14 @@ public class PageDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
 		}
 	}
 	
 	//페이지 문장 변경 적용
-	public static void updatePageSentence(Connection con, int page_id, String page_sentence) throws SQLException {
-		PreparedStatement pstmt = null;
+	public static void updatePageSentence(Connection con, int page_id, String page_sentence){
 		try {
 			
-			pstmt = con.prepareStatement(SQLST_UPDATE_PAGE_SENTENCE, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_UPDATE_PAGE_SENTENCE, Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, page_sentence);
 			pstmt.setInt(2, page_id);
 			
@@ -177,28 +163,19 @@ public class PageDAO {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {pstmt.close(); }
 		}
 	}
 	
 	//Page 삭제 -> CASCADE 기능을 이용하여 page 삭제 시 문장도 함께 삭제 
 	public static void deletePage(Connection con, int page_id) {
-		PreparedStatement pstmt = null;
 		try {
-			pstmt = con.prepareStatement(SQLST_DELETE_PAGE);
+			PreparedStatement pstmt = con.prepareStatement(SQLST_DELETE_PAGE);
 			pstmt.setInt(1, page_id);
 			
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			if(pstmt != null) {try {
-				pstmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} }
 		}
 	}
 

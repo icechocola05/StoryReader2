@@ -41,14 +41,9 @@ public class DoChangeStoryTitle extends HttpServlet {
 		int storyId = currStory.getStoryId();
 		int userId = currStory.getStoryUser();
 		
-		//DB에 있던 Story 수정
-		try {
-			currStory = StoryDAO.updateStoryTitle(con, storyTitle, storyId, userId); // currUser.getUserId() 로 수정 필요
-			session.setAttribute("currStory", currStory);
-			System.out.println(currStory.getStoryTitle());
-	    } catch (SQLException e) {
-	    	e.printStackTrace();
-	    }
+		currStory = StoryDAO.updateStoryTitle(con, storyTitle, storyId, userId); // currUser.getUserId() 로 수정 필요
+		session.setAttribute("currStory", currStory);
+		System.out.println(currStory.getStoryTitle());
 		
 		PrintWriter writer = response.getWriter(); 
 		writer.println("<script>location.href='makeStory.jsp';</script>");

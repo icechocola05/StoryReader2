@@ -39,15 +39,10 @@ public class DoGetPageList extends HttpServlet {
 	    Story currStory = (Story) session.getAttribute("currStory");
 	    int story_id = currStory.getStoryId();
 	    
-	    try {
-	    	//한 story 안에 있는 모든 page를 list로 저장
-	    	ArrayList<Page> pageList = new ArrayList<Page>();
-	    	pageList = PageDAO.getStoryPage(con, story_id);
-	    	session.setAttribute("pageList", pageList);
-	    	
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	    //한 story 안에 있는 모든 page를 list로 저장
+		ArrayList<Page> pageList = new ArrayList<Page>();
+		pageList = PageDAO.getStoryPage(con, story_id);
+		session.setAttribute("pageList", pageList);
 	    
 	    session.removeAttribute("sentenceSet");//DoPreviewSavePage -> sentenceSet 세션 삭제(sentence 데이터 중복 방지)
 	    

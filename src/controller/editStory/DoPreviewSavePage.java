@@ -62,24 +62,19 @@ public class DoPreviewSavePage extends HttpServlet {
 		
 		ViewProcessing vp = new ViewProcessing();
 		
-	    try {
-			sentenceSet = (ArrayList<Sentence>)SentenceDAO.getPageSentence(con, page_id);//저장된 문장 설정값들 가져오기
-			System.out.println("sentenceSet : "+ sentenceSet);
-			currPageImgUrl = (String)PageDAO.getPageImgUrl(con, page_id);
-			for(int i=0;i<sentenceSet.size();i++) {
-				
-				//각 문장의 voice_id와 맞는 voice_color를 리스트 형태로 저장
-				voiceColorList.add(voiceSet.get(sentenceSet.get(i).getVoiceId()-1).getVoiceColor());
-				
-				//각 문장의 emotion_id에 적절한 emoticon의 이름을 저장
-				emoticonNameList.add(vp.getEmotionName(sentenceSet.get(i)));
-				
-				//각 문장의 emotion_intensity를 적절한 opacity로 분류
-				 opacityList.add(vp.getColorOpacityList(sentenceSet.get(i)));
-			}
-		} catch (SQLException e) {
-			sentenceSet=null;
-			e.printStackTrace();
+	    sentenceSet = (ArrayList<Sentence>)SentenceDAO.getPageSentence(con, page_id);//저장된 문장 설정값들 가져오기
+		System.out.println("sentenceSet : "+ sentenceSet);
+		currPageImgUrl = (String)PageDAO.getPageImgUrl(con, page_id);
+		for(int i=0;i<sentenceSet.size();i++) {
+			
+			//각 문장의 voice_id와 맞는 voice_color를 리스트 형태로 저장
+			voiceColorList.add(voiceSet.get(sentenceSet.get(i).getVoiceId()-1).getVoiceColor());
+			
+			//각 문장의 emotion_id에 적절한 emoticon의 이름을 저장
+			emoticonNameList.add(vp.getEmotionName(sentenceSet.get(i)));
+			
+			//각 문장의 emotion_intensity를 적절한 opacity로 분류
+			 opacityList.add(vp.getColorOpacityList(sentenceSet.get(i)));
 		}
 	    session.setAttribute("sentenceSet", sentenceSet);
 	    request.setAttribute("voiceColorList", voiceColorList);

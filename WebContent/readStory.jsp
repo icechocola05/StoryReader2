@@ -65,7 +65,7 @@
 	    <audio class="w3-container w3-mobile"id='player' style="width:40%" autoplay controls>
 	       	<source id = "play-source">
 	       	<%for (int i = 0 ; i < currSentences.size(); i++ ){ %>
-	       	<source src="/output/<%=currSentences.get(i).getSentenceWavUrl()%>" type="audio/wav">
+	       	<source src="./output/<%=currSentences.get(i).getSentenceWavUrl()%>" type="audio/wav">
 	       	<%} %>
 	    </audio>
     </div>

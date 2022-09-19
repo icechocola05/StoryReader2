@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+
 import model.dto.User;
 
 public class UserDAO {
@@ -21,13 +23,29 @@ public class UserDAO {
 	    * 가져온 pw가 파라미터 pw와 다를 때 return null
 	    * 가져올 수 있는 pw가 없을 때(user가 없을 때) return null
 	    */
-	   public static User findUser(Connection con, String user_input_id, String user_input_pw) throws SQLException {
-			PreparedStatement pstmt = null;
+	   public static void throwConnection(Connection con) throws SQLException {
+		   PreparedStatement pstmt = null;
+		   try {
+				pstmt = con.prepareStatement("select 1");
+				pstmt.execute();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				 if(pstmt != null) {
+				        pstmt.close(); 
+				 }
+			}
+	   }
+	   public static User findUser(Connection con, String user_input_id, String user_input_pw){
 			User user = new User();
 			try {
-				pstmt = con.prepareStatement(SQLST_SELECT_USER_BY_ID);
+				//con.setAutoCommit(false);
+				PreparedStatement pstmt = con.prepareStatement(SQLST_SELECT_USER_BY_ID);
 				pstmt.setString(1, user_input_id);
 				ResultSet rs = pstmt.executeQuery();
+				//con.commit();
+		        //con.setAutoCommit(true);
 				
 				if(rs.next()) { //existing user
 					String user_login_pw = rs.getString(3);
@@ -40,19 +58,18 @@ public class UserDAO {
 						return user;
 					}
 					else { //login failed
+						System.out.println("login failed");
 						return null;
 					}
 				}
 				else { //invalid user
+					System.out.println("invalid user");
 					return null;
+					
 				}
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-			} finally {
-				 if(pstmt != null) {
-			        pstmt.close(); 
-			     }
 			}
 			return null;
 		}
@@ -64,10 +81,9 @@ public class UserDAO {
 	    * 주어진 id가 DB내 존재하지 않을 경우 return true
 	    * 주어진 id가 DB내 존재하거나 쿼리 실행 실패 시 return false
 	    */
-	   public static boolean selectID(Connection con, String id) throws SQLException{
-	      PreparedStatement pstmt=null;
+	   public static boolean selectID(Connection con, String id){
 	      try {
-	         pstmt = con.prepareStatement(SQLST_SELECT_USER_ID);
+	    	  PreparedStatement pstmt = con.prepareStatement(SQLST_SELECT_USER_ID);
 	         pstmt.setString(1, id);
 	         ResultSet rs = pstmt.executeQuery();
 	         if (rs.next()) {
@@ -79,10 +95,6 @@ public class UserDAO {
 	      } catch (SQLException e) {
 	         e.printStackTrace();
 	         return false;
-	      } finally {
-	         if(pstmt != null) {
-	            pstmt.close(); 
-	         }
 	      }
 	   }
 	   
@@ -91,7 +103,7 @@ public class UserDAO {
 	    * 성공 시 return true
 	    * 실패 시 return false
 	    */
-	   public static boolean insertUser(Connection con, User user) throws SQLException{
+	   public static boolean insertUser(Connection con, User user){
 	      PreparedStatement pstmt=null;
 	      try {
 	         pstmt = con.prepareStatement(SQLST_INSERT_USER);
@@ -107,10 +119,6 @@ public class UserDAO {
 	      }catch (Exception e) {
 	         e.printStackTrace();
 	         return false;
-	      }finally {
-	         if(pstmt != null) {
-	            pstmt.close(); 
-	         }
 	      }
 	   }
 }

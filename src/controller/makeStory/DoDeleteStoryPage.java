@@ -43,25 +43,19 @@ public class DoDeleteStoryPage extends HttpServlet {
 	    int flag = 0;
 	    int pageId = 0;
 	    
-	    try {
-	    	
-		    for(int i=1; i<=pageSize; i++) {
-		    	n = Integer.toString(i);
-		    	pageId = Integer.parseInt(request.getParameter("pageId"+n)); // pageId
-		    	flag = Integer.parseInt(request.getParameter("deleteFlag"+n));
-		    	
-		    	if(flag == 1) { //flag 값이 1이면 삭제할 pageId
-		    		PageDAO.deletePage(con, pageId);
-		    	}
-		    }
-		    
-		    pageList = PageDAO.getStoryPage(con, storyId);
-	    	
-	    	session.setAttribute("pageList", pageList);
-	    	
-		    } catch (SQLException e) {
-		    	e.printStackTrace();
-		    }
+	    for(int i=1; i<=pageSize; i++) {
+			n = Integer.toString(i);
+			pageId = Integer.parseInt(request.getParameter("pageId"+n)); // pageId
+			flag = Integer.parseInt(request.getParameter("deleteFlag"+n));
+			
+			if(flag == 1) { //flag 값이 1이면 삭제할 pageId
+				PageDAO.deletePage(con, pageId);
+			}
+		}
+		
+		pageList = PageDAO.getStoryPage(con, storyId);
+		
+		session.setAttribute("pageList", pageList);
 		    
 		 // 새로고침 시 데이터 적재 방지
 		   response.sendRedirect("makeStory.jsp");

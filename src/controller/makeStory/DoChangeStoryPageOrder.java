@@ -42,8 +42,6 @@ public class DoChangeStoryPageOrder extends HttpServlet {
 	    int pageId = 0;
 	    int pageOrder = 0;
 	    
-	    try {
-	    	
 	    for(int i=1; i<=pageSize; i++) {
 	    	n = Integer.toString(i);
 	    	pageId = Integer.parseInt(request.getParameter("pageId"+n)); // pageId
@@ -55,10 +53,6 @@ public class DoChangeStoryPageOrder extends HttpServlet {
 	    pageList = PageDAO.getStoryPage(con, storyId);
     	
     	session.setAttribute("pageList", pageList);
-    	
-	    } catch (SQLException e) {
-	    	e.printStackTrace();
-	    }
 	    
 	    PrintWriter writer = response.getWriter(); 
 		writer.println("<script>location.href='makeStory.jsp';</script>");

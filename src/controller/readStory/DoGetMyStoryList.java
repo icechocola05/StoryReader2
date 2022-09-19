@@ -43,17 +43,13 @@ public class DoGetMyStoryList extends HttpServlet {
 		ArrayList<String> myStoryImgUrl = new ArrayList<String>();
 		int storySize = storyList.size();
 		for (int i=0; i<storySize; i++){
-			try {
-				myStoryPages = (ArrayList<Page>)PageDAO.getStoryPage(con, storyList.get(i).getStoryId());
-				// 제목만 저장하고 페이지 추가하지 않은 경우 Story 삭제
-				if(myStoryPages.isEmpty()) {
-					StoryDAO.deleteStory(con, storyList.get(i).getStoryId());					
-				}
-				else {
-					myStoryImgUrl.add(myStoryPages.get(0).getPageImgUrl());
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
+			myStoryPages = (ArrayList<Page>)PageDAO.getStoryPage(con, storyList.get(i).getStoryId());
+			// 제목만 저장하고 페이지 추가하지 않은 경우 Story 삭제
+			if(myStoryPages.isEmpty()) {
+				StoryDAO.deleteStory(con, storyList.get(i).getStoryId());					
+			}
+			else {
+				myStoryImgUrl.add(myStoryPages.get(0).getPageImgUrl());
 			}
 		}
 		//Story 삭제 결정 후 다시 list setting하기

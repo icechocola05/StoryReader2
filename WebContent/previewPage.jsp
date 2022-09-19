@@ -57,7 +57,7 @@
 	            <audio id='player' style="width:100%" autoplay controls>
 	               	<source id = "play-source">
 	               	<%for (int i = 0 ; i < sentenceSet.size(); i++ ){ %>
-	               	<source src="/output/<%=sentenceSet.get(i).getSentenceWavUrl()%>" type="audio/wav">
+	               	<source src="./output/<%=sentenceSet.get(i).getSentenceWavUrl()%>" type="audio/wav">
 	               	<%} %>
 	            </audio>
             </div>

@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +24,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import model.dto.Sentence;
-import model.dto.Story;
 
 
 /*
@@ -86,16 +84,20 @@ public class DoTTSConnection extends HttpServlet {
 				int read = 0;
 				byte[] bytes = new byte[1024];
 				
-				String path = "C:"+File.separator+"StoryReader"+File.separator+"output"; //getServletContext().getRealPath("output/"); 
-				
-	            System.out.println(path);
-	            request.setAttribute("path", path);
+				//String path = "C:"+File.separator+"StoryReader"+File.separator+"output"; //getServletContext().getRealPath("output/"); 
+	            //System.out.println(path);
+	            
 
+	            String path = request.getSession().getServletContext().getRealPath("/output");// 파일 업로드 디렉토리 경로
+	    	    System.out.println("절대경로 : " + path);
+	    	    request.setAttribute("path", path);
+	    	    
+	    	    /*
 	            File fileSaveDir = new File(path);
 	            // 파일 경로 없으면 생성
 	            if (!fileSaveDir.exists()) {
 	               fileSaveDir.mkdirs();
-	            }
+	            }*/
 	            
 	            //파일 이름 중복 방지 랜덤 생성
 	            String audioFileName =null;

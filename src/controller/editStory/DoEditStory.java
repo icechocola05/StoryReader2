@@ -42,15 +42,10 @@ public class DoEditStory extends HttpServlet {
 	    Story currStory = StoryDAO.getStoryById(con, story_id);
 	    session.setAttribute("currStory", currStory);
 	    
-	    try {
-	    	//한 story 안에 있는 모든 page를 list로 저장
-	    	ArrayList<Page> pageList = new ArrayList<Page>();
-	    	pageList = PageDAO.getStoryPage(con, story_id);
-	    	session.setAttribute("pageList", pageList);
-	    	
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	    //한 story 안에 있는 모든 page를 list로 저장
+		ArrayList<Page> pageList = new ArrayList<Page>();
+		pageList = PageDAO.getStoryPage(con, story_id);
+		session.setAttribute("pageList", pageList);
 	    
 	    // 새로고침 시 데이터 적재 방지
 	    response.sendRedirect("makeStory.jsp");
